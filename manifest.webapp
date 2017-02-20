@@ -1,11 +1,11 @@
 {
   "version": "1.0.0",
-  "name": "Friendly Chat",
+  "name": "World Without Walls",
   "launch_path": "/index.html",
-  "description": "Chat with friends using Firebase 2.0",
+  "description": "Improve your foreign language skills by chatting with native speakers your age.",
   "developer": {
-    "name": "Google inc.",
-    "url": "https://firebase.google.com"
+    "name": "SHS App Dev",
+    "url": "#"
   },
   "installs_allowed_from": [
     "*"
@@ -15,8 +15,8 @@
   },
   "locales": {
     "en": {
-      "name": "Friendly Chat",
-      "description": "Chat with friends using Firebase 2.0"
+      "name": "World Without Walls",
+      "description": "Improve your foreign language skills by chatting with native speakers your age."
     }
   }
 }
