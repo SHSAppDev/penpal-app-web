@@ -54,7 +54,7 @@ function W3Chat() {
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.
 W3Chat.prototype.initFirebase = function() {
-  // TODO(DEVELOPER): Initialize Firebase.
+  // Initialize Firebase.
   // Shortcuts to Firebase SDK features.
   this.auth = firebase.auth();
   this.database = firebase.database();
@@ -66,26 +66,13 @@ W3Chat.prototype.initFirebase = function() {
 W3Chat.EXAMPLE_OTHER_UID="hJeeOKl9hxbDtk899kV8qa1phB22";
 // Loads chat messages history and listens for upcoming ones.
 W3Chat.prototype.loadMessages = function() {
-  // TODO(DEVELOPER): Load and listens for new messages.
-  // Reference to the /messages/ database path.
+  // Load and listens for new messages.
+  // The conversation reference is /conversations/{both UIDs stuck together}
+  // The order that they're stuck together is based on which one is greater in ASCII land.
   var uid1 = this.auth.currentUser.uid;
   var uid2 = getParameterByName('targetUID');
   var uids = uid1 > uid2 ? uid1+uid2 : uid2+uid1; 
-  // var conversationsRef = this.database.ref('conversations');
   this.messagesRef = this.database.ref('conversations/'+uids);
-  // console.log("accessing conversations/"+uids);
-//   this.database.ref().once('conversations', function(snapshot) {
-//   if (snapshot.hasChild(uids)) {
-//     alert('exists');
-//   }
-// });
-  // if(!conversationsRef.child(uids)) {
-  //   // If the ref doesn't exist yet, make it exist!
-  //   this.messagesRef = conversationsRef.push(uids);
-  // } else {
-  //   this.messagesRef = conversationsRef.child(uids);
-  // }
-  // Make sure we remove all previous listeners.
   this.messagesRef.off();
 
 
@@ -104,7 +91,7 @@ W3Chat.prototype.saveMessage = function(e) {
   // Check that the user entered a message and is signed in.
   if (this.messageInput.value && this.checkSignedInWithMessage()) {
 
-    // TODO(DEVELOPER): push new message to Firebase.
+    // Push new message to Firebase.
     var currentUser = this.auth.currentUser;
     // Add a new message entry to the Firebase Database.
     this.messagesRef.push({
@@ -155,7 +142,7 @@ W3Chat.prototype.saveImageMessage = function(event) {
   // Check if the user is signed-in
   if (this.checkSignedInWithMessage()) {
 
-    // TODO(DEVELOPER): Upload image to Firebase storage and add message.
+    // Upload image to Firebase storage and add message.
     // We add a message with a loading icon that will get updated with the shared image.
     var currentUser = this.auth.currentUser;
     this.messagesRef.push({
@@ -196,8 +183,8 @@ W3Chat.prototype.signOut = function() {
 W3Chat.prototype.onAuthStateChanged = function(user) {
   if (user) { // User is signed in!
     // Get profile pic and user's name from the Firebase user object.
-    var profilePicUrl = user.photoURL;   // TODO(DEVELOPER): Get profile pic.
-    var userName = user.displayName;        // TODO(DEVELOPER): Get user's name.
+    var profilePicUrl = user.photoURL;   // Get profile pic.
+    var userName = user.displayName;        // Get user's name.
 
     // Set the user's profile pic and name.
     this.userPic.style.backgroundImage = 'url(' + profilePicUrl + ')';
