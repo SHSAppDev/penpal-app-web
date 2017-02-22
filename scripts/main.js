@@ -63,13 +63,31 @@ FriendlyChat.prototype.initFirebase = function() {
   this.auth.onAuthStateChanged(this.onAuthStateChanged.bind(this));
 };
 
+FriendlyChat.EXAMPLE_OTHER_UID="hJeeOKl9hxbDtk899kV8qa1phB22";
 // Loads chat messages history and listens for upcoming ones.
 FriendlyChat.prototype.loadMessages = function() {
   // TODO(DEVELOPER): Load and listens for new messages.
   // Reference to the /messages/ database path.
-  this.messagesRef = this.database.ref('messages');
+  var uid1 = this.auth.currentUser.uid;
+  var uid2 = FriendlyChat.EXAMPLE_OTHER_UID;
+  var uids = uid1 > uid2 ? uid1+uid2 : uid2+uid1; 
+  // var conversationsRef = this.database.ref('conversations');
+  this.messagesRef = this.database.ref('conversations/'+uids);
+  console.log("accessing conversations/"+uids);
+//   this.database.ref().once('conversations', function(snapshot) {
+//   if (snapshot.hasChild(uids)) {
+//     alert('exists');
+//   }
+// });
+  // if(!conversationsRef.child(uids)) {
+  //   // If the ref doesn't exist yet, make it exist!
+  //   this.messagesRef = conversationsRef.push(uids);
+  // } else {
+  //   this.messagesRef = conversationsRef.child(uids);
+  // }
   // Make sure we remove all previous listeners.
   this.messagesRef.off();
+
 
   // Loads the last 12 messages and listen for new ones.
   var setMessage = function(data) {
