@@ -5,34 +5,13 @@
 function W3Dashboard() {
 
   // Shortcuts to DOM Elements.
-  // this.messageList = document.getElementById('messages');
-  // this.messageForm = document.getElementById('message-form');
-  // this.messageInput = document.getElementById('message');
-  // this.submitButton = document.getElementById('submit');
-  // this.submitImageButton = document.getElementById('submitImage');
-  // this.imageForm = document.getElementById('image-form');
-  // this.mediaCapture = document.getElementById('mediaCapture');
   this.userPic = document.getElementById('user-pic');
   this.userName = document.getElementById('user-name');
   this.signInButton = document.getElementById('sign-in');
   this.signOutButton = document.getElementById('sign-out');
-  // this.signInSnackbar = document.getElementById('must-signin-snackbar');
-
-  // Saves message on form submit.
-  // this.messageForm.addEventListener('submit', this.saveMessage.bind(this));
+ 
   this.signOutButton.addEventListener('click', this.signOut.bind(this));
   this.signInButton.addEventListener('click', this.signIn.bind(this));
-
-  // // Toggle for the button.
-  // var buttonTogglingHandler = this.toggleButton.bind(this);
-  // this.messageInput.addEventListener('keyup', buttonTogglingHandler);
-  // this.messageInput.addEventListener('change', buttonTogglingHandler);
-
-  // Events for image upload.
-  // this.submitImageButton.addEventListener('click', function() {
-  //   this.mediaCapture.click();
-  // }.bind(this));
-  // this.mediaCapture.addEventListener('change', this.saveImageMessage.bind(this));
 
   this.initFirebase();
 }
@@ -91,30 +70,11 @@ W3Dashboard.prototype.onAuthStateChanged = function(user) {
 
     // // Show sign-in button.
     // this.signInButton.removeAttribute('hidden');
+
+    //In this case, I just take the user straight back to the login.
     window.location.href = 'login.html';
   }
 };
-
-// Returns true if user is signed-in. Otherwise false and displays a message.
-// W3Dashboard.prototype.checkSignedInWithMessage = function() {
-//   // Return true if the user is signed in Firebase
-//   if (this.auth.currentUser) {
-//     return true;
-//   }
-//   // Display a message to the user using a Toast.
-//   var data = {
-//     message: 'You must sign-in first',
-//     timeout: 2000
-//   };
-//   this.signInSnackbar.MaterialSnackbar.showSnackbar(data);
-//   return false;
-// };
-
-// Resets the given MaterialTextField.
-// W3Dashboard.resetMaterialTextfield = function(element) {
-//   element.value = '';
-//   element.parentNode.MaterialTextfield.boundUpdateClassesHandler();
-// };
 
 // Template for messages.
 W3Dashboard.MESSAGE_TEMPLATE =
@@ -126,41 +86,6 @@ W3Dashboard.MESSAGE_TEMPLATE =
 
 // A loading image URL.
 W3Dashboard.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
-
-// Displays a Message in the UI.
-// W3Dashboard.prototype.displayMessage = function(key, name, text, picUrl, imageUri) {
-//   var div = document.getElementById(key);
-//   // If an element for that message does not exists yet we create it.
-//   if (!div) {
-//     var container = document.createElement('div');
-//     container.innerHTML = W3Dashboard.MESSAGE_TEMPLATE;
-//     div = container.firstChild;
-//     div.setAttribute('id', key);
-//     this.messageList.appendChild(div);
-//   }
-//   if (picUrl) {
-//     div.querySelector('.pic').style.backgroundImage = 'url(' + picUrl + ')';
-//   }
-//   div.querySelector('.name').textContent = name;
-//   var messageElement = div.querySelector('.message');
-//   if (text) { // If the message is text.
-//     messageElement.textContent = text;
-//     // Replace all line breaks by <br>.
-//     messageElement.innerHTML = messageElement.innerHTML.replace(/\n/g, '<br>');
-//   } else if (imageUri) { // If the message is an image.
-//     var image = document.createElement('img');
-//     image.addEventListener('load', function() {
-//       this.messageList.scrollTop = this.messageList.scrollHeight;
-//     }.bind(this));
-//     this.setImageUrl(imageUri, image);
-//     messageElement.innerHTML = '';
-//     messageElement.appendChild(image);
-//   }
-//   // Show the card fading-in.
-//   setTimeout(function() {div.classList.add('visible')}, 1);
-//   this.messageList.scrollTop = this.messageList.scrollHeight;
-//   this.messageInput.focus();
-// };
 
 
 // Stolen from stack overflow. Useful!
