@@ -202,12 +202,14 @@ W3Chat.prototype.onAuthStateChanged = function(user) {
     this.loadMessages();
   } else { // User is signed out!
     // Hide user's profile and sign-out button.
-    this.userName.setAttribute('hidden', 'true');
-    this.userPic.setAttribute('hidden', 'true');
-    this.signOutButton.setAttribute('hidden', 'true');
+    // this.userName.setAttribute('hidden', 'true');
+    // this.userPic.setAttribute('hidden', 'true');
+    // this.signOutButton.setAttribute('hidden', 'true');
 
-    // Show sign-in button.
-    this.signInButton.removeAttribute('hidden');
+    // // Show sign-in button.
+    // this.signInButton.removeAttribute('hidden');
+    window.location.href = 'login.html';
+    // console.log("Should have changed page");
   }
 };
 
