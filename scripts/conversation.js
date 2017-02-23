@@ -1,18 +1,4 @@
-/**
- * Copyright 2015 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 'use strict';
 
 // Initializes W3Chat.
@@ -63,7 +49,6 @@ W3Chat.prototype.initFirebase = function() {
   this.auth.onAuthStateChanged(this.onAuthStateChanged.bind(this));
 };
 
-W3Chat.EXAMPLE_OTHER_UID="hJeeOKl9hxbDtk899kV8qa1phB22";
 // Loads chat messages history and listens for upcoming ones.
 W3Chat.prototype.loadMessages = function() {
   // Load and listens for new messages.
@@ -166,14 +151,12 @@ W3Chat.prototype.saveImageMessage = function(event) {
   }
 };
 
-// Signs-in Friendly Chat.
 W3Chat.prototype.signIn = function() {
   // Sign in Firebase using popup auth and Google as the identity provider.
   var provider = new firebase.auth.GoogleAuthProvider();
   this.auth.signInWithPopup(provider);
 };
 
-// Signs-out of Friendly Chat.
 W3Chat.prototype.signOut = function() {
   // Sign out of Firebase.
   this.auth.signOut();
@@ -202,12 +185,16 @@ W3Chat.prototype.onAuthStateChanged = function(user) {
     this.loadMessages();
   } else { // User is signed out!
     // Hide user's profile and sign-out button.
-    this.userName.setAttribute('hidden', 'true');
-    this.userPic.setAttribute('hidden', 'true');
-    this.signOutButton.setAttribute('hidden', 'true');
+    // this.userName.setAttribute('hidden', 'true');
+    // this.userPic.setAttribute('hidden', 'true');
+    // this.signOutButton.setAttribute('hidden', 'true');
 
-    // Show sign-in button.
-    this.signInButton.removeAttribute('hidden');
+    // // Show sign-in button.
+    // this.signInButton.removeAttribute('hidden');
+
+    // I don't want to do that stuff ^ since there's no point in viewing messages 
+    // if you're signed out. So I take the user straight back to login.
+    window.location.href = 'login.html';
   }
 };
 
