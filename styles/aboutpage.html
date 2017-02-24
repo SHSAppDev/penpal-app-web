@@ -6,10 +6,19 @@
 
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<style>
+<meta charset="utf-8">
+<!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
 
-/*This is demonstrating Git
-*/
+ <!--Import Google Icon Font-->
+      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<style>
 
 .chat{
 	float: left;
@@ -19,19 +28,15 @@
 	height: 100%;
 }
 body{
-	background-color: lightblue;
+	background-color:white;
 }
 ol{
-	background:#ffb84d;
+	background: teal;
 	padding: 20px;
 }
 
-ul{
-	background: #3399ff;
-	padding: 20px;
-}
 ol li{
-	background: #e6e6e6;
+
 	padding: 5px;
 	margin-left: 35px;
 }
@@ -39,115 +44,76 @@ img{
 	width: 100%;
 	height: auto;
 }
-/*The container <div> needed to position the dropdown content*/
-.dropdown{
-	position: relative;
-	display: inline-block;
-}
-/* Dropdown content hidden by default*/
-.dropdown-content{
-	display: none;
-	position: absolute;
-	background-color: #f9f9f9;
-	min-width:  160px;
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0,);
-	padding: 12px 16px;
-	z-index: 1;
-}
-/* Show the dropdown menu on hover*/
-.dropdown:hover .dropdown-content{
-	display: block;
-} 
-/*Style The Dropdown button*/
-.dropbtn{
-	background-color: #4caf50;
-	color: white;
-	padding: 16px;
-	font-size: 16px;
-	border: none;
-	cursor: pointer;
-}
-.dropdown: hover.dropbtn{
-	background-color: #3e8e41;
-}
+
+
 </style>
-
-<div class="dropdown">
-<button class="dropbtn">Dropdown</button>
-<span>Mouse over me</span>
-
-<div> class="dropdown-content"></div>
-<a href="#">Home</a>
-<a href="#">About</a>
-<a href="#">News</a>
-<a href="#">Topics</a>
-</div>
-</div>
-
-<div class="chat"></div>
-
-<head>
-
-<title>About Page </title>
-
-<ul>
-  <li><a class="active" href="#home">Home</a></li>
-  <li><a  href="#about">About</a></li>
-  <li><a  href="#news">News</a></li>
-  <li><a  href="#topics">Topics</a></li>
-</ul>
 
 </head>
 
 <body>
 
+ <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
 
-
-<button type="button" onclick="document.getElementById('demo').innerHTML=Date()">
-Click on me to display Date and Time</button>
+   <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script type="text/javascript" src="js/materialize.min.js"></script>
 
 <p id="demo"></p>
 
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo center">About Page</a>
+      <ul id="nav-mobile" class="left hide-on-med-and-down">
+      </ul>
+    </div>
+  </nav>
+
+  <button class="waves-effect waves-light btn" type="button" onclick="document.getElementById('demo').innerHTML=Date()">
+Click on me to display Date and Time</button>
 
 
-<h1><center>About Page</center></h1>
+   
+ <!-- Page Content goes here -->          
+<div class="container">
 
-
-
-<img> <center> src="World Without Walls.JPEG" alt="World Without Walls" style="width:304px;height:228px;"<center></img>
-
-
-
-
-
-
-<p style="text-align:left;">Website Topic Summary:</p>
-  <ol style="text-align:left;">
+<p style="text-align:left;" class="flow-text">Website Topic Summary:</p>
+  <ol style="text-align:left;" class="flow-text">
     <li>Description</li><br>
     <li>Description</li><br>
     <li>Description</li><br>
   </ol>
 
 
-<h3>About</h3>
+<h3><center>About</center></h3>
 
-<p style="text-align:left;">World Without Walls will be a service that upgrades the old pen pal concept with instant messaging that young people are used to today in the form of an online chat app. Especially in the case of foreign language education, this is fantastic because it allows students to improve their language skills while having fun by conversing with native speakers their age. Certain tools will also be implemented that make this type of communication easier such as the ability to translate just an individual word or phrase, grammar checks, and speech to text.</p>
-
-<h3>News</h3>
-
-
-<h3>Topics</h3>
-
+<p style="text-align:left;" class="flow-text">World Without Walls will be a service that upgrades the old pen pal concept with instant messaging that young people are used to today in the form of an online chat app. Especially in the case of foreign language education, this is fantastic because it allows students to improve their language skills while having fun by conversing with native speakers their age. Certain tools will also be implemented that make this type of communication easier such as the ability to translate just an individual word or phrase, grammar checks, and speech to text.</p>
+</div>
 
 </body>
-<header>
 
-
-</header>
-
-
-
-</body>
+        <footer class="page-footer">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">World Without Walls</h5>
+                <p class="grey-text text-lighten-4">A inovative messaging website.</p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="http://www.worldwithoutwalls.tk">World Without Walls Messaging</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">© 2017 Copyright Text
+            
+            </div>
+          </div>
+        </footer>
 </html>
 
 
