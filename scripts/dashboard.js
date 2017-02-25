@@ -118,6 +118,7 @@ W3Dashboard.prototype.displayConversation = function(recipientUID) {
 
   // this.userDataRef.child(recipientUID).once('value', function(snapshot){
   this.database.ref('user-data/'+recipientUID).once('value').then(function(snapshot){
+    if(snapshot.val()===null) {return;}
 
     var div = document.getElementById(recipientUID);
     if(!div) {
