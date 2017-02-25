@@ -48,7 +48,12 @@
         <h3><i class="material-icons">chat_bubble_outline</i> World Without Walls</h3>
       </div>
       <div id="user-container">
-        <button  id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+        <div hidden id="user-pic"></div>
+        <div hidden id="user-name"></div>
+        <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+          Sign-out
+        </button>
+        <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
           <i class="material-icons">account_circle</i>Sign-in with Google
         </button>
       </div>
@@ -56,9 +61,12 @@
   </header>
 
   <main class="mdl-layout__content mdl-color--grey-100">
-    <h1>Welcome to the Ghetto Login!</h1>
-    <h3>You sorta just gotta press the sign-in button ^^^^</h3>
-    This Text is new.
+    It's the ADD CONVERSATION PAGE! :D
+    <p><i>Type the user ID you want to add here</i></p>
+    <input id="uid-field" type="text" clue="userID">
+    <button id="add-conversation-button">Add Conversation</button>
+    <p> Click <a href="index.html">here</a> to go back to your dashboard</p>
+
   </main>
 </div>
 
@@ -75,6 +83,6 @@
   };
   firebase.initializeApp(config);
 </script>
-<script src="scripts/login.js"></script>
+<script src="scripts/add-conversation.js"></script>
 </body>
 </html>
