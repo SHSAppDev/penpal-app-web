@@ -1,66 +1,53 @@
 <!doctype html>
 
 <html lang="en">
+<!-- Materialize CSS Head -->
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="Improve your foreign language skills by chatting with native speakers your age.">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>World Without Walls</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Improve your foreign language skills by chatting with native speakers your age.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Without Walls</title>
 
-  <!-- Disable tap highlight on IE -->
-  <meta name="msapplication-tap-highlight" content="no">
+    <!-- Disable tap highlight on IE -->
+    <meta name="msapplication-tap-highlight" content="no">
 
-  <!-- Web Application Manifest -->
-  <link rel="manifest" href="manifest.json">
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="World Without Walls">
+    <meta name="theme-color" content="#303F9F">
 
-  <!-- Add to homescreen for Chrome on Android -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="World Without Walls">
-  <meta name="theme-color" content="#303F9F">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="World Without Walls">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
 
-  <!-- Add to homescreen for Safari on iOS -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="World Without Walls">
-  <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
+    <!-- Tile icon for Win8 -->
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <meta name="msapplication-navbutton-color" content="#303F9F">
 
-  <!-- Tile icon for Win8 -->
-  <meta name="msapplication-TileColor" content="#3372DF">
-  <meta name="msapplication-navbutton-color" content="#303F9F">
+    <!-- Compiled and minified CSS -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <link rel="stylesheet" href="styles/main.css" </head>
+    <link rel="stylesheet" href="styles/login.css" </head>
 
-  <!-- Material Design Lite -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
-  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
 
-  <!-- App Styling -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-  <link rel="stylesheet" href="styles/main.css">
 </head>
+
 <body>
-<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
-
-  <!-- Header section containing logo -->
-  <header class="mdl-layout__header mdl-color-text--white mdl-color--light-blue-700">
-    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
-      <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-        <h3><i class="material-icons">chat_bubble_outline</i> World Without Walls</h3>
-      </div>
-      <div id="user-container">
-        <button  id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-          <i class="material-icons">account_circle</i>Sign-in with Google
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <main class="mdl-layout__content mdl-color--grey-100">
-    <h1>Welcome to the Ghetto Login!</h1>
-    <h3>You sorta just gotta press the sign-in button ^^^^</h3>
-    This Text is new.
-  </main>
-</div>
+  		<div class="card" id="login-card">
+  			<div class="card-content">
+  				<span class="card-title center-align">Login</span>
+          <a id="sign-in" class="waves-effect waves-light btn"><i class="material-icons left">account_circle</i>Login with Google</a>
+  			</div>
+  	</div>
 
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
