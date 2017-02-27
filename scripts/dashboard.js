@@ -88,14 +88,14 @@ W3Dashboard.prototype.loadConversations = function() {
   var setConversation = function(data) {
     // Each item is a random key with a recipientUserID
     // console.log(this.displayConversation);
-    this.displayConversation(data.val().recipientUID);
+    this.displayConversation(data.val().recipientUID, data.val().unreadMessages);
   }
   this.myConversationsRef.on('child_added', setConversation.bind(this));
   this.myConversationsRef.on('child_changed', setConversation.bind(this));
 
 };
 
-W3Dashboard.prototype.displayConversation = function(recipientUID) {
+W3Dashboard.prototype.displayConversation = function(recipientUID, unreadMessages) {
 
   // this.userDataRef.child(recipientUID).once('value', function(snapshot){
   this.database.ref('user-data/'+recipientUID).once('value').then(function(snapshot){
@@ -110,22 +110,24 @@ W3Dashboard.prototype.displayConversation = function(recipientUID) {
       // console.log(this.conversationList); //HELP
       this.conversationList.appendChild(div);
     }
-    // Set recipient profile pic in conversation button
-    // var urlForPic = null;
-    // if(snapshot.val().photoURL !== null) {
-    //   urlForPic = snapshot.val().photoURL;
-    // } else {
-    //   urlForPic = W3Dashboard.URL_PROFILE_PLACEHOLDER;
-    // }
-    // // div.querySelector('.pic').style.backgroundImage = 'url(' + urlForPic.replace('"', '') + ')';
-    // div.querySelector('.pic').src = urlForPic;
-    // div.querySelector('#conversation-link').href = 'conversation.html?targetUID='+recipientUID;
     div.href = 'conversation.html?targetUID='+recipientUID;
-    // div.textContent = snapshot.val().displayName;
-    console.log(div);
-    // console.log(div.querySelector('#bleh'));
+    // console.log(div);
+
+    // Display name (displayName)
     div.querySelector('.name').textContent = snapshot.val().displayName;
-    div.querySelector('.new').textContent = 3; //Hardcoded value
+
+    // Display num of unread messages
+    if(unreadMessages === null || unreadMessages <= 0 || unreadMessages === '') {
+      div.querySelector('.new').setAttribute('hidden', true);
+    } else {
+      div.querySelector('.new').textContent = unreadMessages;
+    }
+
+    // Set recipient profile pic. TODO Make look nicer
+    // var picURL = snapshot.val().photoURL !== null ? snapshot.val().photoURL : W3Dashboard.URL_PROFILE_PLACEHOLDER;
+    // div.querySelector('.pic').src = picURL;
+    div.querySelector('.pic').setAttribute('hidden', true);
+
   }.bind(this));
 
   this.database.ref('user-data/'+this.auth.currentUser.uid+'/conversations').once('value').then(function(snapshot){
@@ -135,27 +137,13 @@ W3Dashboard.prototype.displayConversation = function(recipientUID) {
 };
 
 
-// Template for messages.
-// W3Dashboard.MESSAGE_TEMPLATE =
-//     '<div class="message-container">' +
-//     '<div class="spacing"><div class="pic"></div></div>' +
-//     '<div class="message"></div>' +
-//     '<div class="name"></div>' +
-//     '</div>';
-
+// Template for conversation in conversation list.
 W3Dashboard.CONVERSATION_TEMPLATE =
     '<a href=# class="collection-item">' +
       '<span class="new badge">0</span>'+
+      '<span><img class="pic" src=#></span>' +
       '<span class="name">Name</span>' +
     '</a>';
-
-    // '<div>' +
-    //   // '<div class="spacing"><div class="pic"></div></div>' +
-    //   '<a href=# id="conversation-link">'+
-    //     '<img src=# class="pic">' +
-    //     '<div class="name"></div>' +
-    //   '</a>'
-    // '</div>';
 
 
 
@@ -179,7 +167,7 @@ function getParameterByName(name, url) {
 
 window.onload = function() {
     window.dashboardScript = new W3Dashboard();
-    document.getElementById('button-collapse').sideNav();
+    // document.getElementById('button-collapse').sideNav(); //DISABLED because js says sideNav() isn't a function.
 };
 
 (function($) {
