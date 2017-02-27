@@ -10,7 +10,6 @@ function W3Dashboard() {
     this.signOutButtonMobile = document.getElementById('sign-out-mobile');
     this.conversationList = document.getElementById('conversation-list');
 
-
     this.signOutButton.addEventListener('click', this.signOut.bind(this));
     this.signOutButtonMobile.addEventListener('click', this.signOut.bind(this));
 
@@ -127,10 +126,11 @@ W3Dashboard.prototype.displayConversation = function(recipientUID) {
     // console.log(div.querySelector('#bleh'));
     div.querySelector('.name').textContent = snapshot.val().displayName;
     div.querySelector('.new').textContent = 3; //Hardcoded value
+  }.bind(this));
 
-    // console.log(div.querySelector('.pic').style.backgroundImage);
+  this.database.ref('user-data/'+this.auth.currentUser.uid+'/conversations').once('value').then(function(snapshot){
+    var val = snapshot.val();
 
-    // div.querySelector('.name').textContent = snapshot.val().displayName;
   }.bind(this));
 };
 
@@ -179,7 +179,7 @@ function getParameterByName(name, url) {
 
 window.onload = function() {
     window.dashboardScript = new W3Dashboard();
-    // document.getElementById('.button-collapse').sideNav();
+    document.getElementById('button-collapse').sideNav();
 };
 
 (function($) {
