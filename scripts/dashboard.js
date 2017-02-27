@@ -117,9 +117,10 @@ W3Dashboard.prototype.displayConversation = function(recipientUID, unreadMessage
     div.querySelector('.name').textContent = snapshot.val().displayName;
 
     // Display num of unread messages
-    if(unreadMessages === null || unreadMessages <= 0 || unreadMessages === '') {
+    if(unreadMessages === null || unreadMessages === undefined || unreadMessages <= 0 || unreadMessages === '') {
       div.querySelector('.new').setAttribute('hidden', true);
     } else {
+      console.log(unreadMessages);
       div.querySelector('.new').textContent = unreadMessages;
     }
 
