@@ -122,9 +122,11 @@ W3Dashboard.prototype.displayConversation = function(recipientUID) {
     // div.querySelector('.pic').src = urlForPic;
     // div.querySelector('#conversation-link').href = 'conversation.html?targetUID='+recipientUID;
     div.href = 'conversation.html?targetUID='+recipientUID;
-    div.textContent = snapshot.val().displayName;
-    console.log(div.querySelector('#bleh'));
-    // div.querySelector('#bleh').textContent = 1; //Hardcoded value
+    // div.textContent = snapshot.val().displayName;
+    console.log(div);
+    // console.log(div.querySelector('#bleh'));
+    div.querySelector('.name').textContent = snapshot.val().displayName;
+    div.querySelector('.new').textContent = 3; //Hardcoded value
 
     // console.log(div.querySelector('.pic').style.backgroundImage);
 
@@ -143,7 +145,8 @@ W3Dashboard.prototype.displayConversation = function(recipientUID) {
 
 W3Dashboard.CONVERSATION_TEMPLATE =
     '<a href=# class="collection-item">' +
-      '<span class="new badge" id="bleh"></span>Name'+
+      '<span class="new badge">0</span>'+
+      '<span class="name">Name</span>' +
     '</a>';
 
     // '<div>' +
