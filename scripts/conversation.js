@@ -146,16 +146,16 @@ W3Chat.prototype.saveImageMessage = function(event) {
   }
 };
 
-W3Chat.prototype.signIn = function() {
-  // Sign in Firebase using popup auth and Google as the identity provider.
-  var provider = new firebase.auth.GoogleAuthProvider();
-  this.auth.signInWithPopup(provider);
-};
-
-W3Chat.prototype.signOut = function() {
-  // Sign out of Firebase.
-  this.auth.signOut();
-};
+// W3Chat.prototype.signIn = function() {
+//   // Sign in Firebase using popup auth and Google as the identity provider.
+//   var provider = new firebase.auth.GoogleAuthProvider();
+//   this.auth.signInWithPopup(provider);
+// };
+//
+// W3Chat.prototype.signOut = function() {
+//   // Sign out of Firebase.
+//   this.auth.signOut();
+// };
 
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
 W3Chat.prototype.onAuthStateChanged = function(user) {

@@ -30,14 +30,13 @@ $ firebase serve
 Visit 'localhost' link provided (usually http://localhost:5000).
 
 ## To-Do ![To-Do](https://maxcdn.icons8.com/Color/PNG/24/Business/todo_list-24.png)
-
-- [ ] UI for viewing conversations 
+- [ ] UI for viewing conversations
 - [ ] Direct Messaging
 - [ ] Add new friends functionality
 - [ ] Translate words to different languages right in the message text box
-- [ ] Logo 
-- [ ] About Page 
-- [ ] Founders Page 
+- [ ] Logo
+- [ ] About Page
+- [ ] Founders Page
 - [ ] Login / Sign-Up Page
 
 
