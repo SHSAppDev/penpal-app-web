@@ -8,6 +8,8 @@ World Without Walls will be a service that upgrades the old pen pal concept with
 
 ## Running the Site via Firebase ![FireBase](https://maxcdn.icons8.com/Color/PNG/24/Astrology/fire_element-24.png)
 
+###Pre-Requisites
+
 *Install NodeJS*
 
 ```shell
@@ -19,7 +21,7 @@ $ curl "https://nodejs.org/dist/latest/node-${VERSION:-$(wget -qO- https://nodej
 $ npm install -g firebase-tools
 ```
 
-###Running the  Server###
+###Running the  Server
 
 ```shell
 $ firebase serve
@@ -39,13 +41,13 @@ Visit 'localhost' link provided (usually http://localhost:5000).
 - [ ] Login / Sign-Up Page
 
 
-##Site Built With:##
-- [Firebase Web Chat Starter Code](https://codelabs.developers.google.com/codelabs/firebase-web/#0)d
+##Site Built With:
+- [Firebase Web Chat Starter Code](https://codelabs.developers.google.com/codelabs/firebase-web/#0)
 - [MaterializeCSS Design Framework](http://materializecss.com)
 - Love ![heart](https://maxcdn.icons8.com/office/PNG/16/Gaming/hearts-16.png "Love")
 
 
-##Authors## ![Authors](https://maxcdn.icons8.com/Color/PNG/24/Business/conference_call-24.png)
+##Authors ![Authors](https://maxcdn.icons8.com/Color/PNG/24/Business/conference_call-24.png)
 - Ryan Anderson
 - Kyle Seid-Phan
 - Kha Nguyen
