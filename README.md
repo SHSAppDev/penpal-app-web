@@ -1,4 +1,4 @@
-# World Without Walls ![World Without Walls](https://maxcdn.icons8.com/Color/PNG/96/Messaging/chat-96.png "World Without Walls")
+# World Without Walls ![World Without Walls](https://maxcdn.icons8.com/Color/PNG/48/Messaging/chat-48.png "World Without Walls")
 
 ## What is "World Without Walls?"
 > If you talk to a man in a language he understands, that goes to his head. If you talk to him in his own language, that goes to his heart.
