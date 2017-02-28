@@ -34,7 +34,7 @@ Visit 'localhost' link provided (usually http://localhost:5000).
 ##Site Built With:##
 - [Firebase Web Chat Starter Code](https://codelabs.developers.google.com/codelabs/firebase-web/#0)
 - [MaterializeCSS Design Framework](http://materializecss.com)
-- Love ![heart](https://maxcdn.icons8.com/office/PNG/30/Gaming/hearts-30.png "Love")
+- Love ![heart](https://maxcdn.icons8.com/office/PNG/16/Gaming/hearts-16.png "Love")
 
 
 ##Authors##
