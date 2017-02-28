@@ -6,10 +6,8 @@
 
 World Without Walls will be a service that upgrades the old pen pal concept with instant messaging that young people are used to today in the form of an online chat app. Especially in the case of foreign language education, this is fantastic because it allows students to improve their language skills while having fun by conversing with native speakers their age. Certain tools will also be implemented that make this type of communication easier such as the ability to translate just an individual word or phrase, grammar checks, and speech to text.
 
+### Running the Site via Firebase ![FireBase]({
 
-f
-
-f
 *Install NodeJS*
 
 ```shell
@@ -29,7 +27,7 @@ $ firebase f
 
 Visit 'localhost' link provided (usually http://localhost:5000).
 
-### To-Do !(https://maxcdn.icons8.com/Color/PNG/24/Business/todo_list-24.png)
+### To-Do ![To-Do](https://maxcdn.icons8.com/Color/PNG/24/Business/todo_list-24.png)
 
 - [ ] UI for viewing conversations 
 - [ ] Direct Messaging
@@ -41,13 +39,13 @@ Visit 'localhost' link provided (usually http://localhost:5000).
 - [ ] Login / Sign-Up Page
 
 
-##Site Built With:##f
+##Site Built With:##
 - [Firebase Web Chat Starter Code](https://codelabs.developers.google.com/codelabs/firebase-web/#0)d
 - [MaterializeCSS Design Framework](http://materializecss.com)
 - Love ![heart](https://maxcdn.icons8.com/office/PNG/16/Gaming/hearts-16.png "Love")
 
 
-##Authors##
+##Authors## ![Authors](https://maxcdn.icons8.com/Color/PNG/24/Business/conference_call-24.png)
 - Ryan Anderson
 - Kyle Seid-Phan
 -  Kha Nguyen
