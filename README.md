@@ -1,5 +1,6 @@
 # World Without Walls ![World Without Walls](https://maxcdn.icons8.com/Color/PNG/96/Messaging/chat-96.png "World Without Walls")
 
+<<<<<<< HEAD
 
 ## What is "World Without Walls?"
 > If you talk to a man in a language he understands, that goes to his head. If you talk to him in his own language, that goes to his heart.
@@ -42,3 +43,7 @@ Visit 'localhost' link provided (usually http://localhost:5000).
 - Ryan Anderson
 - Kyle Seid-Phan
 -  Kha Nguyen
+=======
+World Without Walls will be a service that upgrades the old pen pal concept with instant messaging that young people are used to today in the form of an online chat app. Especially in the case of foreign language education, this is fantastic because it allows students to improve their language skills while having fun by conversing with native speakers their age. Certain tools will also be implemented that make this type of communication easier such as the ability to translate just an individual word or phrase, grammar checks, and speech to text.
+
+>>>>>>> master
