@@ -68,41 +68,42 @@
 
     <!-- Content -->
     <div class="row">
-        <div id="sidebar" class="col s4 teal">
-            <p class="white-text">Conversations
-                <p>
-                    <div id="conversation-list" class="collection">
-                        <!--Here I hardcoded some conversation links (link to conversation.html and passing in a user ID, which are also hardcoded)-->
-                        <a href="index.html?targetUID=miTtPwEyWBcfuLcauRuMhzyiqjQ2" class="collection-item" onclick="function()"><span class="new badge">4</span>Ryan Anderson</a>
-                        <a href="index.html?targetUID=lsPwIYYJAiVPGInFluSjwCVl9IF3" class="collection-item"><span class="new badge">2</span>Kha Nguyen</a>
-                        <a href="index.html?targetUID=hJeeOKl9hxbDtk899kV8qa1phB22" class="collection-item">SHS App Dev</a>
-                        <a href="add-conversation.html" class="collection-item">New Conversation</a>
-                    </div>
-                    <div id="chat" class="col s8 teal white-text">
-                        Chat
-                        <div id="messages">
-                            <span id="message-filler"></span>
-                        </div>
-                        <form id="message-form" action="#">
-                        </form>
-                    </div>
+        <div id="sidebar" class="col s4 teal white-text">
+          Conversations
+            <div id="conversation-list" class="collection">
+                <!--Here I hardcoded some conversation links (link to conversation.html and passing in a user ID, which are also hardcoded)-->
+                <a href="index.html?targetUID=miTtPwEyWBcfuLcauRuMhzyiqjQ2" class="collection-item" onclick="function()"><span class="new badge">4</span>Ryan Anderson</a>
+                <a href="index.html?targetUID=lsPwIYYJAiVPGInFluSjwCVl9IF3" class="collection-item"><span class="new badge">2</span>Kha Nguyen</a>
+                <a href="index.html?targetUID=hJeeOKl9hxbDtk899kV8qa1phB22" class="collection-item">SHS App Dev</a>
+                <a href="add-conversation.html" class="collection-item">New Conversation</a>
+            </div>
+          </div>
+            <div id="chat" class="col s8 teal white-text">
+                Chat
+                <div id="messages">
+                    <span id="message-filler"></span>
+                </div>
+                <form id="message-form" action="#">
+                </form>
+            </div>
         </div>
+    </div>
 
-        <!-- Firebase -->
-        <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
-        <script>
-            // Initialize Firebase
-            var config = {
-                apiKey: "AIzaSyCx-2_5IcfXswoDZhjle1rPS3m-ryi3rpM",
-                authDomain: "penpalapp-6020c.firebaseapp.com",
-                databaseURL: "https://penpalapp-6020c.firebaseio.com",
-                storageBucket: "penpalapp-6020c.appspot.com",
-                messagingSenderId: "322094641122"
-            };
-            firebase.initializeApp(config);
-        </script>
-        <script src="scripts/dashboard.js"></script>
-        <script src="scripts/conversation.js"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyCx-2_5IcfXswoDZhjle1rPS3m-ryi3rpM",
+            authDomain: "penpalapp-6020c.firebaseapp.com",
+            databaseURL: "https://penpalapp-6020c.firebaseio.com",
+            storageBucket: "penpalapp-6020c.appspot.com",
+            messagingSenderId: "322094641122"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script src="scripts/dashboard.js"></script>
+    <script src="scripts/conversation.js"></script>
 
 </body>
 
