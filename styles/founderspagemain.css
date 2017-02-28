@@ -1,0 +1,27 @@
+h1{
+	color:blue;
+	font-size:40px;
+	font-weight: 900px;
+	font-family:Lobster    ;
+}
+
+h2{
+	color:indigo;
+	font-size:40px ;
+	font-weight:900px ;
+	font-family:Lobster ;
+}
+
+html {
+    font-family:sans-serif;
+  }
+
+   body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
