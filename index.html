@@ -2,6 +2,7 @@
 
 <html lang="en">
 <!-- Materialize CSS Head -->
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -40,7 +41,8 @@
 </head>
 
 <body>
-  <!-- Navbar  -->
+
+    <!-- Navbar  -->
     <ul id="user-dropdown" class="dropdown-content">
         <li>
             <a id="sign-out">
@@ -65,28 +67,25 @@
     </nav>
 
     <!-- Content -->
-
     <div class="row">
-        <div id="sidebar" class="col s4 teal">
-            <p class="white-text">Conversations<p>
+        <div id="sidebar" class="col s4 teal white-text">
+          Conversations
             <div id="conversation-list" class="collection">
-            <!--Here I hardcoded some conversation links (link to conversation.html and passing in a user ID, which are also hardcoded)-->
-            <!-- <a href="conversation.html?targetUID=miTtPwEyWBcfuLcauRuMhzyiqjQ2" class="collection-item"><span class="new badge">4</span>Ryan Anderson</a>
-            <a href="conversation.html?targetUID=lsPwIYYJAiVPGInFluSjwCVl9IF3" class="collection-item"><span class="new badge">2</span>Kha Nguyen</a>
-            <a href="conversation.html?targetUID=hJeeOKl9hxbDtk899kV8qa1phB22" class="collection-item">SHS App Dev</a> -->
-            <a href="add-conversation.html" class="collection-item">New Conversation</a>
-
+                <!--Here I hardcoded some conversation links (link to conversation.html and passing in a user ID, which are also hardcoded)-->
+                <a href="index.html?targetUID=miTtPwEyWBcfuLcauRuMhzyiqjQ2" class="collection-item" onclick="function()"><span class="new badge">4</span>Ryan Anderson</a>
+                <a href="index.html?targetUID=lsPwIYYJAiVPGInFluSjwCVl9IF3" class="collection-item"><span class="new badge">2</span>Kha Nguyen</a>
+                <a href="index.html?targetUID=hJeeOKl9hxbDtk899kV8qa1phB22" class="collection-item">SHS App Dev</a>
+                <a href="add-conversation.html" class="collection-item">New Conversation</a>
+            </div>
           </div>
-            <!-- <p>Click <a href="conversation.html?targetUID=miTtPwEyWBcfuLcauRuMhzyiqjQ2">here</a> to talk to Ryan! (rkanderson15@gmail.com)<p>
-
-            <p>Click <a href="conversation.html?targetUID=lsPwIYYJAiVPGInFluSjwCVl9IF3">here</a> to talk to Kha! (kha.vng@gmail.com)<p>
-
-            <p>Click <a href="conversation.html?targetUID=hJeeOKl9hxbDtk899kV8qa1phB22">here</a> to talk to SHS App Dev! (shsappdev17@gmail.com)<p>
-            <p>Click <a href="add-conversation.html">here</a> to add a new conversation.</p> -->
-
-        </div>
-        <div id="chat" class="col s8 teal lighten-3">
-            Chat
+            <div id="chat" class="col s8 teal white-text">
+                Chat
+                <div id="messages">
+                    <span id="message-filler"></span>
+                </div>
+                <form id="message-form" action="#">
+                </form>
+            </div>
         </div>
     </div>
 
@@ -104,5 +103,8 @@
         firebase.initializeApp(config);
     </script>
     <script src="scripts/dashboard.js"></script>
+    <script src="scripts/conversation.js"></script>
+
 </body>
+
 </html>
