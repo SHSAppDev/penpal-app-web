@@ -40,3 +40,17 @@
 [info] Public Directory: ./
 [info] 
 [info] Server listening at: http://localhost:5000
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] CLI Version:  3.4.0
+[debug] Platform:     darwin
+[debug] Node Version: v6.10.0
+[debug] Time:         Wed Mar 01 2017 12:10:45 GMT-0800 (PST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/khanguyen/Desktop/penpal-app-web
+[info] Public Directory: ./
+[info] 
+[info] Server listening at: http://localhost:5000

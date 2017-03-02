@@ -55,6 +55,9 @@
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li>
+                    <a href="aboutpage.html">About</a>
+                </li>
+                <li>
                     <a class="dropdown-button" href="#!" data-activates="user-dropdown" id="user-pic"></a>
                 </li>
             </ul>
@@ -69,7 +72,7 @@
     <!-- Content -->
     <div class="row">
         <div id="sidebar" class="col s4 teal white-text">
-          Conversations
+            Conversations
             <div id="conversation-list" class="collection">
                 <!--Here I hardcoded some conversation links (link to conversation.html and passing in a user ID, which are also hardcoded)-->
                 <a href="index.html?targetUID=miTtPwEyWBcfuLcauRuMhzyiqjQ2" class="collection-item" onclick="function()"><span class="new badge">4</span>Ryan Anderson</a>
@@ -77,16 +80,16 @@
                 <a href="index.html?targetUID=hJeeOKl9hxbDtk899kV8qa1phB22" class="collection-item">SHS App Dev</a>
                 <a href="add-conversation.html" class="collection-item">New Conversation</a>
             </div>
-          </div>
-            <div id="chat" class="col s8 teal white-text">
-                Chat
-                <div id="messages">
-                    <span id="message-filler"></span>
-                </div>
-                <form id="message-form" action="#">
-                </form>
-            </div>
         </div>
+        <div id="chat" class="col s8 teal white-text">
+            Chat
+            <div id="messages">
+                <span id="message-filler"></span>
+            </div>
+            <form id="message-form" action="#">
+            </form>
+        </div>
+    </div>
     </div>
 
     <!-- Firebase -->
