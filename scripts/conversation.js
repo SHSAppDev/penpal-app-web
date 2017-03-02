@@ -242,7 +242,7 @@ W3Chat.prototype.displayMessage = function(key, name, text, picUrl, imageUri) {
   // Show the card fading-in.
   setTimeout(function() {div.classList.add('visible')}, 1);
   this.messageList.scrollTop = this.messageList.scrollHeight;
-  this.messageInput.focus();
+  // this.messageInput.focus(); //TODO undo
 };
 
 // Enables or disables the submit button depending on the values of the input
