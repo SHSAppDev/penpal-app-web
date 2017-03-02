@@ -1,26 +1,69 @@
-h1{
-	color:blue;
-	font-size:40px;
-	font-weight: 900px;
-	font-family:Lobster    ;
+h1 {
+    color: blue;
+    font-size: 40px;
+    font-weight: 900px;
+    font-family: Lobster;
 }
 
-h2{
-	color:indigo;
-	font-size:40px ;
-	font-weight:900px ;
-	font-family:Lobster ;
+h2 {
+    color: indigo;
+    font-size: 40px;
+    font-weight: 900px;
+    font-family: Lobster;
 }
+
 html {
-    font-family:sans-serif;
-  }
+    font-family: sans-serif;
+}
 
-   body {
+body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-  }
+}
 
-  main {
+main {
     flex: 1 0 auto;
-  }
+}
+
+.chat {
+    float: left;
+    margin: 5px;
+    padding: 15px;
+    max-width: 100%;
+    height: 100%;
+}
+
+body {
+    background-color: white;
+}
+
+ol {
+    background: teal;
+    padding: 20px;
+}
+
+ol li {
+    background-color: lightblue;
+}
+
+ol {
+    background: #ffb84d;
+    padding: 20px;
+}
+
+ul {
+    background: #3399ff;
+    padding: 20px;
+}
+
+ol li {
+    background: #e6e6e6;
+    padding: 5px;
+    margin-left: 35px;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
