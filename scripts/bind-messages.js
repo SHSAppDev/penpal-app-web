@@ -1,12 +1,11 @@
 
 'use strict';
 
-// Initializes W3Chat.
-function W3Chat() {
-  console.log("loading W3Chat");
-  this.checkSetup();
+// Initializes a list of messages and listens for more.
+// REQUIRES that a few html elements exist in the document with the following IDs
+function LoadMessages(targetUID) {
 
-  // Shortcuts to DOM Elements.
+  // These are the IDs:
   this.messageList = document.getElementById('messages');
   this.messageForm = document.getElementById('message-form');
   this.messageInput = document.getElementById('message');
@@ -14,38 +13,51 @@ function W3Chat() {
   this.submitImageButton = document.getElementById('submitImage');
   this.imageForm = document.getElementById('image-form');
   this.mediaCapture = document.getElementById('mediaCapture');
+  this.targetUID = targetUID;
 
-  // Saves message on form submit.
-  this.messageForm.addEventListener('submit', this.saveMessage.bind(this));
+  if(this.targetUID===null) {
+    console.log('tid null');
+    document.getElementById("nothing-to-display").removeAttribute('hidden');
+    this.messageList.setAttribute('hidden', true);
+    this.messageForm.setAttribute('hidden', true);
+    this.messageInput.setAttribute('hidden', true);
+    this.submitButton.setAttribute('hidden', true);
 
+    return;
+  }
 
-  // // Toggle for the button.
-  // var buttonTogglingHandler = this.toggleButton.bind(this);
-  // this.messageInput.addEventListener('keyup', buttonTogglingHandler);
-  // this.messageInput.addEventListener('change', buttonTogglingHandler);
-  //
-  // // Events for image upload.
+  // Toggle for the button.
+  var buttonTogglingHandler = this.toggleButton.bind(this);
+  this.messageInput.addEventListener('keyup', buttonTogglingHandler);
+  this.messageInput.addEventListener('change', buttonTogglingHandler);
+
+  // Events for image upload.
   // this.submitImageButton.addEventListener('click', function() {
   //   this.mediaCapture.click();
   // }.bind(this));
   // this.mediaCapture.addEventListener('change', this.saveImageMessage.bind(this));
 
+
+  this.messageForm.addEventListener('submit', this.saveMessage.bind(this));
   this.initFirebase();
+
 }
 
-// Sets up shortcuts to Firebase features and initiate firebase auth.
-W3Chat.prototype.initFirebase = function() {
-  // Initialize Firebase.
-  // Shortcuts to Firebase SDK features.
+LoadMessages.prototype.initFirebase = function() {
   this.auth = firebase.auth();
   this.database = firebase.database();
   this.storage = firebase.storage();
-  // Initiates Firebase auth and listen to auth state changes.
   this.auth.onAuthStateChanged(this.onAuthStateChanged.bind(this));
 };
 
+LoadMessages.prototype.onAuthStateChanged = function(user) {
+  if (user) { // User is signed in!
+    this.loadMessages();
+  }
+};
+
 // Loads chat messages history and listens for upcoming ones.
-W3Chat.prototype.loadMessages = function() {
+LoadMessages.prototype.loadMessages = function() {
   // Load and listens for new messages.
   // The conversation reference is /conversations/{both UIDs stuck together}
   // The order that they're stuck together is based on which one is greater in ASCII land.
@@ -66,7 +78,7 @@ W3Chat.prototype.loadMessages = function() {
 };
 
 // Saves a new message on the Firebase DB.
-W3Chat.prototype.saveMessage = function(e) {
+LoadMessages.prototype.saveMessage = function(e) {
   e.preventDefault();
   // Check that the user entered a message and is signed in.
   if (this.messageInput.value && this.checkSignedInWithMessage()) {
@@ -80,7 +92,7 @@ W3Chat.prototype.saveMessage = function(e) {
       photoUrl: currentUser.photoURL || '/images/profile_placeholder.png'
     }).then(function() {
       // Clear message text field and SEND button state.
-      W3Chat.resetMaterialTextfield(this.messageInput);
+      LoadMessages.resetMaterialTextfield(this.messageInput);
       this.toggleButton();
     }.bind(this)).catch(function(error) {
       console.error('Error writing new message to Firebase Database', error);
@@ -90,10 +102,10 @@ W3Chat.prototype.saveMessage = function(e) {
 };
 
 // Sets the URL of the given img element with the URL of the image stored in Firebase Storage.
-W3Chat.prototype.setImageUrl = function(imageUri, imgElement) {
+LoadMessages.prototype.setImageUrl = function(imageUri, imgElement) {
   // If the image is a Firebase Storage URI we fetch the URL.
   if (imageUri.startsWith('gs://')) {
-    imgElement.src = W3Chat.LOADING_IMAGE_URL; // Display a loading image first.
+    imgElement.src = LoadMessages.LOADING_IMAGE_URL; // Display a loading image first.
     this.storage.refFromURL(imageUri).getMetadata().then(function(metadata) {
       imgElement.src = metadata.downloadURLs[0];
     });
@@ -104,7 +116,7 @@ W3Chat.prototype.setImageUrl = function(imageUri, imgElement) {
 
 // Saves a new message containing an image URI in Firebase.
 // This first saves the image in Firebase storage.
-W3Chat.prototype.saveImageMessage = function(event) {
+LoadMessages.prototype.saveImageMessage = function(event) {
   var file = event.target.files[0];
 
   // Clear the selection in the file picker input.
@@ -127,7 +139,7 @@ W3Chat.prototype.saveImageMessage = function(event) {
     var currentUser = this.auth.currentUser;
     this.messagesRef.push({
       name: currentUser.displayName,
-      imageUrl: W3Chat.LOADING_IMAGE_URL,
+      imageUrl: LoadMessages.LOADING_IMAGE_URL,
       photoUrl: currentUser.photoURL || '/images/profile_placeholder.png'
     }).then(function(data) {
 
@@ -146,40 +158,9 @@ W3Chat.prototype.saveImageMessage = function(event) {
   }
 };
 
-// W3Chat.prototype.signIn = function() {
-//   // Sign in Firebase using popup auth and Google as the identity provider.
-//   var provider = new firebase.auth.GoogleAuthProvider();
-//   this.auth.signInWithPopup(provider);
-// };
-//
-// W3Chat.prototype.signOut = function() {
-//   // Sign out of Firebase.
-//   this.auth.signOut();
-// };
-
-// Triggers when the auth state change for instance when the user signs-in or signs-out.
-W3Chat.prototype.onAuthStateChanged = function(user) {
-  if (user) { // User is signed in!
-    // Get profile pic and user's name from the Firebase user object.
-    // We load currently existing chant messages.
-    this.loadMessages();
-  } else { // User is signed out!
-    // Hide user's profile and sign-out button.
-    // this.userName.setAttribute('hidden', 'true');
-    // this.userPic.setAttribute('hidden', 'true');
-    // this.signOutButton.setAttribute('hidden', 'true');
-
-    // // Show sign-in button.
-    // this.signInButton.removeAttribute('hidden');
-
-    // I don't want to do that stuff ^ since there's no point in viewing messages
-    // if you're signed out. So I take the user straight back to login.
-    window.location.href = 'login.html';
-  }
-};
 
 // Returns true if user is signed-in. Otherwise false and displays a message.
-W3Chat.prototype.checkSignedInWithMessage = function() {
+LoadMessages.prototype.checkSignedInWithMessage = function() {
   // Return true if the user is signed in Firebase
   if (this.auth.currentUser) {
     return true;
@@ -194,13 +175,13 @@ W3Chat.prototype.checkSignedInWithMessage = function() {
 };
 
 // Resets the given MaterialTextField.
-W3Chat.resetMaterialTextfield = function(element) {
+LoadMessages.resetMaterialTextfield = function(element) {
   element.value = '';
-  element.parentNode.MaterialTextfield.boundUpdateClassesHandler();
+  // element.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 };
 
 // Template for messages.
-W3Chat.MESSAGE_TEMPLATE =
+LoadMessages.MESSAGE_TEMPLATE =
     '<div class="message-container">' +
       '<div class="spacing"><div class="pic"></div></div>' +
       '<div class="message"></div>' +
@@ -208,15 +189,15 @@ W3Chat.MESSAGE_TEMPLATE =
     '</div>';
 
 // A loading image URL.
-W3Chat.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
+LoadMessages.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
 
 // Displays a Message in the UI.
-W3Chat.prototype.displayMessage = function(key, name, text, picUrl, imageUri) {
+LoadMessages.prototype.displayMessage = function(key, name, text, picUrl, imageUri) {
   var div = document.getElementById(key);
   // If an element for that message does not exists yet we create it.
   if (!div) {
     var container = document.createElement('div');
-    container.innerHTML = W3Chat.MESSAGE_TEMPLATE;
+    container.innerHTML = LoadMessages.MESSAGE_TEMPLATE;
     div = container.firstChild;
     div.setAttribute('id', key);
     this.messageList.appendChild(div);
@@ -242,12 +223,12 @@ W3Chat.prototype.displayMessage = function(key, name, text, picUrl, imageUri) {
   // Show the card fading-in.
   setTimeout(function() {div.classList.add('visible')}, 1);
   this.messageList.scrollTop = this.messageList.scrollHeight;
-  // this.messageInput.focus(); //TODO undo
+  this.messageInput.focus();
 };
 
 // Enables or disables the submit button depending on the values of the input
 // fields.
-W3Chat.prototype.toggleButton = function() {
+LoadMessages.prototype.toggleButton = function() {
   if (this.messageInput.value) {
     this.submitButton.removeAttribute('disabled');
   } else {
@@ -255,26 +236,8 @@ W3Chat.prototype.toggleButton = function() {
   }
 };
 
-// Checks that the Firebase SDK has been correctly setup and configured.
-W3Chat.prototype.checkSetup = function() {
-  if (!window.firebase || !(firebase.app instanceof Function) || !window.config) {
-    window.alert('You have not configured and imported the Firebase SDK.');
-  } else if (config.storageBucket === '') {
-    window.alert('Your Firebase Storage bucket has not been enabled. Sorry about that. This is ' +
-        'actually a Firebase bug that occurs rarely. ' +
-        'Please go and re-generate the Firebase initialisation snippet (step 4 of the codelab) ' +
-        'and make sure the storageBucket attribute is not empty. ' +
-        'You may also need to visit the Storage tab and paste the name of your bucket which is ' +
-        'displayed there.');
-  } else if (!getParameterByName('targetUID')) {
-    window.alert("You didn't give a parameter for the target User ID in the url."+
-      "Use the format {URL}?targetUID={target UserID}");
-  }
-};
 
-// Stolen from stack overflow
-// http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
-function getParameterByName(name, url) {
+var getURLParameterByName = function(name, url) {
     if (!url) {
       url = window.location.href;
     }
@@ -284,12 +247,11 @@ function getParameterByName(name, url) {
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-
-window.onload = function() {
-  window.friendlyChat = new W3Chat();
 };
+var targetUID = getURLParameterByName('targetUID');
+// var targetUID = document.currentScript.getAttribute('targetUID');
+// if(targetUID===null) {
+//   window.alert("Supply a targetUID");
+// }
 
-function loadChat() {
-  window.friendlyChat = new W3Chat();
-}
+var x = new LoadMessages(targetUID);

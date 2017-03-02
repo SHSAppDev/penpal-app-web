@@ -3,7 +3,7 @@
 [debug] CLI Version:  3.4.0
 [debug] Platform:     darwin
 [debug] Node Version: v6.9.4
-[debug] Time:         Sat Feb 25 2017 14:07:50 GMT-0800 (PST)
+[debug] Time:         Wed Mar 01 2017 21:39:57 GMT-0800 (PST)
 [debug] ----------------------------------------------------------------------
 [debug] 
 [info] Starting Firebase development server...
@@ -12,6 +12,7 @@
 [info] Public Directory: ./
 [info] 
 [info] Server listening at: http://localhost:5000
+<<<<<<< HEAD
 [debug] ----------------------------------------------------------------------
 [debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
 [debug] CLI Version:  3.4.0
@@ -54,3 +55,5 @@
 [info] Public Directory: ./
 [info] 
 [info] Server listening at: http://localhost:5000
+=======
+>>>>>>> master
