@@ -52,7 +52,7 @@
     <nav>
         <div class="nav-wrapper teal" id="nav-bar">
             <a href="#" class="brand-logo"><i class="large material-icons">textsms</i>World Without Walls</a>
-            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse" id="button-collapse"><i class="material-icons">menu</i></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li>
                     <a class="dropdown-button" href="#!" data-activates="user-dropdown" id="user-pic"></a>
@@ -72,9 +72,9 @@
           Conversations
             <div id="conversation-list" class="collection">
                 <!--Here I hardcoded some conversation links (link to conversation.html and passing in a user ID, which are also hardcoded)-->
-                <a href="index.html?targetUID=miTtPwEyWBcfuLcauRuMhzyiqjQ2" class="collection-item" onclick="function()"><span class="new badge">4</span>Ryan Anderson</a>
+                <!-- <a href="index.html?targetUID=miTtPwEyWBcfuLcauRuMhzyiqjQ2" class="collection-item" onclick="function()"><span class="new badge">4</span>Ryan Anderson</a>
                 <a href="index.html?targetUID=lsPwIYYJAiVPGInFluSjwCVl9IF3" class="collection-item"><span class="new badge">2</span>Kha Nguyen</a>
-                <a href="index.html?targetUID=hJeeOKl9hxbDtk899kV8qa1phB22" class="collection-item">SHS App Dev</a>
+                <a href="index.html?targetUID=hJeeOKl9hxbDtk899kV8qa1phB22" class="collection-item">SHS App Dev</a> -->
                 <a href="add-conversation.html" class="collection-item">New Conversation</a>
             </div>
           </div>
@@ -84,7 +84,15 @@
                     <span id="message-filler"></span>
                 </div>
                 <form id="message-form" action="#">
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                      <input class="mdl-textfield__input" type="text" id="message">
+                      <label class="mdl-textfield__label" for="message">Message...</label>
+                  </div>
+                  <button id="submit" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                    Send
+                  </button>
                 </form>
+                <p id="nothing-to-display" hidden>No conversation to display. Yet...</p>
             </div>
         </div>
     </div>
@@ -101,9 +109,16 @@
             messagingSenderId: "322094641122"
         };
         firebase.initializeApp(config);
+
     </script>
-    <script src="scripts/dashboard.js"></script>
-    <script src="scripts/conversation.js"></script>
+    <!-- The main page script -->
+    <script src="scripts/pages/dashboard.js"></script>
+
+    <!-- Modules that add specific functionality. -->
+    <script src="scripts/bind-signout-button.js" buttonID="sign-out"></script>
+    <script src="scripts/bind-signout-button.js" buttonID="sign-out-mobile"></script>
+    <script src="scripts/load-conversation-list.js" conversationListID="conversation-list"></script>
+    <script src="scripts/bind-messages.js"></script>
 
 </body>
 
