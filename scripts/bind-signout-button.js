@@ -5,8 +5,10 @@
 // button with id 'sign-out'
 
 function BindSignOut(buttonID) {
-  this.checkSetup();
   this.signOutButton = document.getElementById(buttonID);
+  if(!this.signOutButton) {
+    window.alert("bind-signout-button.js: Provide an attribute called buttonID in the script tag.");
+  }
   this.signOutButton.addEventListener('click', this.signOut.bind(this));
   firebase.auth().onAuthStateChanged(this.onAuthStateChanged.bind(this));
 }
@@ -19,12 +21,6 @@ BindSignOut.prototype.signOut = function() {
 BindSignOut.prototype.onAuthStateChanged = function(user) {
   if (!user) { // User is signed out!
     window.location.href = 'login.html';
-  }
-};
-
-BindSignOut.prototype.checkSetup = function() {
-  if(!this.signOutButton) {
-    window.alert("bind-signout-button.js: Provide an attribute called buttonID in the script tag.");
   }
 };
 
