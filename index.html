@@ -84,6 +84,13 @@
                     <span id="message-filler"></span>
                 </div>
                 <form id="message-form" action="#">
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                      <input class="mdl-textfield__input" type="text" id="message">
+                      <label class="mdl-textfield__label" for="message">Message...</label>
+                  </div>
+                  <button id="submit" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                    Send
+                  </button>
                 </form>
             </div>
         </div>
@@ -101,15 +108,16 @@
             messagingSenderId: "322094641122"
         };
         firebase.initializeApp(config);
+
     </script>
-    // The main page script
+    <!-- The main page script -->
     <script src="scripts/pages/dashboard.js"></script>
 
-    // Modules that add specific functionality.
+    <!-- Modules that add specific functionality. -->
     <script src="scripts/bind-signout-button.js" buttonID="sign-out"></script>
     <script src="scripts/bind-signout-button.js" buttonID="sign-out-mobile"></script>
     <script src="scripts/load-conversation-list.js" conversationListID="conversation-list"></script>
-    <!-- <script src="scripts/conversation.js"></script> -->
+    <script src="scripts/bind-messages.js"></script>
 
 </body>
 

@@ -65,7 +65,7 @@ LoadConversationList.prototype.displayConversation = function(recipientUID, unre
       // console.log(this.conversationList); //HELP
       this.conversationList.appendChild(div);
     }
-    div.href = 'conversation.html?targetUID='+recipientUID;
+    div.href = 'index.html?targetUID='+recipientUID;
 
     // Display name (displayName)
     div.querySelector('.name').textContent = snapshot.val().displayName;
@@ -74,7 +74,6 @@ LoadConversationList.prototype.displayConversation = function(recipientUID, unre
     if(unreadMessages === null || unreadMessages === undefined || unreadMessages <= 0 || unreadMessages === '') {
       div.querySelector('.new').setAttribute('hidden', true);
     } else {
-      console.log(unreadMessages);
       div.querySelector('.new').textContent = unreadMessages;
     }
 
