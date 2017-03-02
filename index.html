@@ -80,35 +80,27 @@
                 <a href="index.html?targetUID=hJeeOKl9hxbDtk899kV8qa1phB22" class="collection-item">SHS App Dev</a> -->
                 <a href="add-conversation.html" class="collection-item">New Conversation</a>
             </div>
-<<<<<<< HEAD
+
         </div>
         <div id="chat" class="col s8 teal white-text">
             Chat
             <div id="messages">
                 <span id="message-filler"></span>
-=======
-          </div>
-            <div id="chat" class="col s8 teal white-text">
-                Chat
-                <div id="messages">
-                    <span id="message-filler"></span>
-                </div>
-                <form id="message-form" action="#">
-                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                      <input class="mdl-textfield__input" type="text" id="message">
-                      <label class="mdl-textfield__label" for="message">Message...</label>
-                  </div>
-                  <button id="submit" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-                    Send
-                  </button>
-                </form>
-                <p id="nothing-to-display" hidden>No conversation to display. Yet...</p>
->>>>>>> master
             </div>
             <form id="message-form" action="#">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="message">
+                    <label class="mdl-textfield__label" for="message">Message...</label>
+                </div>
+                <button id="submit" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                    Send
+                  </button>
             </form>
+            <p id="nothing-to-display" hidden>No conversation to display. Yet...</p>
+            <<<<<<< HEAD>>>>>>> master ======= >>>>>>> origin/Kha-Branch
         </div>
-    </div>
+        <form id="message-form" action="#">
+        </form>
     </div>
 
     <!-- Firebase -->
@@ -123,7 +115,6 @@
             messagingSenderId: "322094641122"
         };
         firebase.initializeApp(config);
-
     </script>
     <!-- The main page script -->
     <script src="scripts/pages/dashboard.js"></script>
