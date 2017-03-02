@@ -15,6 +15,17 @@ function LoadMessages(targetUID) {
   this.mediaCapture = document.getElementById('mediaCapture');
   this.targetUID = targetUID;
 
+  if(this.targetUID===null) {
+    console.log('tid null');
+    document.getElementById("nothing-to-display").removeAttribute('hidden');
+    this.messageList.setAttribute('hidden', true);
+    this.messageForm.setAttribute('hidden', true);
+    this.messageInput.setAttribute('hidden', true);
+    this.submitButton.setAttribute('hidden', true);
+
+    return;
+  }
+
   // Toggle for the button.
   var buttonTogglingHandler = this.toggleButton.bind(this);
   this.messageInput.addEventListener('keyup', buttonTogglingHandler);
@@ -239,8 +250,8 @@ var getURLParameterByName = function(name, url) {
 };
 var targetUID = getURLParameterByName('targetUID');
 // var targetUID = document.currentScript.getAttribute('targetUID');
-if(targetUID===null) {
-  window.alert("Supply a targetUID");
-}
+// if(targetUID===null) {
+//   window.alert("Supply a targetUID");
+// }
 
 var x = new LoadMessages(targetUID);
