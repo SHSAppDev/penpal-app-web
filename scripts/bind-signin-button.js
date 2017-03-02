@@ -1,11 +1,9 @@
 
 'use strict';
 
-// Reference this script when you want to make a sign-in button actually sign-in.
-// REQUIRES an html element with an ID of 'sign-in'
-
-function BindSignIn() {
-  this.signInButton = document.getElementById('sign-in');
+function BindSignIn(buttonID) {
+  this.signInButton = document.getElementById(buttonID);
+  this.checkSetup();
   this.signInButton.addEventListener('click', this.signIn.bind(this));
   firebase.auth().onAuthStateChanged(this.onAuthStateChanged.bind(this));
 }
@@ -23,4 +21,11 @@ BindSignIn.prototype.onAuthStateChanged = function(user) {
   }
 };
 
-new BindSignIn();
+BindSignIn.prototype.checkSetup = function() {
+  if(this.signInButton == null) {
+    window.alert("bind-signin-button.js: Provide an attribute called buttonID in the script tag.");
+  }
+};
+
+var buttonID = document.currentScript.getAttribute('buttonID');
+new BindSignIn(buttonID);

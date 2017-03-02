@@ -4,9 +4,10 @@
 // REQUIRES
 // button with id 'sign-out'
 
-function BindSignOut() {
-  this.signInButton = document.getElementById('sign-out');
-  this.signInButton.addEventListener('click', this.signOut.bind(this));
+function BindSignOut(buttonID) {
+  this.checkSetup();
+  this.signOutButton = document.getElementById(buttonID);
+  this.signOutButton.addEventListener('click', this.signOut.bind(this));
   firebase.auth().onAuthStateChanged(this.onAuthStateChanged.bind(this));
 }
 
@@ -21,4 +22,11 @@ BindSignOut.prototype.onAuthStateChanged = function(user) {
   }
 };
 
-new BindSignOut();
+BindSignOut.prototype.checkSetup = function() {
+  if(!this.signOutButton) {
+    window.alert("bind-signout-button.js: Provide an attribute called buttonID in the script tag.");
+  }
+};
+
+var buttonID = document.currentScript.getAttribute('buttonID');
+new BindSignOut(buttonID);
