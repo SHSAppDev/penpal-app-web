@@ -9,6 +9,9 @@
     <meta name="description" content="Improve your foreign language skills by chatting with native speakers your age.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>World Without Walls</title>
+    <link rel="stylesheet" type="text/css" href="styles/dashboard.css">
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
+
 
     <!-- Disable tap highlight on IE -->
     <meta name="msapplication-tap-highlight" content="no">
@@ -33,10 +36,11 @@
     <!-- Compiled and minified CSS -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
-    <link rel="stylesheet" href="styles/main.css" </head>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+
+
 
 </head>
 
@@ -45,8 +49,7 @@
     <!-- Navbar  -->
     <ul id="user-dropdown" class="dropdown-content">
         <li>
-            <a id="sign-out">
-  Sign-out</a>
+            <a id="sign-out">Sign-out</a>
         </li>
     </ul>
     <nav>
@@ -71,19 +74,19 @@
 
     <!-- Content -->
     <div class="row">
-        <div id="sidebar" class="col s4 teal white-text">
+        <div id="sidebar" class="col s12 m2 l2 teal white-text">
             Conversations
-            <div id="conversation-list" class="collection">
+            <div id="conversation-list" class="collection z-depth-3">
                 <!--Here I hardcoded some conversation links (link to conversation.html and passing in a user ID, which are also hardcoded)-->
                 <!-- <a href="index.html?targetUID=miTtPwEyWBcfuLcauRuMhzyiqjQ2" class="collection-item" onclick="function()"><span class="new badge">4</span>Ryan Anderson</a>
                 <a href="index.html?targetUID=lsPwIYYJAiVPGInFluSjwCVl9IF3" class="collection-item"><span class="new badge">2</span>Kha Nguyen</a>
                 <a href="index.html?targetUID=hJeeOKl9hxbDtk899kV8qa1phB22" class="collection-item">SHS App Dev</a> -->
                 <a href="add-conversation.html" class="collection-item">New Conversation</a>
             </div>
-
         </div>
-        <div id="chat" class="col s8 teal white-text">
-            Chat
+        <div id="chat-container" class="col s12 m10 l10">
+          Chat
+          <div id="chat" class="card z-depth-3">
             <div id="messages">
                 <span id="message-filler"></span>
             </div>
@@ -92,17 +95,13 @@
                     <input class="mdl-textfield__input" type="text" id="message">
                     <label class="mdl-textfield__label" for="message">Message...</label>
                 </div>
-                <button id="submit" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-                    Send
-                  </button>
             </form>
-            <p id="nothing-to-display" hidden>No conversation to display. Yet...</p>
-            <<<<<<< HEAD>>>>>>> master ======= >>>>>>> origin/Kha-Branch
-        </div>
-        <form id="message-form" action="#">
-        </form>
-    </div>
+            <button id="submit" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Send</button>
 
+
+            <p id="nothing-to-display" hidden>No conversation to display. Yet...</p>
+        </div>
+      </div>
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
     <script>
