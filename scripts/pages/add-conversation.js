@@ -10,8 +10,8 @@ function AddConversation() {
   this.signInButton = document.getElementById('sign-in');
   this.signOutButton = document.getElementById('sign-out');
   this.addButton = document.getElementById('add-conversation-button');
-  this.uidField = document.getElementById('uid-field');
- 
+  this.emailField = document.getElementById('email-field');
+
   this.signOutButton.addEventListener('click', this.signOut.bind(this));
   // this.signInButton.addEventListener('click', this.signIn.bind(this));
   this.addButton.addEventListener('click', this.addConversationToDatabase.bind(this));
@@ -33,48 +33,46 @@ AddConversation.prototype.initFirebase = function() {
 
 AddConversation.prototype.addConversationToDatabase = function() {
   if(!this.auth.currentUser) { return; }
-  var enteredInID = this.uidField.value;
+  // var enteredInID = this.emailField.value;
+  // var myConversationsRef = this.database.ref('user-data/'+this.auth.currentUser.uid+"/conversations");
+  // myConversationsRef.push({
+  //   recipientUID: enteredInID
+  // }).then(function(){
+  //   window.alert("Conversation Added Successfully!");
+  //   this.emailField.value = "";
+  // }.bind(this)).catch(function(error) {
+  //   window.alert("Uh Oh. Something went wrong. The conversation wasn't added. Sry.")
+  // });
+  var email = this.emailField.value;
+  const ref = this.database.ref('user-data');
+  ref.orderByChild('email')
+    .equalTo(email)
+    .once('value')
+    .then(function (snapshot) {
+      var value = snapshot.val();
+      if (value) {
+        // value is an object containing one or more of the users that matched your email query
+        // choose a user and do something with it
+        var uid = Object.keys(value)[0];
+        this.addUidToMyConversations(uid);
+      } else {
+        window.alert("No user was found with that email.");
+      }
+    }.bind(this));
+
+};
+
+AddConversation.prototype.addUidToMyConversations = function(uid) {
   var myConversationsRef = this.database.ref('user-data/'+this.auth.currentUser.uid+"/conversations");
   myConversationsRef.push({
-    recipientUID: enteredInID
+    recipientUID: uid
   }).then(function(){
-    window.alert("Conversation Added Successfully!");
-    this.uidField.value = "";
+    window.alert("Conversation Added Successfully!"+uid);
+    this.emailField.value = "";
   }.bind(this)).catch(function(error) {
     window.alert("Uh Oh. Something went wrong. The conversation wasn't added. Sry.")
   });
 };
-
-// W3Chat.prototype.saveMessage = function(e) {
-//   e.preventDefault();
-//   // Check that the user entered a message and is signed in.
-//   if (this.messageInput.value && this.checkSignedInWithMessage()) {
-
-//     // Push new message to Firebase.
-//     var currentUser = this.auth.currentUser;
-//     // Add a new message entry to the Firebase Database.
-//     this.messagesRef.push({
-//       name: currentUser.displayName,
-//       text: this.messageInput.value,
-//       photoUrl: currentUser.photoURL || '/images/profile_placeholder.png'
-//     }).then(function() {
-//       // Clear message text field and SEND button state.
-//       W3Chat.resetMaterialTextfield(this.messageInput);
-//       this.toggleButton();
-//     }.bind(this)).catch(function(error) {
-//       console.error('Error writing new message to Firebase Database', error);
-//     });
-
-//   }
-// };
-
-
-// // Signs-in 
-// AddConversation.prototype.signIn = function() {
-//   // Sign in Firebase using popup auth and Google as the identity provider.
-//   var provider = new firebase.auth.GoogleAuthProvider();
-//   this.auth.signInWithPopup(provider);
-// };
 
 // Signs-out
 AddConversation.prototype.signOut = function() {
