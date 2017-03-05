@@ -3,9 +3,6 @@
 
 // Initializes W3Login.
 function W3Login() {
-  // console.log("Inside login.js");
-  this.signInButton = document.getElementById('sign-in');
-  this.signInButton.addEventListener('click', this.signIn.bind(this));
   this.initFirebase();
 }
 
@@ -20,14 +17,6 @@ W3Login.prototype.initFirebase = function() {
   this.auth.onAuthStateChanged(this.onAuthStateChanged.bind(this));
 };
 
-
-
-// Signs-in
-W3Login.prototype.signIn = function() {
-  // Sign in Firebase using popup auth and Google as the identity provider.
-  var provider = new firebase.auth.GoogleAuthProvider();
-  this.auth.signInWithPopup(provider);
-};
 
 
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
