@@ -90,18 +90,20 @@
                 <div id="messages">
                     <span id="message-filler"></span>
                 </div>
-                <form id="message-form" action="#">
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="message">
-                        <label class="mdl-textfield__label" for="message">Message...</label>
-                    </div>
-                </form>
-                <button id="submit" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Send</button>
-                <div class="row">
-                    <div class="col s9 m3 l3">
-                        <div class="card-panel teal" hidden id="nothing-to-display">
-                            <!-- <span class="white-text center-align">No conversation loaded.</span> -->
-                            <p class="white-text center-align">No conversation loaded</p>
+                <div id="message-interaction">
+                    <form id="message-form" action="#">
+                        <div class="input-field inline">
+                            <input type="text" id="message">
+                            <label for="message">Message...</label>
+                        </div>
+                    </form>
+                    <button id="submit" disabled type="submit" class="btn waves-light waves-effect red lighten-1">Send</button>
+                    <div class="row">
+                        <div class="col s9 m3 l3">
+                            <div class="card-panel teal" hidden id="nothing-to-display">
+                                <!-- <span class="white-text center-align">No conversation loaded.</span> -->
+                                <p class="white-text center-align">No conversation loaded</p>
+                            </div>
                         </div>
                     </div>
                 </div>
