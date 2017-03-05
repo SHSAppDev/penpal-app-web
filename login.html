@@ -2,12 +2,15 @@
 
 <html lang="en">
 <!-- Materialize CSS Head -->
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Improve your foreign language skills by chatting with native speakers your age.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>World Without Walls</title>
+    <link rel="stylesheet" type="text/css" href="styles/login.css">
+
 
     <!-- Disable tap highlight on IE -->
     <meta name="msapplication-tap-highlight" content="no">
@@ -32,8 +35,6 @@
     <!-- Compiled and minified CSS -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
-    <link rel="stylesheet" href="styles/main.css" </head>
-    <link rel="stylesheet" href="styles/login.css" </head>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Compiled and minified JavaScript -->
@@ -42,26 +43,27 @@
 </head>
 
 <body>
-  		<div class="card" id="login-card">
-  			<div class="card-content">
-  				<span class="card-title center-align">Login</span>
-          <a id="sign-in" class="waves-effect waves-light btn"><i class="material-icons left">account_circle</i>Login with Google</a>
-  			</div>
-  	</div>
+    <div class="card" id="login-card">
+        <div class="card-content">
+            <span class="card-title center-align">Login</span>
+            <a id="sign-in" class="waves-effect waves-light btn"><i class="material-icons left">account_circle</i>Login with Google</a>
+        </div>
+    </div>
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyCx-2_5IcfXswoDZhjle1rPS3m-ryi3rpM",
-    authDomain: "penpalapp-6020c.firebaseapp.com",
-    databaseURL: "https://penpalapp-6020c.firebaseio.com",
-    storageBucket: "penpalapp-6020c.appspot.com",
-    messagingSenderId: "322094641122"
-  };
-  firebase.initializeApp(config);
-</script>
-<script src="scripts/bind-signin-button.js" buttonID='sign-in'></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyCx-2_5IcfXswoDZhjle1rPS3m-ryi3rpM",
+            authDomain: "penpalapp-6020c.firebaseapp.com",
+            databaseURL: "https://penpalapp-6020c.firebaseio.com",
+            storageBucket: "penpalapp-6020c.appspot.com",
+            messagingSenderId: "322094641122"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script src="scripts/bind-signin-button.js" buttonID='sign-in'></script>
 </body>
+
 </html>
