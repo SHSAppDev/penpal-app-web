@@ -4,7 +4,6 @@
 // Initializes W3Chat.
 function W3Chat() {
   console.log("loading W3Chat");
-  setInterval("updateScroll",1000);
 
   this.checkSetup();
 
@@ -33,6 +32,7 @@ function W3Chat() {
   // this.mediaCapture.addEventListener('change', this.saveImageMessage.bind(this));
 
   this.initFirebase();
+  $("#chat").animate({ scrollTop: $('#chat').prop("scrollHeight")}, 1000);
 }
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.
@@ -67,16 +67,6 @@ W3Chat.prototype.loadMessages = function() {
   this.messagesRef.limitToLast(12).on('child_added', setMessage);
   this.messagesRef.limitToLast(12).on('child_changed', setMessage);
 };
-
-var chat = document.getElementById("chat");
-var add = setInterval(function() {
-    // allow 1px inaccuracy by adding 1
-    var isScrolledToBottom = out.scrollHeight - out.clientHeight <= out.scrollTop + 1;
-    console.log(out.scrollHeight - out.clientHeight,  out.scrollTop + 1);
-    // scroll to bottom if isScrolledToBotto
-    if(isScrolledToBottom)
-      out.scrollTop = out.scrollHeight - out.clientHeight;
-}, 1000);
 
 // Saves a new message on the Firebase DB.
 W3Chat.prototype.saveMessage = function(e) {

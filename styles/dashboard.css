@@ -33,6 +33,6 @@ body {
   color: black;
   margin-top: 6.5px;
   padding: 10px 10px 10px 10px;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 85vh;
 }
