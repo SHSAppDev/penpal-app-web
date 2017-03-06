@@ -34,7 +34,7 @@ body {
     padding: 10px 10px 10px 10px;
     overflow-y: auto;
     height: 85vh;
-    margin-left: 10px;
+    /*margin-left: 7.5px;*/
 }
 
 #message-interaction {
