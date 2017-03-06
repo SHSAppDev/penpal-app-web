@@ -32,7 +32,10 @@ W3Dashboard.prototype.initFirebase = function() {
 W3Dashboard.prototype.checkForFirstTimeUser = function(userId) {
   var userRef = this.database.ref('user-data/'+userId);
   userRef.once('value', function(snapshot) {
-    if(snapshot.val() === null) {
+    if(snapshot.val() === null
+    || snapshot.val().registered == false
+    || snapshot.val().registered == null
+    || snapshot.val().registered == undefined) {
       // We have ourselves a first time user!
       // console.log("this="+this);
       userRef.set({
