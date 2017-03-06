@@ -32,7 +32,6 @@ function W3Chat() {
   // this.mediaCapture.addEventListener('change', this.saveImageMessage.bind(this));
 
   this.initFirebase();
-  $("#chat").animate({ scrollTop: $('#chat').prop("scrollHeight")}, 1000);
 }
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.

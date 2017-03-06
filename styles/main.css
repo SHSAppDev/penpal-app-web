@@ -92,12 +92,6 @@
     box-sizing: border-box;
 }
 
-#message-form {
-    display: flex;
-    flex-direction: row;
-    width: calc(100% - 48px);
-    float: left;
-}
 
 #image-form {
     display: flex;
@@ -106,14 +100,6 @@
     float: right;
 }
 
-#message-form #message {
-    width: calc(100% - 100px);
-}
-
-#message-form button, #image-form button {
-    width: 100px;
-    margin: 15px 0 0 10px;
-}
 
 #user-container {
     position: absolute;
@@ -157,10 +143,6 @@
   top: -1px;
 }*/
 
-.message img {
-    max-width: 300px;
-    max-height: 200px;
-}
 
 #mediaCapture {
     display: none;

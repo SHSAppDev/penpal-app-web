@@ -40,6 +40,7 @@ function LoadMessages(targetUID) {
 
 
   this.messageForm.addEventListener('submit', this.saveMessage.bind(this));
+
   this.initFirebase();
 
 }
