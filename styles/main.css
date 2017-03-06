@@ -46,6 +46,7 @@
     height: 35px;
     background-size: 35px;
     border-radius: 30px;
+    margin-right: 7.5px;
 }
 
 .message-container .spacing {
@@ -60,7 +61,7 @@
     box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
     color: white;
     display: table-cell;
-    width: calc(100% - 40px);
+    max-width: 35vw;
     padding: 5px 10px 5px 10px;
     background: #009688;
     -webkit-border-radius: 4px;
@@ -101,13 +102,13 @@
 }
 
 
-#user-container {
+/*#user-container {
     position: absolute;
     display: flex;
     flex-direction: row;
     top: 22px;
     width: 100%;
-    right: 0;
+    right: 10px;
     padding-left: 10px;
     justify-content: flex-end;
     padding-right: 10px;
@@ -130,7 +131,7 @@
     line-height: 36px;
     padding-right: 10px;
     padding-left: 20px;
-}
+}*/
 
 #image-form #submitImage {
     width: auto;
