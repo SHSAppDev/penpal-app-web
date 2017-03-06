@@ -5,15 +5,9 @@
 function AddConversation() {
 
   // Shortcuts to DOM Elements.
-  this.userPic = document.getElementById('user-pic');
-  this.userName = document.getElementById('user-name');
-  this.signInButton = document.getElementById('sign-in');
-  this.signOutButton = document.getElementById('sign-out');
   this.addButton = document.getElementById('add-conversation-button');
   this.emailField = document.getElementById('email-field');
 
-  this.signOutButton.addEventListener('click', this.signOut.bind(this));
-  // this.signInButton.addEventListener('click', this.signIn.bind(this));
   this.addButton.addEventListener('click', this.addConversationToDatabase.bind(this));
 
   this.initFirebase();
@@ -33,16 +27,6 @@ AddConversation.prototype.initFirebase = function() {
 
 AddConversation.prototype.addConversationToDatabase = function() {
   if(!this.auth.currentUser) { return; }
-  // var enteredInID = this.emailField.value;
-  // var myConversationsRef = this.database.ref('user-data/'+this.auth.currentUser.uid+"/conversations");
-  // myConversationsRef.push({
-  //   recipientUID: enteredInID
-  // }).then(function(){
-  //   window.alert("Conversation Added Successfully!");
-  //   this.emailField.value = "";
-  // }.bind(this)).catch(function(error) {
-  //   window.alert("Uh Oh. Something went wrong. The conversation wasn't added. Sry.")
-  // });
   var email = this.emailField.value;
   const ref = this.database.ref('user-data');
   ref.orderByChild('email')
@@ -74,30 +58,10 @@ AddConversation.prototype.addUidToMyConversations = function(uid) {
   });
 };
 
-// Signs-out
-AddConversation.prototype.signOut = function() {
-  // Sign out of Firebase.
-  this.auth.signOut();
-};
 
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
 AddConversation.prototype.onAuthStateChanged = function(user) {
   if (user) { // User is signed in!
-    // Get profile pic and user's name from the Firebase user object.
-    var profilePicUrl = user.photoURL;   // Get profile pic.
-    var userName = user.displayName;        // Get user's name.
-
-    // Set the user's profile pic and name.
-    this.userPic.style.backgroundImage = 'url(' + profilePicUrl + ')';
-    this.userName.textContent = userName;
-
-    // Show user's profile and sign-out button.
-    this.userName.removeAttribute('hidden');
-    this.userPic.removeAttribute('hidden');
-    this.signOutButton.removeAttribute('hidden');
-
-    // Hide sign-in button.
-    this.signInButton.setAttribute('hidden', 'true');
 
   } else { // User is signed out!
 
@@ -105,14 +69,6 @@ AddConversation.prototype.onAuthStateChanged = function(user) {
     window.location.href = 'login.html';
   }
 };
-
-// Template for messages.
-// AddConversation.MESSAGE_TEMPLATE =
-//     '<div class="message-container">' +
-//       '<div class="spacing"><div class="pic"></div></div>' +
-//       '<div class="message"></div>' +
-//       '<div class="name"></div>' +
-//     '</div>';
 
 // A loading image URL.
 AddConversation.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
@@ -132,6 +88,4 @@ function getParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-window.onload = function() {
-  window.dashboardScript = new AddConversation();
-};
+new AddConversation();

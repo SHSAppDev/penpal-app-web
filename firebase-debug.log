@@ -1,14 +1,14 @@
 [debug] ----------------------------------------------------------------------
-[debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\Kyle\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase serve
 [debug] CLI Version:  3.4.0
-[debug] Platform:     win32
-[debug] Node Version: v6.10.0
-[debug] Time:         Fri Mar 03 2017 17:43:54 GMT-0800 (Pacific Standard Time)
+[debug] Platform:     darwin
+[debug] Node Version: v6.9.4
+[debug] Time:         Sun Mar 05 2017 19:43:40 GMT-0800 (PST)
 [debug] ----------------------------------------------------------------------
 [debug] 
 [info] Starting Firebase development server...
 [info] 
-[info] Project Directory: C:\Users\Kyle\Desktop\penpal-app-web
+[info] Project Directory: /Users/ryananderson/Documents/Web/penpal-app-web
 [info] Public Directory: ./
 [info] 
 [info] Server listening at: http://localhost:5000

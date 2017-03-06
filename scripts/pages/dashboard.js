@@ -5,7 +5,6 @@ function W3Dashboard() {
 
     // Shortcuts to DOM Elements.
     this.userPic = document.getElementById('user-pic');
-    // this.userName = document.getElementById('user-name');
     this.initFirebase();
 }
 
@@ -52,6 +51,7 @@ W3Dashboard.prototype.checkForFirstTimeUser = function(userId) {
 W3Dashboard.prototype.onAuthStateChanged = function(user) {
     if (user) { // User is signed in!
         //First, check for first time user.
+        // console.log("on auth change");
         this.checkForFirstTimeUser(this.auth.currentUser.uid);
 
         // Get profile pic and user's name from the Firebase user object.
