@@ -6,6 +6,7 @@
 function LoadMessages(targetUID) {
 
   // These are the IDs:
+  this.chat = document.getElementById('chat');
   this.messageList = document.getElementById('messages');
   this.messageForm = document.getElementById('message-form');
   this.messageInput = document.getElementById('message');
@@ -39,6 +40,7 @@ function LoadMessages(targetUID) {
 
 
   this.messageForm.addEventListener('submit', this.saveMessage.bind(this));
+
   this.initFirebase();
 
 }
@@ -214,7 +216,7 @@ LoadMessages.prototype.displayMessage = function(key, name, text, picUrl, imageU
   } else if (imageUri) { // If the message is an image.
     var image = document.createElement('img');
     image.addEventListener('load', function() {
-      this.messageList.scrollTop = this.messageList.scrollHeight;
+      this.chat.scrollTop = this.chat.scrollHeight;
     }.bind(this));
     this.setImageUrl(imageUri, image);
     messageElement.innerHTML = '';
@@ -222,8 +224,10 @@ LoadMessages.prototype.displayMessage = function(key, name, text, picUrl, imageU
   }
   // Show the card fading-in.
   setTimeout(function() {div.classList.add('visible')}, 1);
-  this.messageList.scrollTop = this.messageList.scrollHeight;
+  this.chat.scrollTop = this.chat.scrollHeight;
   this.messageInput.focus();
+  // $("#chat").animate({ scrollTop: $('#chat').prop("scrollHeight")}, 1000);
+
 };
 
 // Enables or disables the submit button depending on the values of the input

@@ -36,8 +36,10 @@ W3Dashboard.prototype.checkForFirstTimeUser = function(userId) {
       // We have ourselves a first time user!
       // console.log("this="+this);
       userRef.set({
+        email: this.auth.currentUser.email,
         displayName: this.auth.currentUser.displayName,
-        photoURL: this.auth.currentUser.photoURL || W3Dashboard.URL_PROFILE_PLACEHOLDER
+        photoURL: this.auth.currentUser.photoURL || W3Dashboard.URL_PROFILE_PLACEHOLDER,
+        registered: true
       });
     }
   }.bind(this));
