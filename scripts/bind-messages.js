@@ -185,9 +185,10 @@ LoadMessages.resetMaterialTextfield = function(element) {
 // Template for messages.
 LoadMessages.MESSAGE_TEMPLATE =
     '<div class="message-container">' +
-      '<div class="spacing"><div class="pic"></div></div>' +
+      '<div class="pic"></div>' +
       '<div class="message"></div>' +
       '<div class="name"></div>' +
+
     '</div>';
 
 // A loading image URL.
@@ -196,6 +197,8 @@ LoadMessages.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
 // Displays a Message in the UI.
 LoadMessages.prototype.displayMessage = function(key, name, text, picUrl, imageUri) {
   var div = document.getElementById(key);
+  var currentUser = this.auth.currentUser;
+
   // If an element for that message does not exists yet we create it.
   if (!div) {
     var container = document.createElement('div');
@@ -203,11 +206,18 @@ LoadMessages.prototype.displayMessage = function(key, name, text, picUrl, imageU
     div = container.firstChild;
     div.setAttribute('id', key);
     this.messageList.appendChild(div);
+    if(name == currentUser.displayName) { // Switch positioning of message if user sent message
+      console.log("switching position");
+      div.style.flexDirection = "row-reverse";
+      div.style.justifyContent = "flex-start"
+}
+
   }
   if (picUrl) {
     div.querySelector('.pic').style.backgroundImage = 'url(' + picUrl + ')';
   }
   div.querySelector('.name').textContent = name;
+  div.querySelector('.name').style.marginRight = "7.5px";
   var messageElement = div.querySelector('.message');
   if (text) { // If the message is text.
     messageElement.textContent = text;
@@ -222,6 +232,16 @@ LoadMessages.prototype.displayMessage = function(key, name, text, picUrl, imageU
     messageElement.innerHTML = '';
     messageElement.appendChild(image);
   }
+
+  var profilePic = div.querySelector('.pic');
+  if(name == currentUser.displayName) {
+      console.log("message sent by current user");
+      messageElement.style.background = "#009688";
+      messageElement.style.color = "white";
+      profilePic.style.marginLeft = "7.5px";
+
+  }
+
   // Show the card fading-in.
   setTimeout(function() {div.classList.add('visible')}, 1);
   this.chat.scrollTop = this.chat.scrollHeight;
