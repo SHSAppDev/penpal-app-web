@@ -42,11 +42,20 @@ LoadConversationList.prototype.loadConversations = function() {
 };
 
 // Template for conversation in conversation list.
+// LoadConversationList.CONVERSATION_TEMPLATE =
+//     '<a href=# class="collection-item">' +
+//       '<span><img class="pic" src=#></span>' +
+//       '<span class="name">Name</span>' +
+//       '<span class="new badge">0</span>'+
+//
+//     '</a>';
+
 LoadConversationList.CONVERSATION_TEMPLATE =
-    '<a href=# class="collection-item">' +
+    '<a href=# class="collection-item avatar">' +
+      '<span><img class="pic circle" src=#></span>' +
+      '<span class="title name">Name</span>' +
       '<span class="new badge">0</span>'+
-      '<span><img class="pic" src=#></span>' +
-      '<span class="name">Name</span>' +
+
     '</a>';
 
 
@@ -78,9 +87,8 @@ LoadConversationList.prototype.displayConversation = function(recipientUID, unre
     }
 
     // Set recipient profile pic. TODO Make look nicer
-    // var picURL = snapshot.val().photoURL !== null ? snapshot.val().photoURL : LoadConversationList.URL_PROFILE_PLACEHOLDER;
-    // div.querySelector('.pic').src = picURL;
-    div.querySelector('.pic').setAttribute('hidden', true);
+    var picURL = snapshot.val().photoURL !== null ? snapshot.val().photoURL : LoadConversationList.URL_PROFILE_PLACEHOLDER;
+    div.querySelector('.pic').src = picURL;
 
   }.bind(this));
 

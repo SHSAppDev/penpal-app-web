@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [debug] ----------------------------------------------------------------------
 [debug] Command:      C:\Program Files\nodejs\node.exe C:\Users\Kyle\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
 [debug] CLI Version:  3.4.0
@@ -40,3 +41,5 @@
 [info] Public Directory: ./
 [info] 
 [info] Server listening at: http://localhost:5000
+=======
+>>>>>>> master
