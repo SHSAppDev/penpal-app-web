@@ -17,13 +17,12 @@ function LoadMessages(targetUID) {
   this.targetUID = targetUID;
 
   if(this.targetUID===null) {
-    console.log('tid null');
+    console.log('target id = null');
     document.getElementById("nothing-to-display").removeAttribute('hidden');
     this.messageList.setAttribute('hidden', true);
     this.messageForm.setAttribute('hidden', true);
     this.messageInput.setAttribute('hidden', true);
     this.submitButton.setAttribute('hidden', true);
-
     return;
   }
 
@@ -202,16 +201,16 @@ LoadMessages.prototype.displayMessage = function(key, name, text, picUrl, imageU
 
   // If an element for that message does not exists yet we create it.
   if (!div) {
-    var container = document.createElement('div');
-    container.innerHTML = LoadMessages.MESSAGE_TEMPLATE;
-    div = container.firstChild;
+    var temp = document.createElement('div');
+    temp.innerHTML = LoadMessages.MESSAGE_TEMPLATE;
+    div = temp.firstChild;
     div.setAttribute('id', key);
     this.messageList.appendChild(div);
     if(uid == currentUser.uid) { // Switch positioning of message if user sent message
-      console.log("switching position "+uid);
+      // console.log("switching position "+uid);
       div.style.flexDirection = "row-reverse";
       div.style.justifyContent = "flex-start"
-}
+    }
 
   }
   if (picUrl) {
@@ -236,7 +235,7 @@ LoadMessages.prototype.displayMessage = function(key, name, text, picUrl, imageU
 
   var profilePic = div.querySelector('.pic');
   if(uid == currentUser.uid) {
-      console.log("message sent by current user");
+      // console.log("message sent by current user");
       messageElement.style.background = "#009688";
       messageElement.style.color = "white";
       profilePic.style.marginLeft = "7.5px";
@@ -274,9 +273,6 @@ var getURLParameterByName = function(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 };
 var targetUID = getURLParameterByName('targetUID');
-// var targetUID = document.currentScript.getAttribute('targetUID');
-// if(targetUID===null) {
-//   window.alert("Supply a targetUID");
-// }
+
 
 var x = new LoadMessages(targetUID);
