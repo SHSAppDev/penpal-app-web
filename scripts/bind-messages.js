@@ -96,6 +96,7 @@ LoadMessages.prototype.saveMessage = function(e) {
       // Clear message text field and SEND button state.
       LoadMessages.resetMaterialTextfield(this.messageInput);
       this.toggleButton();
+      this.incrementRecipientUnreadMessages();
     }.bind(this)).catch(function(error) {
       console.error('Error writing new message to Firebase Database', error);
     });
@@ -259,6 +260,33 @@ LoadMessages.prototype.toggleButton = function() {
     this.submitButton.setAttribute('disabled', 'true');
   }
 };
+
+LoadMessages.prototype.incrementRecipientUnreadMessages = function() {
+  //WARNING this might seem sorta confusing
+  var recipientConversationContainerRef = this.database.ref('user-data/'+this.targetUID)
+    .child('conversations').orderByChild('recipientUID')
+    .equalTo(this.auth.currentUser.uid).limitToFirst(1);
+    recipientConversationContainerRef.once('value',function(data){
+      // console.log(data.val());
+      // data.val() should be an object that has just one child which os the
+      // random key for the conversation. Inside that is the unreadMessages
+      // property which we can set.
+      var theWeirdKey = Object.keys(data.val())[0];
+      var cVal = data.val()[theWeirdKey].unreadMessages; // The current unread messages value
+      var newVal = 0;
+      if(cVal===null||cVal===undefined||cVal===0) {
+        newVal = 1;
+      } else {
+        newVal = cVal+1;
+      }
+      var convRef = this.database.ref('user-data/'+this.targetUID)
+        .child('conversations').child(theWeirdKey);
+      convRef.update({
+        '/unreadMessages': newVal
+      });
+
+    }.bind(this));
+}
 
 
 var getURLParameterByName = function(name, url) {
