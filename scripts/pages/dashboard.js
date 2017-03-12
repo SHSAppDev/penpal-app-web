@@ -6,7 +6,7 @@ function W3Dashboard() {
     // Shortcuts to DOM Elements.
     this.userPic = document.getElementById('user-pic');
     this.initFirebase();
-    console.log(OSName);
+    // console.log(OSName);
 }
 
 
