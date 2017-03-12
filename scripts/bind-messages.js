@@ -73,7 +73,7 @@ LoadMessages.prototype.loadMessages = function() {
   // Loads the last 12 messages and listen for new ones.
   var setMessage = function(data) {
     var val = data.val();
-    this.displayMessage(data.key, val.name, val.text, val.photoUrl, val.imageUrl);
+    this.displayMessage(data.key, val.name, val.text, val.photoUrl, val.imageUrl, val.uid);
   }.bind(this);
   this.messagesRef.limitToLast(12).on('child_added', setMessage);
   this.messagesRef.limitToLast(12).on('child_changed', setMessage);
@@ -91,7 +91,8 @@ LoadMessages.prototype.saveMessage = function(e) {
     this.messagesRef.push({
       name: currentUser.displayName,
       text: this.messageInput.value,
-      photoUrl: currentUser.photoURL || '/images/profile_placeholder.png'
+      photoUrl: currentUser.photoURL || '/images/profile_placeholder.png',
+      uid: currentUser.uid
     }).then(function() {
       // Clear message text field and SEND button state.
       LoadMessages.resetMaterialTextfield(this.messageInput);
@@ -195,7 +196,7 @@ LoadMessages.MESSAGE_TEMPLATE =
 LoadMessages.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
 
 // Displays a Message in the UI.
-LoadMessages.prototype.displayMessage = function(key, name, text, picUrl, imageUri) {
+LoadMessages.prototype.displayMessage = function(key, name, text, picUrl, imageUri, uid) {
   var div = document.getElementById(key);
   var currentUser = this.auth.currentUser;
 
@@ -206,8 +207,8 @@ LoadMessages.prototype.displayMessage = function(key, name, text, picUrl, imageU
     div = container.firstChild;
     div.setAttribute('id', key);
     this.messageList.appendChild(div);
-    if(name == currentUser.displayName) { // Switch positioning of message if user sent message
-      console.log("switching position");
+    if(uid == currentUser.uid) { // Switch positioning of message if user sent message
+      console.log("switching position "+uid);
       div.style.flexDirection = "row-reverse";
       div.style.justifyContent = "flex-start"
 }
@@ -234,7 +235,7 @@ LoadMessages.prototype.displayMessage = function(key, name, text, picUrl, imageU
   }
 
   var profilePic = div.querySelector('.pic');
-  if(name == currentUser.displayName) {
+  if(uid == currentUser.uid) {
       console.log("message sent by current user");
       messageElement.style.background = "#009688";
       messageElement.style.color = "white";
