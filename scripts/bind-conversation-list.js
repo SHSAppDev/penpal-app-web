@@ -36,7 +36,7 @@ LoadConversationList.prototype.loadConversations = function() {
   var setConversation = function(data) {
     // Each item is a random key with a recipientUserID
     // console.log(this.displayConversation);
-    this.displayConversation(data.val().recipientUID, data.val().unreadMessages);
+    this.displayConversation(data.val().recipientUID, data.key);
   }
   this.myConversationsRef.on('child_added', setConversation.bind(this));
   this.myConversationsRef.on('child_changed', setConversation.bind(this));
@@ -44,14 +44,6 @@ LoadConversationList.prototype.loadConversations = function() {
 };
 
 // Template for conversation in conversation list.
-// LoadConversationList.CONVERSATION_TEMPLATE =
-//     '<a href=# class="collection-item">' +
-//       '<span><img class="pic" src=#></span>' +
-//       '<span class="name">Name</span>' +
-//       '<span class="new badge">0</span>'+
-//
-//     '</a>';
-
 LoadConversationList.CONVERSATION_TEMPLATE =
     '<a href=# class="collection-item avatar">' +
       '<span><img class="pic circle" src=#></span>' +
@@ -61,7 +53,7 @@ LoadConversationList.CONVERSATION_TEMPLATE =
     '</a>';
 
 
-LoadConversationList.prototype.displayConversation = function(recipientUID, unreadMessages) {
+LoadConversationList.prototype.displayConversation = function(recipientUID, myConversationKey) {
 
   // this.userDataRef.child(recipientUID).once('value', function(snapshot){
   this.database.ref('user-data/'+recipientUID).once('value').then(function(snapshot){
@@ -81,26 +73,27 @@ LoadConversationList.prototype.displayConversation = function(recipientUID, unre
     // Display name (displayName)
     div.querySelector('.name').textContent = snapshot.val().displayName;
 
-    // Display num of unread messages
-    if(unreadMessages === null || unreadMessages === undefined || unreadMessages <= 0 || unreadMessages === '') {
-      div.querySelector('.new').setAttribute('hidden', true);
-    } else {
-      div.querySelector('.new').textContent = unreadMessages;
-    }
 
-    // Set recipient profile pic. TODO Make look nicer
+    // Set recipient profile pic.
     var picURL = snapshot.val().photoURL !== null ? snapshot.val().photoURL : LoadConversationList.URL_PROFILE_PLACEHOLDER;
     div.querySelector('.pic').src = picURL;
 
     document.getElementById('conversations-preloader').style.display = "none";
-
+    var unreadMessagesRef = this.database.ref('user-data/'+this.auth.currentUser.uid+'/conversations/'+myConversationKey+"/unreadMessages");
+    unreadMessagesRef.off();
+    unreadMessagesRef.on('value', function(dataSnapshot){
+      var unreadMessages = dataSnapshot.val();
+      // Display num of unread messages
+      if(unreadMessages === null || unreadMessages === undefined || unreadMessages <= 0 || unreadMessages === '') {
+        div.querySelector('.new').setAttribute('hidden', true);
+      } else {
+        div.querySelector('.new').removeAttribute('hidden');
+        div.querySelector('.new').textContent = unreadMessages;
+      }
+    }.bind(this));
 
   }.bind(this));
 
-  // this.database.ref('user-data/'+this.auth.currentUser.uid+'/conversations').once('value').then(function(snapshot){
-  //   var val = snapshot.val();
-  //
-  // }.bind(this));
 };
 
 var conversationListID = document.currentScript.getAttribute('conversationListID');

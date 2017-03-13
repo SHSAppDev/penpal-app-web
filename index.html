@@ -88,11 +88,7 @@
                 </div>
             </div>
             <div id="conversation-list" class="collection z-depth-3">
-                <!--Here I hardcoded some conversation links (link to conversation.html and passing in a user ID, which are also hardcoded)-->
-                <!-- <a href="index.html?targetUID=miTtPwEyWBcfuLcauRuMhzyiqjQ2" class="collection-item" onclick="function()"><span class="new badge">4</span>Ryan Anderson</a>
-                <a href="index.html?targetUID=lsPwIYYJAiVPGInFluSjwCVl9IF3" class="collection-item"><span class="new badge">2</span>Kha Nguyen</a>
-                <a href="index.html?targetUID=hJeeOKl9hxbDtk899kV8qa1phB22" class="collection-item">SHS App Dev</a> -->
-                <!-- <a href="add-conversation.html" class="collection-item">New Conversation</a> -->
+
             </div>
         </div>
         <div id="chat-container" class="col s12 m10 l10">
@@ -172,11 +168,12 @@
     <script src="scripts/pages/dashboard.js"></script>
 
     <!-- Modules that add specific functionality. -->
+    <script src="scripts/get-os-details.js"></script>
     <script src="scripts/bind-signout-button.js" buttonid="sign-out"></script>
     <script src="scripts/bind-signout-button.js" buttonid="sign-out-mobile"></script>
     <script src="scripts/bind-conversation-list.js" conversationlistid="conversation-list"></script>
     <script src="scripts/bind-messages.js"></script>
-    <script src="scripts/pages/add-conversation.js"></script>
+    <script src="scripts/add-conversation.js"></script>
 
     <script>
         $(document).ready(function() {

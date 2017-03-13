@@ -20,18 +20,11 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    font-family: sans-serif;
 }
 
 main {
     flex: 1 0 auto;
-}
-
-.chat {
-    float: left;
-    margin: 5px;
-    padding: 15px;
-    max-width: 100%;
-    height: 100%;
 }
 
 body {
@@ -40,15 +33,6 @@ body {
 
 ol {
     background: teal;
-    padding: 20px;
-}
-
-ol li {
-    background-color: lightblue;
-}
-
-ol {
-    background: #ffb84d;
     padding: 20px;
 }
 
@@ -63,7 +47,4 @@ ol li {
     margin-left: 35px;
 }
 
-img {
-    width: 100%;
-    height: auto;
-}
+

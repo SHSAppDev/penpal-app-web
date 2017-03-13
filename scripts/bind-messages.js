@@ -17,13 +17,12 @@ function LoadMessages(targetUID) {
   this.targetUID = targetUID;
 
   if(this.targetUID===null) {
-    console.log('tid null');
+    console.log('target id = null');
     document.getElementById("nothing-to-display").removeAttribute('hidden');
     this.messageList.setAttribute('hidden', true);
     this.messageForm.setAttribute('hidden', true);
     this.messageInput.setAttribute('hidden', true);
     this.submitButton.setAttribute('hidden', true);
-
     return;
   }
 
@@ -55,6 +54,16 @@ LoadMessages.prototype.initFirebase = function() {
 LoadMessages.prototype.onAuthStateChanged = function(user) {
   if (user) { // User is signed in!
     this.loadMessages();
+    if(this.targetUID) {
+      // We've entered the conversation, so no more messages should be unread
+      var myConversationsRef = this.database.ref('user-data/'+firebase.auth().currentUser.uid+'/conversations');
+      myConversationsRef.orderByChild("recipientUID").equalTo(this.targetUID).limitToFirst(1).once('value', function(data){
+        var convKey = Object.keys(data.val())[0]
+        var updates = {};
+        updates["/"+convKey+"/unreadMessages"] = 0
+        myConversationsRef.update(updates);
+      });
+    }
   }
 };
 
@@ -73,7 +82,7 @@ LoadMessages.prototype.loadMessages = function() {
   // Loads the last 12 messages and listen for new ones.
   var setMessage = function(data) {
     var val = data.val();
-    this.displayMessage(data.key, val.name, val.text, val.photoUrl, val.imageUrl);
+    this.displayMessage(data.key, val.name, val.text, val.photoUrl, val.imageUrl, val.uid);
   }.bind(this);
   this.messagesRef.limitToLast(12).on('child_added', setMessage);
   this.messagesRef.limitToLast(12).on('child_changed', setMessage);
@@ -93,11 +102,13 @@ LoadMessages.prototype.saveMessage = function(e) {
     this.messagesRef.push({
       name: currentUser.displayName,
       text: this.messageInput.value,
-      photoUrl: currentUser.photoURL || '/images/profile_placeholder.png'
+      photoUrl: currentUser.photoURL || '/images/profile_placeholder.png',
+      uid: currentUser.uid
     }).then(function() {
       // Clear message text field and SEND button state.
       LoadMessages.resetMaterialTextfield(this.messageInput);
       this.toggleButton();
+      this.incrementRecipientUnreadMessages();
     }.bind(this)).catch(function(error) {
       console.error('Error writing new message to Firebase Database', error);
     });
@@ -197,22 +208,22 @@ LoadMessages.MESSAGE_TEMPLATE =
 LoadMessages.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
 
 // Displays a Message in the UI.
-LoadMessages.prototype.displayMessage = function(key, name, text, picUrl, imageUri) {
+LoadMessages.prototype.displayMessage = function(key, name, text, picUrl, imageUri, uid) {
   var div = document.getElementById(key);
   var currentUser = this.auth.currentUser;
 
   // If an element for that message does not exists yet we create it.
   if (!div) {
-    var container = document.createElement('div');
-    container.innerHTML = LoadMessages.MESSAGE_TEMPLATE;
-    div = container.firstChild;
+    var temp = document.createElement('div');
+    temp.innerHTML = LoadMessages.MESSAGE_TEMPLATE;
+    div = temp.firstChild;
     div.setAttribute('id', key);
     this.messageList.appendChild(div);
-    if(name == currentUser.displayName) { // Switch positioning of message if user sent message
-      console.log("switching position");
+    if(uid == currentUser.uid) { // Switch positioning of message if user sent message
+      // console.log("switching position "+uid);
       div.style.flexDirection = "row-reverse";
       div.style.justifyContent = "flex-start"
-}
+    }
 
   }
   if (picUrl) {
@@ -236,8 +247,8 @@ LoadMessages.prototype.displayMessage = function(key, name, text, picUrl, imageU
   }
 
   var profilePic = div.querySelector('.pic');
-  if(name == currentUser.displayName) {
-      console.log("message sent by current user");
+  if(uid == currentUser.uid) {
+      // console.log("message sent by current user");
       messageElement.style.background = "#009688";
       messageElement.style.color = "white";
       profilePic.style.marginLeft = "7.5px";
@@ -262,6 +273,33 @@ LoadMessages.prototype.toggleButton = function() {
   }
 };
 
+LoadMessages.prototype.incrementRecipientUnreadMessages = function() {
+  //WARNING this might seem sorta confusing
+  var recipientConversationContainerRef = this.database.ref('user-data/'+this.targetUID)
+    .child('conversations').orderByChild('recipientUID')
+    .equalTo(this.auth.currentUser.uid).limitToFirst(1);
+    recipientConversationContainerRef.once('value',function(data){
+      // console.log(data.val());
+      // data.val() should be an object that has just one child which os the
+      // random key for the conversation. Inside that is the unreadMessages
+      // property which we can set.
+      var theWeirdKey = Object.keys(data.val())[0];
+      var cVal = data.val()[theWeirdKey].unreadMessages; // The current unread messages value
+      var newVal = 0;
+      if(cVal===null||cVal===undefined||cVal===0) {
+        newVal = 1;
+      } else {
+        newVal = cVal+1;
+      }
+      var convRef = this.database.ref('user-data/'+this.targetUID)
+        .child('conversations').child(theWeirdKey);
+      convRef.update({
+        '/unreadMessages': newVal
+      });
+
+    }.bind(this));
+}
+
 
 var getURLParameterByName = function(name, url) {
     if (!url) {
@@ -275,9 +313,6 @@ var getURLParameterByName = function(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 };
 var targetUID = getURLParameterByName('targetUID');
-// var targetUID = document.currentScript.getAttribute('targetUID');
-// if(targetUID===null) {
-//   window.alert("Supply a targetUID");
-// }
+
 
 var x = new LoadMessages(targetUID);
