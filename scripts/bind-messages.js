@@ -54,6 +54,16 @@ LoadMessages.prototype.initFirebase = function() {
 LoadMessages.prototype.onAuthStateChanged = function(user) {
   if (user) { // User is signed in!
     this.loadMessages();
+    if(this.targetUID) {
+      // We've entered the conversation, so no more messages should be unread
+      var myConversationsRef = this.database.ref('user-data/'+firebase.auth().currentUser.uid+'/conversations');
+      myConversationsRef.orderByChild("recipientUID").equalTo(this.targetUID).limitToFirst(1).once('value', function(data){
+        var convKey = Object.keys(data.val())[0]
+        var updates = {};
+        updates["/"+convKey+"/unreadMessages"] = 0
+        myConversationsRef.update(updates);
+      });
+    }
   }
 };
 
