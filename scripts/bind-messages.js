@@ -4,7 +4,7 @@
 // Initializes a list of messages and listens for more.
 // REQUIRES that a few html elements exist in the document with the following IDs
 function LoadMessages(targetUID) {
-
+    document.getElementById('chat-preloader').style.display = "block";
   // These are the IDs:
   this.chat = document.getElementById('chat');
   this.messageList = document.getElementById('messages');
@@ -86,6 +86,8 @@ LoadMessages.prototype.loadMessages = function() {
   }.bind(this);
   this.messagesRef.limitToLast(12).on('child_added', setMessage);
   this.messagesRef.limitToLast(12).on('child_changed', setMessage);
+  document.getElementById('chat-preloader').style.display = "none";
+
 };
 
 // Saves a new message on the Firebase DB.
