@@ -5,12 +5,14 @@
 // and listens for changes.
 
 function LoadConversationList(conversationListID) {
+  document.getElementById('conversations-preloader').style.display = "block";
   this.conversationList = document.getElementById(conversationListID);
   if(this.conversationList == null) {
     window.alert("load-conversation-list.js: provide a conversationListID"+
     "attribute in the script tag. Otherwise this script dunno what to stick"+
     "the conversations onto :(");
   }
+
   this.initFirebase();
 }
 
@@ -53,7 +55,7 @@ LoadConversationList.prototype.loadConversations = function() {
 LoadConversationList.CONVERSATION_TEMPLATE =
     '<a href=# class="collection-item avatar">' +
       '<span><img class="pic circle" src=#></span>' +
-      '<span class="title name">Name</span>' +
+      '<span class="name title">Name</span>' +
       '<span class="new badge">0</span>'+
 
     '</a>';
@@ -89,6 +91,9 @@ LoadConversationList.prototype.displayConversation = function(recipientUID, unre
     // Set recipient profile pic. TODO Make look nicer
     var picURL = snapshot.val().photoURL !== null ? snapshot.val().photoURL : LoadConversationList.URL_PROFILE_PLACEHOLDER;
     div.querySelector('.pic').src = picURL;
+
+    document.getElementById('conversations-preloader').style.display = "none";
+
 
   }.bind(this));
 
