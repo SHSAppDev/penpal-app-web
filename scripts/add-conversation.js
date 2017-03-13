@@ -13,6 +13,9 @@ function AddConversation() {
   this.initFirebase();
 }
 
+// A loading image URL.
+AddConversation.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
+
 // Sets up shortcuts to Firebase features and initiate firebase auth.
 AddConversation.prototype.initFirebase = function() {
   // Initialize Firebase.
@@ -38,7 +41,9 @@ AddConversation.prototype.addConversationToDatabase = function() {
         // value is an object containing one or more of the users that matched your email query
         // choose a user and do something with it
         var uid = Object.keys(value)[0];
-        this.addUidToMyConversations(uid);
+        console.log(value);
+        this.addUidToMyConversations(uid, value[uid].displayName);
+        this.addUidToOtherUsersConversations(uid);
       } else {
         window.alert("No user was found with that email.");
       }
@@ -46,15 +51,23 @@ AddConversation.prototype.addConversationToDatabase = function() {
 
 };
 
-AddConversation.prototype.addUidToMyConversations = function(uid) {
+AddConversation.prototype.addUidToMyConversations = function(uid, displayName) {
   var myConversationsRef = this.database.ref('user-data/'+this.auth.currentUser.uid+"/conversations");
   myConversationsRef.push({
     recipientUID: uid
   }).then(function(){
-    window.alert("Conversation Added Successfully!"+uid);
+    window.alert(displayName+" has been added to your conversations!");
     this.emailField.value = "";
   }.bind(this)).catch(function(error) {
     window.alert("Uh Oh. Something went wrong. The conversation wasn't added. Sry.")
+  });
+};
+
+AddConversation.prototype.addUidToOtherUsersConversations = function (uid) {
+  //@param uid = user id of the other user
+  var otherConversationRef = this.database.ref('user-data/'+uid+"/conversations");
+  otherConversationRef.push({
+    recipientUID: this.auth.currentUser.uid
   });
 };
 
@@ -70,22 +83,6 @@ AddConversation.prototype.onAuthStateChanged = function(user) {
   }
 };
 
-// A loading image URL.
-AddConversation.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
 
-
-// Stolen from stack overflow. Useful!
-// http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
-function getParameterByName(name, url) {
-    if (!url) {
-      url = window.location.href;
-    }
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
 
 new AddConversation();
