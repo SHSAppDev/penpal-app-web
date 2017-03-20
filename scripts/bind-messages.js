@@ -161,7 +161,8 @@ LoadMessages.prototype.saveImageMessage = function(event) {
     this.messagesRef.push({
       name: currentUser.displayName,
       imageUrl: LoadMessages.LOADING_IMAGE_URL,
-      photoUrl: currentUser.photoURL || '/images/profile_placeholder.png'
+      photoUrl: currentUser.photoURL || '/images/profile_placeholder.png',
+      uid: currentUser.uid
     }).then(function(data) {
 
       // Upload the image to Firebase Storage.
