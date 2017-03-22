@@ -22,10 +22,14 @@ function LoadMessages(targetUID) {
   if(this.targetUID===null) {
     console.log('target id = null');
     document.getElementById("nothing-to-display").removeAttribute('hidden');
-    this.messageList.setAttribute('hidden', true);
-    this.messageForm.setAttribute('hidden', true);
-    this.messageInput.setAttribute('hidden', true);
-    this.submitButton.setAttribute('hidden', true);
+    // document.getElementById("chat-container").setAttribute('hidden', true);
+    document.getElementById("chat-container").style.display = 'none';
+    // console.log(document.getElementById("chat-container"));
+
+    // this.messageList.setAttribute('hidden', true);
+    // this.messageForm.setAttribute('hidden', true);
+    // this.messageInput.setAttribute('hidden', true);
+    // this.submitButton.setAttribute('hidden', true);
     return;
   }
 
@@ -82,13 +86,13 @@ LoadMessages.prototype.loadMessages = function() {
   this.messagesRef.off();
 
 
-  // Loads the last 12 messages and listen for new ones.
+  // Loads the last messages and listen for new ones.
   var setMessage = function(data) {
     var val = data.val();
     this.displayMessage(data.key, val.name, val.text, val.photoUrl, val.imageUrl, val.uid);
   }.bind(this);
-  this.messagesRef.limitToLast(12).on('child_added', setMessage);
-  this.messagesRef.limitToLast(12).on('child_changed', setMessage);
+  this.messagesRef.limitToLast(30).on('child_added', setMessage);
+  this.messagesRef.limitToLast(30).on('child_changed', setMessage);
   document.getElementById('chat-preloader').style.display = "none";
 
 };
@@ -319,7 +323,7 @@ var getURLParameterByName = function(name, url) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 };
-var targetUID = getURLParameterByName('targetUID');
 
+var targetUID = getURLParameterByName('targetUID');
 
 var x = new LoadMessages(targetUID);
