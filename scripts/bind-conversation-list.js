@@ -65,7 +65,7 @@ LoadConversationList.prototype.displayConversation = function(recipientUID, myCo
       container.innerHTML = LoadConversationList.CONVERSATION_TEMPLATE;
       div = container.firstChild;
       div.setAttribute('id', recipientUID);
-      // console.log(this.conversationList); //HELP
+      // console.log(this.conversationList);
       this.conversationList.appendChild(div);
     }
     div.href = 'index.html?targetUID='+recipientUID;
