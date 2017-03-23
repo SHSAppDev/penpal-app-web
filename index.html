@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Improve your foreign language skills by chatting with native speakers your age.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>World Without Walls</title>
+    <span class="notranslate"><title>World Without Walls</title></span>
     <link rel="stylesheet" type="text/css" href="styles/dashboard.css">
     <link rel="stylesheet" type="text/css" href="styles/main.css">
 
@@ -43,7 +43,18 @@
 
 <body>
 
+  <div id="google_translate_element"></div>
+
+  <script type="text/javascript">
+  function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+  }
+  </script>
+
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <!-- Navbar  -->
+    <span class="notranslate">
     <ul id="user-dropdown" class="dropdown-content">
         <li>
             <a id="sign-out">Sign-out</a>
@@ -68,12 +79,14 @@
             </ul>
         </div>
     </nav>
+    </span>
 
     <!-- Content -->
     <div class="row">
         <div id="sidebar" class="col s12 m2 l2 teal white-text">
             Conversations
             <br>
+            <span class="notranslate">
             <div class="preloader-wrapper active" id="conversations-preloader">
                 <div class="spinner-layer spinner-red-only">
                     <div class="circle-clipper left">
@@ -87,12 +100,15 @@
                     </div>
                 </div>
             </div>
+
             <div id="conversation-list" class="collection z-depth-3">
 
             </div>
+          </span>
         </div>
         <div id="chat-container" class="col s12 m10 l10">
             <center>Chat</center>
+            <span class="notranslate">
             <div id="chat" class="card z-depth-3">
               <div class="preloader-wrapper active" id="chat-preloader">
                   <div class="spinner-layer spinner-red-only">
@@ -115,9 +131,10 @@
                     <form id="message-form" action="#">
                         <div class="input-field inline" id="message-input">
                             <input type="text" id="message">
-                            <label for="message">Message...</label>
+                            <label for="message"><span class="translate">Message...</span></label>
                         </div>
-                        <button id="submit" disabled type="submit" class="btn waves-light waves-effect red lighten-1">Send
+                        <button id="submit" disabled type="submit" class="btn waves-light waves-effect red lighten-1">
+                          <span class="translate">Send</span>
                           <i class="material-icons right">send</i>
                         </button>
                         <button id="submitImage" class="btn waves-light waves-effect red lighten-1" title="Add an image.">
@@ -130,6 +147,7 @@
                     </form>
                 </div>
             </div>
+          </span>
         </div>
 
         <!-- <div class="row"> -->
@@ -147,8 +165,9 @@
 
         <!-- Floating Action Button  -->
         <div class="fixed-action-btn">
-
-            <a class="btn-floating btn-large waves-effect waves-light red lighten-1" href="#add-conversation"><i class="material-icons">add</i></a>
+            <a class="btn-floating btn-large waves-effect waves-light red lighten-1" href="#add-conversation">
+              <i class="material-icons"><span class="notranslate">add</span></i>
+            </a>
         </div>
         <!-- Add Conversation Modal -->
         <div id="add-conversation" class="modal">

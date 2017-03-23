@@ -142,8 +142,8 @@ LoadMessages.prototype.saveImageMessage = function(event) {
   var file = event.target.files[0];
 
   // Clear the selection in the file picker input.
-  console.log(this);
-  console.log(this.imageForm);
+  // console.log(this);
+  // console.log(this.imageForm);
   this.imageForm.reset();
 
   // Check if the file is an image.
