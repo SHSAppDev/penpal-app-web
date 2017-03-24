@@ -88,25 +88,26 @@
                 </div>
             </div>
             <div id="conversation-list" class="collection z-depth-3">
-
             </div>
+            <a id="add-conversation-button" class="btn-large waves-effect waves-light red lighten-1" href="#add-conversation">Add <i class="material-icons">people</i></a>
+            </a>
         </div>
         <div id="chat-container" class="col s12 m10 l10">
             <center>Chat</center>
             <div id="chat" class="card z-depth-3">
-              <div class="preloader-wrapper active" id="chat-preloader">
-                  <div class="spinner-layer spinner-red-only">
-                      <div class="circle-clipper left">
-                          <div class="circle"></div>
-                      </div>
-                      <div class="gap-patch">
-                          <div class="circle"></div>
-                      </div>
-                      <div class="circle-clipper right">
-                          <div class="circle"></div>
-                      </div>
-                  </div>
-              </div>
+                <div class="preloader-wrapper active" id="chat-preloader">
+                    <div class="spinner-layer spinner-red-only">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </div>
                 <div id="messages">
                     <span id="message-filler"></span>
                 </div>
@@ -131,11 +132,7 @@
             </div>
         </div>
 
-        <!-- Floating Action Button  -->
-        <div class="fixed-action-btn">
 
-            <a class="btn-floating btn-large waves-effect waves-light red lighten-1" href="#add-conversation"><i class="material-icons">add</i></a>
-        </div>
         <!-- Add Conversation Modal -->
         <div id="add-conversation" class="modal">
             <div class="modal-content">
@@ -176,7 +173,7 @@
     <script src="scripts/add-conversation.js"></script>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
             $('.modal').modal();
         });
