@@ -45,7 +45,7 @@ AddConversation.prototype.addConversationToDatabase = function() {
         this.addUidToMyConversations(uid, value[uid].displayName);
         this.addUidToOtherUsersConversations(uid);
       } else {
-        window.alert("No user was found with that email.");
+        window.alert("No user was found with that email: "+email);
       }
     }.bind(this));
 

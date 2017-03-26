@@ -4,41 +4,41 @@
 <!-- Materialize CSS Head -->
 
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="Improve your foreign language skills by chatting with native speakers your age.">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<span class="notranslate"><title>World Without Walls</title></span>
-<link rel="stylesheet" type="text/css" href="styles/dashboard.css">
-<link rel="stylesheet" type="text/css" href="styles/main.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Improve your foreign language skills by chatting with native speakers your age.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <span class="notranslate"><title>World Without Walls</title></span>
+    <link rel="stylesheet" type="text/css" href="styles/dashboard.css">
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
 
+    <!-- Disable tap highlight on IE -->
+    <meta name="msapplication-tap-highlight" content="no">
 
-<!-- Disable tap highlight on IE -->
-<meta name="msapplication-tap-highlight" content="no">
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="World Without Walls">
+    <meta name="theme-color" content="#303F9F">
 
-<!-- Web Application Manifest -->
-<link rel="manifest" href="manifest.json">
-<!-- Add to homescreen for Chrome on Android -->
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="application-name" content="World Without Walls">
-<meta name="theme-color" content="#303F9F">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="World Without Walls">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
 
-<!-- Add to homescreen for Safari on iOS -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="World Without Walls">
-<meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
+    <!-- Tile icon for Win8 -->
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <meta name="msapplication-navbutton-color" content="#303F9F">
 
-<!-- Tile icon for Win8 -->
-<meta name="msapplication-TileColor" content="#3372DF">
-<meta name="msapplication-navbutton-color" content="#303F9F">
+    <!-- Compiled and minified CSS -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
 
-<!-- Compiled and minified CSS -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<!-- Compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
 </head>
 
 <body>
@@ -104,7 +104,7 @@ new google.translate.TranslateElement({pageLanguage: 'en', layout: google.transl
         <div id="conversation-list" class="collection z-depth-3">
         </div>
         </span>
-        <a id="add-conversation-button" class="btn-large waves-effect waves-light red lighten-1" href="#add-conversation">Add <i class=" notranslate material-icons">people</i></a>
+        <a id="add-people-button" class="btn-large waves-effect waves-light red lighten-1" href="#add-conversation">Add <i class=" notranslate material-icons">people</i></a>
         </a>
     </div>
     <div id="chat-container" class="col s12 m10 l10">
@@ -176,37 +176,41 @@ new google.translate.TranslateElement({pageLanguage: 'en', layout: google.transl
             <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Done</a>
         </div>
     </div>
-</div>
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
-<script>
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyCx-2_5IcfXswoDZhjle1rPS3m-ryi3rpM",
-        authDomain: "penpalapp-6020c.firebaseapp.com",
-        databaseURL: "https://penpalapp-6020c.firebaseio.com",
-        storageBucket: "penpalapp-6020c.appspot.com",
-        messagingSenderId: "322094641122"
-    };
-    firebase.initializeApp(config);
-</script>
-<!-- The main page script -->
-<script src="scripts/pages/dashboard.js"></script>
 
-<!-- Modules that add specific functionality. -->
-<script src="scripts/get-os-details.js"></script>
-<script src="scripts/bind-signout-button.js" buttonid="sign-out"></script>
-<script src="scripts/bind-signout-button.js" buttonid="sign-out-mobile"></script>
-<script src="scripts/bind-conversation-list.js" conversationlistid="conversation-list"></script>
-<script src="scripts/bind-messages.js"></script>
-<script src="scripts/add-conversation.js"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyCx-2_5IcfXswoDZhjle1rPS3m-ryi3rpM",
+            authDomain: "penpalapp-6020c.firebaseapp.com",
+            databaseURL: "https://penpalapp-6020c.firebaseio.com",
+            storageBucket: "penpalapp-6020c.appspot.com",
+            messagingSenderId: "322094641122"
+        };
+        firebase.initializeApp(config);
+    </script>
+    
+    <script src="scripts/ez-translate.js"></script>
 
-<script>
-    $(document).ready(function () {
-        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-        $('.modal').modal();
-    });
-</script>
+    <!-- The main page script -->
+    <script src="scripts/pages/dashboard.js"></script>
+
+    <!-- Modules that add specific functionality. -->
+    <script src="scripts/get-os-details.js"></script>
+    <script src="scripts/bind-signout-button.js" buttonid="sign-out"></script>
+    <script src="scripts/bind-signout-button.js" buttonid="sign-out-mobile"></script>
+    <script src="scripts/bind-conversation-list.js" conversationlistid="conversation-list"></script>
+    <script src="scripts/bind-messages.js"></script>
+    <script src="scripts/add-conversation.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+            $('.modal').modal();
+        });
+    </script>
+
 
 
 </body>
