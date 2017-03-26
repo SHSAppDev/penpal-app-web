@@ -13,14 +13,14 @@ function LoadMessages(targetUID) {
   this.submitButton = document.getElementById('submit');
   this.submitImageButton = document.getElementById('submitImage');
   this.imageForm = document.getElementById('image-form');
-  console.log("IMAGE FORM "+this.imageForm);
+  // console.log("IMAGE FORM "+this.imageForm);
   // console.log("IMAGE BTN "+this.submitImageButton);
 
   this.mediaCapture = document.getElementById('mediaCapture');
   this.targetUID = targetUID;
 
   if(this.targetUID===null) {
-    console.log('target id = null');
+    // console.log('target id = null');
     document.getElementById("nothing-to-display").removeAttribute('hidden');
     // document.getElementById("chat-container").setAttribute('hidden', true);
     document.getElementById("chat-container").style.display = 'none';

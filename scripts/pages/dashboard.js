@@ -6,7 +6,10 @@ function W3Dashboard() {
     // Shortcuts to DOM Elements.
     this.userPic = document.getElementById('user-pic');
     this.initFirebase();
-    // console.log(OSName);
+    this.translate = new EZTranslate();
+    this.translate.translate("en", "es", "What's up?", function(translatedText){
+        console.log("translatedText: "+translatedText);
+    });
 }
 
 
