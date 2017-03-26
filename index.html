@@ -40,55 +40,80 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+
 </head>
 
 <body>
 
-  <div id="google_translate_element"></div>
+<div id="google_translate_element"></div>
 
-  <script type="text/javascript">
-  function googleTranslateElementInit() {
-  new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-  }
-  </script>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+}
+</script>
 
-  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-    <!-- Navbar  -->
-    <span class="notranslate">
-    <ul id="user-dropdown" class="dropdown-content">
-        <li>
-            <a id="sign-out">Sign-out</a>
-        </li>
-    </ul>
-    <nav>
-        <div class="nav-wrapper teal" id="nav-bar">
-            <a href="#" class="brand-logo"><i class="large material-icons">textsms</i>World Without Walls</a>
-            <a href="#" data-activates="mobile-demo" class="button-collapse" id="button-collapse"><i class="material-icons">menu</i></a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li>
-                    <a href="aboutpage.html">About</a>
-                </li>
-                <li>
-                    <a class="dropdown-button" href="#!" data-activates="user-dropdown" id="user-pic"></a>
-                </li>
-            </ul>
-            <ul class="side-nav" id="mobile-demo">
-                <li>
-                    <a id="sign-out-mobile">Sign-out</a>
-                </li>
-            </ul>
+<!-- Navbar  -->
+<span class="notranslate">
+<ul id="user-dropdown" class="dropdown-content">
+    <li>
+        <a id="sign-out">Sign-out</a>
+    </li>
+</ul>
+<nav>
+    <div class="nav-wrapper teal" id="nav-bar">
+        <a href="#" class="brand-logo"><i class="large material-icons">textsms</i>World Without Walls</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse" id="button-collapse"><i class="material-icons">menu</i></a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li>
+                <a href="aboutpage.html">About</a>
+            </li>
+            <li>
+                <a class="dropdown-button" href="#!" data-activates="user-dropdown" id="user-pic"></a>
+            </li>
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+            <li>
+                <a id="sign-out-mobile">Sign-out</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+</span>
+
+<!-- Content -->
+<div class="row">
+    <div id="sidebar" class="col s12 m2 l2 teal white-text">
+        Conversations
+        <br>
+        <span class="notranslate">
+        <div class="preloader-wrapper active" id="conversations-preloader">
+            <div class="spinner-layer spinner-red-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
         </div>
-    </nav>
-    </span>
 
-    <!-- Content -->
-    <div class="row">
-        <div id="sidebar" class="col s12 m2 l2 teal white-text">
-            Conversations
-            <br>
-            <span class="notranslate">
-            <div class="preloader-wrapper active" id="conversations-preloader">
+        <div id="conversation-list" class="collection z-depth-3">
+        </div>
+        </span>
+        <a id="add-conversation-button" class="btn-large waves-effect waves-light red lighten-1" href="#add-conversation">Add <i class=" notranslate material-icons">people</i></a>
+        </a>
+    </div>
+    <div id="chat-container" class="col s12 m10 l10">
+        <center>Chat</center>
+        <span class="notranslate">
+        <div id="chat" class="card z-depth-3">
+            <div class="preloader-wrapper active" id="chat-preloader">
                 <div class="spinner-layer spinner-red-only">
                     <div class="circle-clipper left">
                         <div class="circle"></div>
@@ -101,90 +126,59 @@
                     </div>
                 </div>
             </div>
-
-            <div id="conversation-list" class="collection z-depth-3">
-
+            <div id="messages">
+                <span id="message-filler"></span>
             </div>
-          </span>
+
+            <div id="message-interaction">
+                <form id="message-form" action="#">
+                    <div class="input-field inline" id="message-input">
+                        <input type="text" id="message">
+                        <label for="message"><span class="translate">Message...</span></label>
+                    </div>
+                    <button id="submit" disabled type="submit" class="btn waves-light waves-effect red lighten-1">
+                        <span class="translate">Send</span>
+                        <i class="material-icons right">send</i>
+                    </button>
+                    <button id="submitImage" class="btn waves-light waves-effect red lighten-1" title="Add an image.">
+                        <i class="material-icons center">image</i>
+                    </button>
+
+                </form>
+                <form id="image-form" action="#">
+                    <input id="mediaCapture" type="file" accept="image/*,capture=camera" hidden>
+                </form>
+            </div>
         </div>
-        <div id="chat-container" class="col s12 m10 l10">
-            <center>Chat</center>
-            <span class="notranslate">
-            <div id="chat" class="card z-depth-3">
-              <div class="preloader-wrapper active" id="chat-preloader">
-                  <div class="spinner-layer spinner-red-only">
-                      <div class="circle-clipper left">
-                          <div class="circle"></div>
-                      </div>
-                      <div class="gap-patch">
-                          <div class="circle"></div>
-                      </div>
-                      <div class="circle-clipper right">
-                          <div class="circle"></div>
-                      </div>
-                  </div>
-              </div>
-                <div id="messages">
-                    <span id="message-filler"></span>
-                </div>
+        </span>
+    </div>
 
-                <div id="message-interaction">
-                    <form id="message-form" action="#">
-                        <div class="input-field inline" id="message-input">
-                            <input type="text" id="message">
-                            <label for="message"><span class="translate">Message...</span></label>
-                        </div>
-                        <button id="submit" disabled type="submit" class="btn waves-light waves-effect red lighten-1">
-                          <span class="translate">Send</span>
-                          <i class="material-icons right">send</i>
-                        </button>
-                        <button id="submitImage" class="btn waves-light waves-effect red lighten-1" title="Add an image.">
-                          <i class="material-icons center">image</i>
-                        </button>
+    <!-- <div class="row"> -->
+        <div class="col s12 m10 l10">
+            <div class="card-panel red" hidden id="nothing-to-display">
+                <p class="white-text center-align">Nothing to show yet :)</p>
+                <p class="white-text center-align">Click a conversation on the left</p>
+                <p class="white-text center-align">Or click <a href="#add-conversation">here</a> to start one.</p>
 
-                    </form>
-                    <form id="image-form" action="#">
-                      <input id="mediaCapture" type="file" accept="image/*,capture=camera" hidden>
-                    </form>
-                </div>
+
+
             </div>
-          </span>
         </div>
-
-        <!-- <div class="row"> -->
-            <div class="col s12 m10 l10">
-                <div class="card-panel red" hidden id="nothing-to-display">
-                    <p class="white-text center-align">Nothing to show yet :)</p>
-                    <p class="white-text center-align">Click a conversation on the left</p>
-                    <p class="white-text center-align">Or click <a href="#add-conversation">here</a> to start one.</p>
-
-
-
-                </div>
+    <!-- Add Conversation Modal -->
+    <div id="add-conversation" class="modal">
+        <div class="modal-content">
+            <h4>Add a conversation.</h4>
+            <div class="input-field inline">
+                <input id="email-field" type="email" class="validate">
+                <label for="email-field" data-error="Email formatted incorrectly" data-success="">Email</label>
             </div>
-        <!-- </div> -->
-
-        <!-- Floating Action Button  -->
-        <div class="fixed-action-btn">
-            <a class="btn-floating btn-large waves-effect waves-light red lighten-1" href="#add-conversation">
-              <i class="material-icons"><span class="notranslate">add</span></i>
-            </a>
+            <button id="add-conversation-button" class="teal btn waves-effect waves-light">Add Conversation</button>
         </div>
-        <!-- Add Conversation Modal -->
-        <div id="add-conversation" class="modal">
-            <div class="modal-content">
-                <h4>Add a conversation.</h4>
-                <div class="input-field inline">
-                    <input id="email-field" type="email" class="validate">
-                    <label for="email-field" data-error="Email formatted incorrectly" data-success="">Email</label>
-                </div>
-                <button id="add-conversation-button" class="teal btn waves-effect waves-light">Add Conversation</button>
-            </div>
-            <div class="modal-footer">
-                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Done</a>
-            </div>
+        <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Done</a>
         </div>
     </div>
+    
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
     <script>
@@ -218,6 +212,7 @@
             $('.modal').modal();
         });
     </script>
+
 
 
 </body>

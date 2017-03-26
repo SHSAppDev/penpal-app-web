@@ -20,6 +20,12 @@
      flex-grow: 1;
  }
  
+
+ #add-conversation-button {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+ }
  .message-container:first-of-type {
      border-top-width: 0;
  }
