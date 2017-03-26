@@ -22,6 +22,7 @@ EZTranslate.prototype.translate = function(sourceLang, targetLang, sourceText, c
                 // alert();
             },
             error: function(resp, b){
+                // LOOK AT THIS HACK!
                 var respText = resp.responseText;
                 respText = respText.replace(/,+/g,",");
                 //var respObj = JSON.parse(resp.responseText);
