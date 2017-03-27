@@ -5,177 +5,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Improve your foreign language skills by chatting with native speakers your age.">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <span class="notranslate"><title>World Without Walls</title></span>
-    <link rel="stylesheet" type="text/css" href="styles/dashboard.css">
-    <link rel="stylesheet" type="text/css" href="styles/main.css">
 
-    <!-- Disable tap highlight on IE -->
-    <meta name="msapplication-tap-highlight" content="no">
-
-    <!-- Web Application Manifest -->
-    <link rel="manifest" href="manifest.json">
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="World Without Walls">
-    <meta name="theme-color" content="#303F9F">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="World Without Walls">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
-
-    <!-- Tile icon for Win8 -->
-    <meta name="msapplication-TileColor" content="#3372DF">
-    <meta name="msapplication-navbutton-color" content="#303F9F">
-
-    <!-- Compiled and minified CSS -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
 
 </head>
 
 <body>
-
-<div id="google_translate_element"></div>
-
-<script type="text/javascript">
-function googleTranslateElementInit() {
-new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-}
-</script>
-
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-<!-- Navbar  -->
-<span class="notranslate">
-<ul id="user-dropdown" class="dropdown-content">
-    <li>
-        <a id="sign-out">Sign-out</a>
-    </li>
-</ul>
-<nav>
-    <div class="nav-wrapper teal" id="nav-bar">
-        <a href="#" class="brand-logo"><i class="large material-icons">textsms</i>World Without Walls</a>
-        <a href="#" data-activates="mobile-demo" class="button-collapse" id="button-collapse"><i class="material-icons">menu</i></a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li>
-                <a href="aboutpage.html">About</a>
-            </li>
-            <li>
-                <a class="dropdown-button" href="#!" data-activates="user-dropdown" id="user-pic"></a>
-            </li>
-        </ul>
-        <ul class="side-nav" id="mobile-demo">
-            <li>
-                <a id="sign-out-mobile">Sign-out</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-</span>
-
-<!-- Content -->
-<div class="row">
-    <div id="sidebar" class="col s12 m2 l2 teal white-text">
-        Conversations
-        <br>
-        <span class="notranslate">
-        <div class="preloader-wrapper active" id="conversations-preloader">
-            <div class="spinner-layer spinner-red-only">
-                <div class="circle-clipper left">
-                    <div class="circle"></div>
-                </div>
-                <div class="gap-patch">
-                    <div class="circle"></div>
-                </div>
-                <div class="circle-clipper right">
-                    <div class="circle"></div>
-                </div>
-            </div>
-        </div>
-
-        <div id="conversation-list" class="collection z-depth-3">
-        </div>
-        </span>
-        <a id="add-people-button" class="btn-large waves-effect waves-light red lighten-1" href="#add-conversation">Add <i class=" notranslate material-icons">people</i></a>
-        </a>
-    </div>
-    <div id="chat-container" class="col s12 m10 l10">
-        <center>Chat</center>
-        <span class="notranslate">
-        <div id="chat" class="card z-depth-3">
-            <div class="preloader-wrapper active" id="chat-preloader">
-                <div class="spinner-layer spinner-red-only">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="gap-patch">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                </div>
-            </div>
-            <div id="messages">
-                <span id="message-filler"></span>
-            </div>
-
-            <div id="message-interaction">
-                <form id="message-form" action="#">
-                    <div class="input-field inline" id="message-input">
-                        <input type="text" id="message">
-                        <label for="message"><span class="translate">Message...</span></label>
-                    </div>
-                    <button id="submit" disabled type="submit" class="btn waves-light waves-effect red lighten-1">
-                        <span class="translate">Send</span>
-                        <i class="material-icons right">send</i>
-                    </button>
-                    <button id="submitImage" class="btn waves-light waves-effect red lighten-1" title="Add an image.">
-                        <i class="material-icons center">image</i>
-                    </button>
-
-                </form>
-                <form id="image-form" action="#">
-                    <input id="mediaCapture" type="file" accept="image/*,capture=camera" hidden>
-                </form>
-            </div>
-        </div>
-        </span>
-    </div>
-
-    <!-- <div class="row"> -->
-        <div class="col s12 m10 l10">
-            <div class="card-panel red" hidden id="nothing-to-display">
-                <p class="white-text center-align">Nothing to show yet :)</p>
-                <p class="white-text center-align">Click a conversation on the left</p>
-                <p class="white-text center-align">Or click <a href="#add-conversation">here</a> to start one.</p>
-
-
-
-            </div>
-        </div>
-    <!-- Add Conversation Modal -->
-    <div id="add-conversation" class="modal">
-        <div class="modal-content">
-            <h4>Add a conversation.</h4>
-            <div class="input-field inline">
-                <input id="email-field" type="email" class="validate">
-                <label for="email-field" data-error="Email formatted incorrectly" data-success="">Email</label>
-            </div>
-            <button id="add-conversation-button" class="teal btn waves-effect waves-light">Add Conversation</button>
-        </div>
-        <div class="modal-footer">
-            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Done</a>
-        </div>
-    </div>
 
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
@@ -189,27 +23,18 @@ new google.translate.TranslateElement({pageLanguage: 'en', layout: google.transl
             messagingSenderId: "322094641122"
         };
         firebase.initializeApp(config);
-    </script>
-    
-    <script src="scripts/ez-translate.js"></script>
 
-    <!-- The main page script -->
-    <script src="scripts/pages/dashboard.js"></script>
-
-    <!-- Modules that add specific functionality. -->
-    <script src="scripts/get-os-details.js"></script>
-    <script src="scripts/bind-signout-button.js" buttonid="sign-out"></script>
-    <script src="scripts/bind-signout-button.js" buttonid="sign-out-mobile"></script>
-    <script src="scripts/bind-conversation-list.js" conversationlistid="conversation-list"></script>
-    <script src="scripts/bind-messages.js"></script>
-    <script src="scripts/add-conversation.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-            $('.modal').modal();
+        var auth = firebase.auth();
+        auth.onAuthStateChanged(function(user){
+          if(user) {
+              window.location.href = "dashboard.html";
+          } else {
+              window.location.href = "login.html";
+          }
         });
+
     </script>
+
 
 
 
