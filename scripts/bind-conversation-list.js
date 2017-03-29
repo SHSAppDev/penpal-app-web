@@ -68,7 +68,7 @@ LoadConversationList.prototype.displayConversation = function(recipientUID, myCo
       // console.log(this.conversationList);
       this.conversationList.appendChild(div);
     }
-    div.href = 'index.html?targetUID='+recipientUID;
+    div.href = 'dashboard.html?targetUID='+recipientUID;
 
     // Display name (displayName)
     div.querySelector('.name').textContent = snapshot.val().displayName;

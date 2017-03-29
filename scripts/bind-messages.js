@@ -13,14 +13,14 @@ function LoadMessages(targetUID) {
   this.submitButton = document.getElementById('submit');
   this.submitImageButton = document.getElementById('submitImage');
   this.imageForm = document.getElementById('image-form');
-  console.log("IMAGE FORM "+this.imageForm);
+  // console.log("IMAGE FORM "+this.imageForm);
   // console.log("IMAGE BTN "+this.submitImageButton);
 
   this.mediaCapture = document.getElementById('mediaCapture');
   this.targetUID = targetUID;
 
   if(this.targetUID===null) {
-    console.log('target id = null');
+    // console.log('target id = null');
     document.getElementById("nothing-to-display").removeAttribute('hidden');
     // document.getElementById("chat-container").setAttribute('hidden', true);
     document.getElementById("chat-container").style.display = 'none';
@@ -248,13 +248,16 @@ LoadMessages.prototype.displayMessage = function(key, name, text, picUrl, imageU
     // Replace all line breaks by <br>.
     messageElement.innerHTML = messageElement.innerHTML.replace(/\n/g, '<br>');
   } else if (imageUri) { // If the message is an image.
-    var image = document.createElement('img');
+    var temp = document.createElement('div');
+    temp.innerHTML = '<img src=# class="materialboxed" width="300"></img>';
+    var image = temp.firstChild;
     image.addEventListener('load', function() {
       this.chat.scrollTop = this.chat.scrollHeight;
     }.bind(this));
     this.setImageUrl(imageUri, image);
     messageElement.innerHTML = '';
     messageElement.appendChild(image);
+    $('.materialboxed').materialbox();
   }
 
   var profilePic = div.querySelector('.pic');
