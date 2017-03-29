@@ -1,0 +1,30 @@
+<!doctype html>
+
+<html lang="en">
+<!-- Materialize CSS Head -->
+
+<head>
+    <meta charset="utf-8">
+
+</head>
+
+<body>
+    <p>your timezone is...</p>
+    <h3 id="time">Unknown</h3>
+
+    <!--get user info-->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js'></script>
+    <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/moment.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data-2010-2020.min.js'></script>
+    <script src="scripts/user-info.js"></script>
+    <script>
+      var time = document.getElementById('time');
+      time.textContent = sessionStorage.timezone;
+    </script>
+
+
+
+
+</body>
+
+</html>
