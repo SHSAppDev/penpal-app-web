@@ -1,5 +1,6 @@
 {
   "projects": {
-    "PenpalApp": "penpalapp-6020c"
+    "PenpalApp": "penpalapp-6020c",
+    "default": "penpalapp-6020c"
   }
 }
