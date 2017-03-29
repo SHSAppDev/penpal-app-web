@@ -37,9 +37,6 @@ body {
     /*margin-left: 7.5px;*/
 }
 
-#message-interaction {
-
-}
 
 #message-form {
   display: flex;
@@ -57,4 +54,9 @@ body {
 }
 #add-conversation-button {
   flex-grow: 1;
+}
+
+#add-people-button {
+    display: flex;
+    align-items: center;
 }
