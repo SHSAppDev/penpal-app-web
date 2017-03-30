@@ -10,11 +10,11 @@ World Without Walls will be a service that upgrades the old pen pal concept with
 
 ### Pre-Requisites
 
-*Install NodeJS*
+*1. Install NodeJS*
 
 https://nodejs.org/en/
 
-*Install Firebase CLI tools*
+*2. Install Firebase CLI tools*
 
 ```shell
 $ npm install -g firebase-tools
@@ -29,9 +29,9 @@ $ firebase serve
 Visit 'localhost' link provided (usually http://localhost:5000).
 
 ## To-Do ![To-Do](https://maxcdn.icons8.com/Color/PNG/24/Business/todo_list-24.png)
-- [ ] UI for viewing conversations
-- [ ] Direct Messaging
-- [ ] Add new friends functionality
+- [x] UI for viewing conversations
+- [x] Direct Messaging
+- [x] Add new friends functionality
 - [ ] Translate words to different languages right in the message text box
 - [ ] Logo
 - [ ] About Page

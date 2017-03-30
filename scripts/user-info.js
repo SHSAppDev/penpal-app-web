@@ -40,14 +40,29 @@ function convertTime(theTime) {
 	var stamp = date + "T" + theTime + "Z";
 	var momentTime = moment(stamp);
 
-	getTimeZone();
+	getTimeZone(); // sets currTz
 	console.log("currTz: " + currTz);
 	var tzTime = momentTime.tz(currTz);
 	var formattedTime = tzTime.format('h:mm A');
 
 	console.log("formatted time: " + formattedTime);
 	// localTime.textContent = "Time in " + currTz + ": " + formattedTime;
+	saveToFirebase(currTz, formattedTime);
+}
+
+function saveToFirebase(timezone, formattedTime) {
+	console.log("saving to firebase")
+	// Make a firebase reference to the currentUser
+	var myUID = firebase.auth().currentUser.uid;
+	var userRef = firebase.database().ref('user-data/' + myUID);
+	//Push updates
+	var updates = {};
+	// updates['/timezone'] = 'timezone'; // a
+	updates['/timezone'] = timezone; // b
+	updates['/formattedTime'] = formattedTime; // b
+
+	userRef.update(updates);
 }
 console.log("got user info");
 loadTime();
-setInterval(loadTime, 60 * 1000);
+setInterval(loadTime, 60 * 1000); // update every minute
