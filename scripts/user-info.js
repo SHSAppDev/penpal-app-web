@@ -48,19 +48,17 @@ function convertTime(theTime) {
 	console.log("formatted time: " + formattedTime);
 	window.formattedTime = formattedTime;
 	// localTime.textContent = "Time in " + currTz + ": " + formattedTime;
-	saveToFirebase(currTz, formattedTime);
+	saveToFirebase(currTz);
 }
 
-function saveToFirebase(timezone, formattedTime) {
+function saveToFirebase(timezone) {
 	console.log("saving to firebase")
 	// Make a firebase reference to the currentUser
 	var myUID = firebase.auth().currentUser.uid;
 	var userRef = firebase.database().ref('user-data/' + myUID);
 	//Push updates
 	var updates = {};
-	// updates['/timezone'] = 'timezone'; // a
 	updates['/timezone'] = timezone; // b
-	updates['/formattedTime'] = formattedTime; // b
 
 	userRef.update(updates);
 }
