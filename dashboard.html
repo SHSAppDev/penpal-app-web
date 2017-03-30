@@ -145,10 +145,66 @@
                         <i class="material-icons center">image</i>
                     </button>
 
+
             </form>
             <form id="image-form" action="#">
                 <input id="mediaCapture" type="file" accept="image/*,capture=camera" hidden>
             </form>
+            <!-- <select>
+              <option value="en">English</option>
+              <option value="af">Afrikaans</option>
+              <option value="ar">Arabic</option>
+              <option value="sq">Albanian</option>
+              <option value="eu">Basque</option>
+              <option value="bn">Bengali</option>
+              <option value="be">Belarusian</option>
+              <option value="bg">Bulgarian</option>
+              <option value="ca">Catalan</option>
+              <option value="zh-CN">Chinese</option>
+            </select> -->
+            <div id="translate-window">
+              <label>Translate Stuff</label>
+
+              <div>
+                <span>
+                  <div class="input-field col s12">
+                    <select id='my-cool-select' class="browser-default">
+                      <option value="" disabled selected>Source Language</option>
+                      <option value="en">English</option>
+                      <option value="es">Spanish</option>
+                      <option value="fr">French</option>
+                      <option value="zh-CN">Chinese</option>
+
+                    </select>
+                  </div>
+                </span>
+                <span>
+                  <div class="input-field col s12">
+                    <select id='my-cool-select' class="browser-default">
+                      <option value="" disabled selected>Target Language</option>
+                      <option value="en">English</option>
+                      <option value="es">Spanish</option>
+                      <option value="fr">French</option>
+                      <option value="zh-CN">Chinese</option>
+                    </select>
+                  </div>
+                </span>
+              </div>
+
+              <div class="input-field col s12">
+                <textarea id="translateSourceText" class="materialize-textarea"></textarea>
+                <label for="textarea1">Source Text</label>
+              </div>
+              <button id="translateSourceTextButton" class="btn waves-light waves-effect red lighten-1">
+                      <span class="translate">Translate</span>
+                      <i class="material-icons right">translate</i>
+              </button>
+
+              <p id="translatedText">
+                Translated Text Here.
+              </p>
+
+            </div>
         </div>
     </div>
     </span>
@@ -213,10 +269,8 @@
     <script src="scripts/add-conversation.js"></script>
 
     <script>
-        $(document).ready(function () {
-            // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-            $('.modal').modal();
-        });
+
+        // console.log("select "+document.getElementById('my-cool-select').style.display+" ?");
     </script>
 
 
