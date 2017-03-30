@@ -46,6 +46,7 @@ function convertTime(theTime) {
 	var formattedTime = tzTime.format('h:mm A');
 
 	console.log("formatted time: " + formattedTime);
+	window.formattedTime = formattedTime;
 	// localTime.textContent = "Time in " + currTz + ": " + formattedTime;
 }
 console.log("got user info");
