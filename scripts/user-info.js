@@ -26,35 +26,35 @@ function loadTime() {
 		minutes = now.getUTCMinutes();
 	}
 
-	console.log("Hours: " + hours);
-	console.log("Minutes: " + minutes);
+	// console.log("Hours: " + hours);
+	// console.log("Minutes: " + minutes);
 
 	var time = hours + ":" + minutes;
-	console.log(time);
+	// console.log(time);
 	convertTime(time);
 }
 
 function convertTime(theTime) {
-	console.log("Converting time");
+	// console.log("Converting time");
 	var date = moment().format("YYYY-MM-DD");
 	var stamp = date + "T" + theTime + "Z";
 	var momentTime = moment(stamp);
 
 	getTimeZone(); // sets currTz
-	console.log("currTz: " + currTz);
+	// console.log("currTz: " + currTz);
 	var tzTime = momentTime.tz(currTz);
 	var formattedTime = tzTime.format('h:mm A');
 
-	console.log("formatted time: " + formattedTime);
+	// console.log("formatted time: " + formattedTime);
 	window.formattedTime = formattedTime;
 	// localTime.textContent = "Time in " + currTz + ": " + formattedTime;
 	saveToFirebase(currTz);
 }
 
 function saveToFirebase(timezone) {
-	console.log("saving to firebase")
+	// console.log("saving to firebase")
 	if(firebase.auth().currentUser === null) {
-		console.log("Unable to save to firebase due to the user not yet being authenticated");
+		// console.log("Unable to save to firebase due to the user not yet being authenticated");
 		return;
 	}
 	// Make a firebase reference to the currentUser
@@ -66,6 +66,6 @@ function saveToFirebase(timezone) {
 
 	userRef.update(updates);
 }
-console.log("got user info");
+// console.log("got user info");
 loadTime();
 setInterval(loadTime, 60 * 1000); // update every minute
