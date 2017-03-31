@@ -8,10 +8,39 @@
 
 function EZTranslate() {
 	// console.log("ez translate created!");
+	this.translatorOccupied = false;
+	this.objectiveNumberOfSentences = 0;
+	this.numberOfSentencesTranslated = 0;
+	this.constructedTranslation = "";
 }
 
-//@param callback should be a function that takes the one parameter of the translated text
 EZTranslate.prototype.translate = function(sourceLang, targetLang, sourceText, callback) {
+	while(this.translatorOccupied) {
+		continue;
+	}
+	this.translatorOccupied = true;
+	var sentences = sourceText.replace(/([.?!])\s*(?=[A-Z])/g, "$1|").split("|");
+	this.objectiveNumberOfSentences = sentences.length;
+	for(var i=0; i<sentences.length;i++) {
+		this.translateSingleSentence(sourceLang, targetLang, sentences[i], this.onSingleSentenceTranslated.bind(this, callback));
+	}
+};
+
+EZTranslate.prototype.onSingleSentenceTranslated = function(ultimateCallback, translatedSentence) {
+	this.numberOfSentencesTranslated += 1;
+	this.constructedTranslation += translatedSentence+' ';
+	if(this.numberOfSentencesTranslated == this.objectiveNumberOfSentences) {
+		var final = this.constructedTranslation;
+		this.constructedTranslation = "";
+		this.translatorOccupied = false;
+		this.objectiveNumberOfSentences = 0;
+		this.numberOfSentencesTranslated = 0;
+		ultimateCallback(final);
+	}
+};
+
+//@param callback should be a function that takes the one parameter of the translated text
+EZTranslate.prototype.translateSingleSentence = function(sourceLang, targetLang, sourceText, callback) {
 	var api_url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl="
             + sourceLang + "&tl=" + targetLang + "&dt=t&q=" + encodeURI(sourceText);
     $.ajax({

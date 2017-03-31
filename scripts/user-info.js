@@ -53,6 +53,10 @@ function convertTime(theTime) {
 
 function saveToFirebase(timezone) {
 	console.log("saving to firebase")
+	if(firebase.auth().currentUser === null) {
+		console.log("Unable to save to firebase due to the user not yet being authenticated");
+		return;
+	}
 	// Make a firebase reference to the currentUser
 	var myUID = firebase.auth().currentUser.uid;
 	var userRef = firebase.database().ref('user-data/' + myUID);
