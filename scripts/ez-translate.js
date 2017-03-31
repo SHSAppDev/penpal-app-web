@@ -38,7 +38,7 @@ EZTranslate.prototype.onSingleSentenceTranslated = function(ultimateCallback, in
 			final+=this.translatedSentences[i];
 		}
 		// this.constructedTranslation = "";
-		this.translatedSentenced = [];
+		this.translatedSentences = [];
 		this.objectiveNumberOfSentences = 0;
 		this.numberOfSentencesTranslated = 0;
 		ultimateCallback(final);
