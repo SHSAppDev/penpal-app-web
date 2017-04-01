@@ -6,14 +6,7 @@ function W3Dashboard() {
     // Shortcuts to DOM Elements.
     this.userPic = document.getElementById('user-pic');
     this.initFirebase();
-    this.translate = new EZTranslate();
 
-    // Example of how to do the translate:
-    // translate method takes in sourceLang, targetLang, sourceText, and a callBack
-    // Here I do English to Spanish
-    // this.translate.translate("en", "es", "What's up?", function(translatedText){
-    //     console.log("translatedText: "+translatedText);
-    // });
 }
 
 
@@ -36,31 +29,50 @@ W3Dashboard.prototype.initFirebase = function() {
 
 // Checks if the given userID is registered in user-data, and if it's not,
 // the userID gets registered
-W3Dashboard.prototype.checkForFirstTimeUser = function(userId) {
-  var userRef = this.database.ref('user-data/'+userId);
-  userRef.once('value', function(snapshot) {
-    if(snapshot.val() === null
-    || snapshot.val().registered == false
-    || snapshot.val().registered == null
-    || snapshot.val().registered == undefined) {
-      // We have ourselves a first time user!
-      // console.log("this="+this);
-      userRef.set({
-        email: this.auth.currentUser.email,
-        displayName: this.auth.currentUser.displayName,
-        photoURL: this.auth.currentUser.photoURL || W3Dashboard.URL_PROFILE_PLACEHOLDER,
-        registered: true
-      });
-    }
-  }.bind(this));
-}
+// W3Dashboard.prototype.checkForFirstTimeUser = function(userId) {
+//   var userRef = this.database.ref('user-data/'+userId);
+//   userRef.once('value', function(snapshot) {
+//     if(snapshot.val() === null
+//     || snapshot.val().registered == false
+//     || snapshot.val().registered == null
+//     || snapshot.val().registered == undefined) {
+//       // We have ourselves a first time user!
+//       // console.log("this="+this);
+//       userRef.set({
+//         email: this.auth.currentUser.email,
+//         displayName: this.auth.currentUser.displayName,
+//         photoURL: this.auth.currentUser.photoURL || W3Dashboard.URL_PROFILE_PLACEHOLDER,
+//         registered: true
+//       });
+//     }
+//   }.bind(this));
+// }
 
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
 W3Dashboard.prototype.onAuthStateChanged = function(user) {
     if (user) { // User is signed in!
         //First, check for first time user.
         // console.log("on auth change");
-        this.checkForFirstTimeUser(this.auth.currentUser.uid);
+        // this.checkForFirstTimeUser(this.auth.currentUser.uid);
+        this.userInfo = new UserInfo();
+        var userRef = this.database.ref('user-data/'+this.auth.currentUser.uid);
+        console.log(this.auth.currentUser.email);
+        console.log(this.auth.currentUser.displayName);
+        console.log(this.auth.currentUser.photoURL || W3Dashboard.URL_PROFILE_PLACEHOLDER);
+        console.log(userRef);
+        console.log(this.userInfo.timezone);
+        var updates = {}
+        updates['/email'] = this.auth.currentUser.email;
+        updates['/displayName'] = this.auth.currentUser.displayName;
+        updates['/photoURL'] = this.auth.currentUser.photoURL || W3Dashboard.URL_PROFILE_PLACEHOLDER;
+        updates['/timezone'] = this.userInfo.timezone;
+        userRef.update(updates);
+        // userRef.set({
+        //         email: this.auth.currentUser.email,
+        //         displayName: this.auth.currentUser.displayName,
+        //         photoURL: this.auth.currentUser.photoURL || W3Dashboard.URL_PROFILE_PLACEHOLDER,
+        //         timezone: this.userInfo.timezone
+        // });
 
         // Get profile pic and user's name from the Firebase user object.
         var profilePicUrl = user.photoURL; // Get profile pic.
@@ -73,6 +85,7 @@ W3Dashboard.prototype.onAuthStateChanged = function(user) {
         // Show user's profile and sign-out button.
         // this.userName.removeAttribute('hidden');
         this.userPic.removeAttribute('hidden');
+
     }
 };
 
@@ -97,10 +110,6 @@ window.onload = function() {
 
 (function($) {
     $(function() {
-        $('.button-collapse').sideNav();
-        $('select').material_select();
-        $('.materialboxed').materialbox();
-        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-        $('.modal').modal();
+
     }); // end of document ready
 })(jQuery); // end of jQuery name space

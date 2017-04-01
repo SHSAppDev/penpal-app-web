@@ -45,14 +45,14 @@
 
     <div id="google_translate_element"></div>
 
-    <!--<script type="text/javascript">
+    <!-- <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
                 pageLanguage: 'en',
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE
             }, 'google_translate_element');
         }
-    </script>-->
+    </script> -->
 
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
@@ -147,21 +147,8 @@
             <form id="image-form" action="#">
                 <input id="mediaCapture" type="file" accept="image/*,capture=camera" hidden>
             </form>
-            <!-- <select>
-              <option value="en">English</option>
-              <option value="af">Afrikaans</option>
-              <option value="ar">Arabic</option>
-              <option value="sq">Albanian</option>
-              <option value="eu">Basque</option>
-              <option value="bn">Bengali</option>
-              <option value="be">Belarusian</option>
-              <option value="bg">Bulgarian</option>
-              <option value="ca">Catalan</option>
-              <option value="zh-CN">Chinese</option>
-            </select> -->
 
             <!--Translate -->
-
             <ul class="collapsible" data-collapsible="accordion">
                 <li>
                     <div class="collapsible-header"><span style="color:red;">Translate Tool</span><i class="material-icons" style="color:red;">compare_arrows</i></div>
@@ -244,30 +231,7 @@
         firebase.initializeApp(config);
     </script>
 
-    <script src="scripts/ez-translate.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('select').material_select();
-            $('.collapsible').collapsible({
-                accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
-            });
 
-            $('.collapsible .collapsible-header').on('click', function (event) {
-                var target = $(this);
-                setTimeout(function () {
-                    if (target.length) {
-                        event.preventDefault();
-                        $("#chat").animate({
-                            scrollTop: $('#chat').prop("scrollHeight")
-                        }, 1000);
-                    }
-                }, 300);
-            });
-        });
-    </script>
-
-    <!-- The main page script -->
-    <script src="scripts/pages/dashboard.js"></script>
 
     <!--get user info-->
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js'></script>
@@ -275,9 +239,11 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data-2010-2020.min.js'></script>
     <script src="scripts/user-info.js"></script>
 
-
+    <!-- The main page script -->
+    <script src="scripts/pages/dashboard.js"></script>
 
     <!-- Modules that add specific functionality. -->
+    <script src="scripts/ez-translate.js"></script>
     <script src="scripts/get-os-details.js"></script>
     <script src="scripts/bind-signout-button.js" buttonid="sign-out"></script>
     <script src="scripts/bind-signout-button.js" buttonid="sign-out-mobile"></script>
@@ -287,7 +253,29 @@
     <script src="scripts/bind-translate.js"></script>
 
     <script>
-        // console.log("select "+document.getElementById('my-cool-select').style.display+" ?");
+        $(document).ready(function () {
+          $('.button-collapse').sideNav();
+          $('select').material_select();
+          $('.materialboxed').materialbox();
+          // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+          $('.modal').modal();
+          $('select').material_select();
+          $('.collapsible').collapsible({
+              accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+          });
+
+          $('.collapsible .collapsible-header').on('click', function (event) {
+              var target = $(this);
+              setTimeout(function () {
+                  if (target.length) {
+                      event.preventDefault();
+                      $("#chat").animate({
+                          scrollTop: $('#chat').prop("scrollHeight")
+                      }, 1000);
+                  }
+              }, 300);
+          });
+        });
     </script>
 
 
