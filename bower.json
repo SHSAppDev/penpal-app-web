@@ -1,0 +1,24 @@
+{
+  "name": "penpal-app-web",
+  "homepage": "https://github.com/SHSAppDev/penpal-app-web",
+  "authors": [
+    "Kha Nguyen <kha.vng@gmail.com>"
+  ],
+  "description": "",
+  "main": "index.html",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "scss-material-shadows": "^0.1.2"
+  },
+  "devDependencies": {
+    "scss-material-shadows": "^0.1.2"
+  }
+}

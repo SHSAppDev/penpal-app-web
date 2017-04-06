@@ -41,6 +41,89 @@
 		"oAP": "\/add-conversation.html",
 		"oF": 0
 		},
+	"\/bower.json": {
+		"ft": 524288,
+		"oA": 1,
+		"oAP": "\/bower-min.json",
+		"oF": 0,
+		"oO": 0,
+		"oS": 1
+		},
+	"\/bower_components\/scss-material-shadows\/.bower.json": {
+		"ft": 524288,
+		"oA": 2,
+		"oAP": "\/bower_components\/scss-material-shadows\/.bower.json",
+		"oF": 0,
+		"oO": 0,
+		"oS": 1
+		},
+	"\/bower_components\/scss-material-shadows\/bower.json": {
+		"ft": 524288,
+		"oA": 2,
+		"oAP": "\/bower_components\/scss-material-shadows\/bower.json",
+		"oF": 0,
+		"oO": 0,
+		"oS": 1
+		},
+	"\/bower_components\/scss-material-shadows\/css\/md-material-shadows.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 2,
+		"oAP": "\/bower_components\/scss-material-shadows\/css\/md-material-shadows.css",
+		"oF": 0,
+		"oS": 0
+		},
+	"\/bower_components\/scss-material-shadows\/gulpfile.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 2,
+		"oAP": "\/bower_components\/scss-material-shadows\/gulpfile.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
+	"\/bower_components\/scss-material-shadows\/LICENSE": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/bower_components\/scss-material-shadows\/LICENSE",
+		"oF": 0
+		},
+	"\/bower_components\/scss-material-shadows\/package.json": {
+		"ft": 524288,
+		"oA": 2,
+		"oAP": "\/bower_components\/scss-material-shadows\/package.json",
+		"oF": 0,
+		"oO": 0,
+		"oS": 1
+		},
+	"\/bower_components\/scss-material-shadows\/README.md": {
+		"cS": 0,
+		"eF": 1,
+		"eL": 1,
+		"eLB": 0,
+		"ema": 1,
+		"eSQ": 1,
+		"ft": 4096,
+		"oA": 2,
+		"oAP": "\/bower_components\/scss-material-shadows\/README.md",
+		"oF": 0,
+		"oFM": 0,
+		"oS": 0,
+		"pHT": 0,
+		"pME": 1,
+		"rFN": 0,
+		"uCM": 0
+		},
+	"\/bower_components\/scss-material-shadows\/sache.json": {
+		"ft": 524288,
+		"oA": 2,
+		"oAP": "\/bower_components\/scss-material-shadows\/sache.json",
+		"oF": 0,
+		"oO": 0,
+		"oS": 1
+		},
 	"\/dashboard.html": {
 		"ft": 8192,
 		"oA": 2,
@@ -267,6 +350,19 @@
 		"oF": 0,
 		"oS": 0
 		},
+	"\/styles\/dashboard.scss": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 4,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/styles\/dashboard.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
+		},
 	"\/styles\/founderspagemain.css": {
 		"aP": 1,
 		"bl": 0,
@@ -287,6 +383,16 @@
 		"oF": 0,
 		"oS": 0
 		},
+	"\/styles\/main-min.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/styles\/main-min-min.css",
+		"oF": 0,
+		"oS": 0
+		},
 	"\/styles\/main.css": {
 		"aP": 1,
 		"bl": 0,
@@ -296,6 +402,42 @@
 		"oAP": "\/styles\/main-min.css",
 		"oF": 0,
 		"oS": 0
+		},
+	"\/styles\/md-material-shadows copy.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/styles\/md-material-shadows copy-min.css",
+		"oF": 0,
+		"oS": 0
+		},
+	"\/styles\/md-material-shadows copy.scss": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 4,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/styles\/md-material-shadows copy.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
+		},
+	"\/styles\/md-material-shadows.scss": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 4,
+		"ma": 0,
+		"oA": 1,
+		"oAP": "\/styles\/md-material-shadows.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
 		},
 	"\/test-timezone.html": {
 		"ft": 8192,
