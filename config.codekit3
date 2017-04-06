@@ -41,10 +41,10 @@
 		"oAP": "\/add-conversation.html",
 		"oF": 0
 		},
-	"\/firebase-debug.log": {
+	"\/dashboard.html": {
 		"ft": 8192,
 		"oA": 2,
-		"oAP": "\/firebase-debug.log",
+		"oAP": "\/dashboard.html",
 		"oF": 0
 		},
 	"\/firebase.json": {
@@ -190,11 +190,29 @@
 		"sC": 1,
 		"tS": 0
 		},
+	"\/scripts\/ez-translate.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/scripts\/ez-translate-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
 	"\/scripts\/get-os-details.js": {
 		"ft": 64,
 		"mi": 1,
 		"oA": 0,
 		"oAP": "\/scripts\/get-os-details-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
+	"\/scripts\/pages\/dashboard.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/scripts\/pages\/dashboard-min.js",
 		"oF": 0,
 		"sC": 1,
 		"tS": 0
@@ -213,6 +231,15 @@
 		"oA": 2,
 		"oAP": "\/scripts\/readme.txt",
 		"oF": 0
+		},
+	"\/scripts\/user-info.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/scripts\/user-info-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
 		},
 	"\/sidebar-conversation": {
 		"ft": 8192,
