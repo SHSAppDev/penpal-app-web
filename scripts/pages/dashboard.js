@@ -11,9 +11,9 @@ function W3Dashboard() {
     // Example of how to do the translate:
     // translate method takes in sourceLang, targetLang, sourceText, and a callBack
     // Here I do English to Spanish
-    this.translate.translate("en", "es", "What's up?", function(translatedText){
-        console.log("translatedText: "+translatedText);
-    });
+    // this.translate.translate("en", "es", "What's up?", function(translatedText){
+    //     console.log("translatedText: "+translatedText);
+    // });
 }
 
 
