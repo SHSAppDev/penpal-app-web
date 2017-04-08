@@ -1,6 +1,7 @@
 {
   "projects": {
     "PenpalApp": "penpalapp-6020c",
-    "default": "penpalapp-6020c"
+    "default": "penpalapp-6020c",
+    "release": "worldwithoutwalls-f2d4b"
   }
 }
