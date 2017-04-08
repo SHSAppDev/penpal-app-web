@@ -54,13 +54,15 @@ EZTranslate.prototype.translateSingleSentence = function(sourceLang, targetLang,
             type: "GET",
             url: api_url,
             success: function(data) {
-                console.log(data);
+                // console.log(data);
+								callback(data[0][0][0])
             },
             error: function(resp, b){
                 // LOOK AT THIS HACK!
                 var respText = resp.responseText;
                 respText = respText.replace(/,+/g,",");
                 var respObj = JSON.parse(respText);
+
                 respObj = respObj[0][0];
                 var translatedText = respObj[0];
                 callback(translatedText);
