@@ -4,7 +4,7 @@
 // Initializes a list of messages and listens for more.
 // REQUIRES that a few html elements exist in the document with the following IDs
 function LoadMessages(targetUID) {
-
+    document.getElementById('chat-preloader').style.display = "block";
   // These are the IDs:
   this.chat = document.getElementById('chat');
   this.messageList = document.getElementById('messages');
@@ -13,17 +13,23 @@ function LoadMessages(targetUID) {
   this.submitButton = document.getElementById('submit');
   this.submitImageButton = document.getElementById('submitImage');
   this.imageForm = document.getElementById('image-form');
+  // console.log("IMAGE FORM "+this.imageForm);
+  // console.log("IMAGE BTN "+this.submitImageButton);
+
   this.mediaCapture = document.getElementById('mediaCapture');
   this.targetUID = targetUID;
 
   if(this.targetUID===null) {
-    console.log('tid null');
+    // console.log('target id = null');
     document.getElementById("nothing-to-display").removeAttribute('hidden');
-    this.messageList.setAttribute('hidden', true);
-    this.messageForm.setAttribute('hidden', true);
-    this.messageInput.setAttribute('hidden', true);
-    this.submitButton.setAttribute('hidden', true);
+    // document.getElementById("chat-container").setAttribute('hidden', true);
+    document.getElementById("chat-container").style.display = 'none';
+    // console.log(document.getElementById("chat-container"));
 
+    // this.messageList.setAttribute('hidden', true);
+    // this.messageForm.setAttribute('hidden', true);
+    // this.messageInput.setAttribute('hidden', true);
+    // this.submitButton.setAttribute('hidden', true);
     return;
   }
 
@@ -33,10 +39,10 @@ function LoadMessages(targetUID) {
   this.messageInput.addEventListener('change', buttonTogglingHandler);
 
   // Events for image upload.
-  // this.submitImageButton.addEventListener('click', function() {
-  //   this.mediaCapture.click();
-  // }.bind(this));
-  // this.mediaCapture.addEventListener('change', this.saveImageMessage.bind(this));
+  this.submitImageButton.addEventListener('click', function() {
+    this.mediaCapture.click();
+  }.bind(this));
+  this.mediaCapture.addEventListener('change', this.saveImageMessage.bind(this));
 
 
   this.messageForm.addEventListener('submit', this.saveMessage.bind(this));
@@ -55,6 +61,16 @@ LoadMessages.prototype.initFirebase = function() {
 LoadMessages.prototype.onAuthStateChanged = function(user) {
   if (user) { // User is signed in!
     this.loadMessages();
+    if(this.targetUID) {
+      // We've entered the conversation, so no more messages should be unread
+      var myConversationsRef = this.database.ref('user-data/'+firebase.auth().currentUser.uid+'/conversations');
+      myConversationsRef.orderByChild("recipientUID").equalTo(this.targetUID).limitToFirst(1).once('value', function(data){
+        var convKey = Object.keys(data.val())[0]
+        var updates = {};
+        updates["/"+convKey+"/unreadMessages"] = 0
+        myConversationsRef.update(updates);
+      });
+    }
   }
 };
 
@@ -70,20 +86,22 @@ LoadMessages.prototype.loadMessages = function() {
   this.messagesRef.off();
 
 
-  // Loads the last 12 messages and listen for new ones.
+  // Loads the last messages and listen for new ones.
   var setMessage = function(data) {
     var val = data.val();
-    this.displayMessage(data.key, val.name, val.text, val.photoUrl, val.imageUrl);
+    this.displayMessage(data.key, val.name, val.text, val.photoUrl, val.imageUrl, val.uid);
   }.bind(this);
-  this.messagesRef.limitToLast(12).on('child_added', setMessage);
-  this.messagesRef.limitToLast(12).on('child_changed', setMessage);
+  this.messagesRef.limitToLast(30).on('child_added', setMessage);
+  this.messagesRef.limitToLast(30).on('child_changed', setMessage);
+  document.getElementById('chat-preloader').style.display = "none";
+
 };
 
 // Saves a new message on the Firebase DB.
 LoadMessages.prototype.saveMessage = function(e) {
   e.preventDefault();
   // Check that the user entered a message and is signed in.
-  if (this.messageInput.value && this.checkSignedInWithMessage()) {
+  if (this.messageInput.value && this.auth.currentUser) {
 
     // Push new message to Firebase.
     var currentUser = this.auth.currentUser;
@@ -91,11 +109,13 @@ LoadMessages.prototype.saveMessage = function(e) {
     this.messagesRef.push({
       name: currentUser.displayName,
       text: this.messageInput.value,
-      photoUrl: currentUser.photoURL || '/images/profile_placeholder.png'
+      photoUrl: currentUser.photoURL || '/images/profile_placeholder.png',
+      uid: currentUser.uid
     }).then(function() {
       // Clear message text field and SEND button state.
       LoadMessages.resetMaterialTextfield(this.messageInput);
       this.toggleButton();
+      this.incrementRecipientUnreadMessages();
     }.bind(this)).catch(function(error) {
       console.error('Error writing new message to Firebase Database', error);
     });
@@ -122,19 +142,22 @@ LoadMessages.prototype.saveImageMessage = function(event) {
   var file = event.target.files[0];
 
   // Clear the selection in the file picker input.
+  // console.log(this);
+  // console.log(this.imageForm);
   this.imageForm.reset();
 
   // Check if the file is an image.
   if (!file.type.match('image.*')) {
-    var data = {
-      message: 'You can only share images',
-      timeout: 2000
-    };
-    this.signInSnackbar.MaterialSnackbar.showSnackbar(data);
+    // var data = {
+    //   message: 'You can only share images',
+    //   timeout: 2000
+    // };
+    // this.signInSnackbar.MaterialSnackbar.showSnackbar(data);
+    // TODO insert some notification that says "Must be an image"
     return;
   }
   // Check if the user is signed-in
-  if (this.checkSignedInWithMessage()) {
+  if (this.auth.currentUser) {
 
     // Upload image to Firebase storage and add message.
     // We add a message with a loading icon that will get updated with the shared image.
@@ -142,7 +165,8 @@ LoadMessages.prototype.saveImageMessage = function(event) {
     this.messagesRef.push({
       name: currentUser.displayName,
       imageUrl: LoadMessages.LOADING_IMAGE_URL,
-      photoUrl: currentUser.photoURL || '/images/profile_placeholder.png'
+      photoUrl: currentUser.photoURL || '/images/profile_placeholder.png',
+      uid: currentUser.uid
     }).then(function(data) {
 
       // Upload the image to Firebase Storage.
@@ -160,21 +184,21 @@ LoadMessages.prototype.saveImageMessage = function(event) {
   }
 };
 
-
-// Returns true if user is signed-in. Otherwise false and displays a message.
-LoadMessages.prototype.checkSignedInWithMessage = function() {
-  // Return true if the user is signed in Firebase
-  if (this.auth.currentUser) {
-    return true;
-  }
-  // Display a message to the user using a Toast.
-  var data = {
-    message: 'You must sign-in first',
-    timeout: 2000
-  };
-  this.signInSnackbar.MaterialSnackbar.showSnackbar(data);
-  return false;
-};
+//
+// // Returns true if user is signed-in. Otherwise false and displays a message.
+// LoadMessages.prototype.checkSignedInWithMessage = function() {
+//   // Return true if the user is signed in Firebase
+//   if (this.auth.currentUser) {
+//     return true;
+//   }
+//   // Display a message to the user using a Toast.
+//   var data = {
+//     message: 'You must sign-in first',
+//     timeout: 2000
+//   };
+//   this.signInSnackbar.MaterialSnackbar.showSnackbar(data);
+//   return false;
+// };
 
 // Resets the given MaterialTextField.
 LoadMessages.resetMaterialTextfield = function(element) {
@@ -195,22 +219,22 @@ LoadMessages.MESSAGE_TEMPLATE =
 LoadMessages.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
 
 // Displays a Message in the UI.
-LoadMessages.prototype.displayMessage = function(key, name, text, picUrl, imageUri) {
+LoadMessages.prototype.displayMessage = function(key, name, text, picUrl, imageUri, uid) {
   var div = document.getElementById(key);
   var currentUser = this.auth.currentUser;
 
   // If an element for that message does not exists yet we create it.
   if (!div) {
-    var container = document.createElement('div');
-    container.innerHTML = LoadMessages.MESSAGE_TEMPLATE;
-    div = container.firstChild;
+    var temp = document.createElement('div');
+    temp.innerHTML = LoadMessages.MESSAGE_TEMPLATE;
+    div = temp.firstChild;
     div.setAttribute('id', key);
     this.messageList.appendChild(div);
-    if(name == currentUser.displayName) { // Switch positioning of message if user sent message
-      console.log("switching position");
+    if(uid == currentUser.uid) { // Switch positioning of message if user sent message
+      // console.log("switching position "+uid);
       div.style.flexDirection = "row-reverse";
       div.style.justifyContent = "flex-start"
-}
+    }
 
   }
   if (picUrl) {
@@ -224,18 +248,21 @@ LoadMessages.prototype.displayMessage = function(key, name, text, picUrl, imageU
     // Replace all line breaks by <br>.
     messageElement.innerHTML = messageElement.innerHTML.replace(/\n/g, '<br>');
   } else if (imageUri) { // If the message is an image.
-    var image = document.createElement('img');
+    var temp = document.createElement('div');
+    temp.innerHTML = '<img src=# class="materialboxed" width="300"></img>';
+    var image = temp.firstChild;
     image.addEventListener('load', function() {
       this.chat.scrollTop = this.chat.scrollHeight;
     }.bind(this));
     this.setImageUrl(imageUri, image);
     messageElement.innerHTML = '';
     messageElement.appendChild(image);
+    $('.materialboxed').materialbox();
   }
 
   var profilePic = div.querySelector('.pic');
-  if(name == currentUser.displayName) {
-      console.log("message sent by current user");
+  if(uid == currentUser.uid) {
+      // console.log("message sent by current user");
       messageElement.style.background = "#009688";
       messageElement.style.color = "white";
       profilePic.style.marginLeft = "7.5px";
@@ -260,6 +287,33 @@ LoadMessages.prototype.toggleButton = function() {
   }
 };
 
+LoadMessages.prototype.incrementRecipientUnreadMessages = function() {
+  //WARNING this might seem sorta confusing
+  var recipientConversationContainerRef = this.database.ref('user-data/'+this.targetUID)
+    .child('conversations').orderByChild('recipientUID')
+    .equalTo(this.auth.currentUser.uid).limitToFirst(1);
+    recipientConversationContainerRef.once('value',function(data){
+      // console.log(data.val());
+      // data.val() should be an object that has just one child which os the
+      // random key for the conversation. Inside that is the unreadMessages
+      // property which we can set.
+      var theWeirdKey = Object.keys(data.val())[0];
+      var cVal = data.val()[theWeirdKey].unreadMessages; // The current unread messages value
+      var newVal = 0;
+      if(cVal===null||cVal===undefined||cVal===0) {
+        newVal = 1;
+      } else {
+        newVal = cVal+1;
+      }
+      var convRef = this.database.ref('user-data/'+this.targetUID)
+        .child('conversations').child(theWeirdKey);
+      convRef.update({
+        '/unreadMessages': newVal
+      });
+
+    }.bind(this));
+}
+
 
 var getURLParameterByName = function(name, url) {
     if (!url) {
@@ -272,10 +326,7 @@ var getURLParameterByName = function(name, url) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 };
+
 var targetUID = getURLParameterByName('targetUID');
-// var targetUID = document.currentScript.getAttribute('targetUID');
-// if(targetUID===null) {
-//   window.alert("Supply a targetUID");
-// }
 
 var x = new LoadMessages(targetUID);

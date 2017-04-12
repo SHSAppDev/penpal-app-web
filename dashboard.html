@@ -1,0 +1,296 @@
+<!doctype html>
+
+<html lang="en">
+<!-- Materialize CSS Head -->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Improve your foreign language skills by chatting with native speakers your age.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <span class="notranslate"><title>World Without Walls</title></span>
+    <link rel="stylesheet" type="text/css" href="styles/dashboard.css">
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
+
+    <!-- Disable tap highlight on IE -->
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="World Without Walls">
+    <meta name="theme-color" content="#303F9F">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="World Without Walls">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
+
+    <!-- Tile icon for Win8 -->
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <meta name="msapplication-navbutton-color" content="#303F9F">
+
+    <!-- Compiled and minified CSS -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+
+</head>
+
+<body>
+
+    <div id="google_translate_element"></div>
+
+    <!--<script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>-->
+
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- Navbar  -->
+    <span class="notranslate">
+<ul id="user-dropdown" class="dropdown-content">
+    <li>
+        <a id="sign-out">Sign-out</a>
+    </li>
+</ul>
+<nav>
+    <div class="nav-wrapper teal" id="nav-bar">
+        <a href="#" class="brand-logo"><i class="large material-icons">textsms</i>World Without Walls</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse" id="button-collapse"><i class="material-icons">menu</i></a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li>
+                <a href="aboutpage.html">About</a>
+            </li>
+            <li>
+                <a class="dropdown-button" href="#!" data-activates="user-dropdown" id="user-pic"></a>
+            </li>
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+            <li>
+                <a id="sign-out-mobile">Sign-out</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+</span>
+
+    <!-- Content -->
+    <div class="row">
+        <div id="sidebar" class="col s12 m12 l2 teal white-text">
+            Conversations
+            <br>
+            <span class="notranslate">
+        <div class="preloader-wrapper active" id="conversations-preloader">
+            <div class="spinner-layer spinner-red-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="conversation-list" class="collection z-depth-3">
+        </div>
+        </span>
+            <a id="add-people-button" class="btn-large waves-effect waves-light red lighten-1" href="#add-conversation">Add <i class=" notranslate material-icons"> people</i></a>
+            </a>
+        </div>
+        <div id="chat-container" class="col s12 m12 l10">
+            <center>Chat</center>
+            <span class="notranslate">
+        <div id="chat" class="card z-depth-3">
+            <div class="preloader-wrapper active" id="chat-preloader">
+                <div class="spinner-layer spinner-red-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="messages"><span id="message-filler"></span></div>
+        <div id="message-interaction">
+            <form id="message-form" action="#">
+                <div class="input-field inline" id="message-input">
+                    <input type="text" id="message">
+                    <label for="message"><span class="translate">Message...</span></label>
+                </div>
+                <button id="submit" disabled type="submit" class="btn waves-light waves-effect red lighten-1">
+                        <span class="translate">Send</span>
+                        <i class="material-icons right">send</i>
+                    </button>
+                <button id="submitImage" class="btn waves-light waves-effect red lighten-1" title="Add an image.">
+                        <i class="material-icons center">image</i>
+                    </button>
+
+
+            </form>
+            <form id="image-form" action="#">
+                <input id="mediaCapture" type="file" accept="image/*,capture=camera" hidden>
+            </form>
+            <!-- <select>
+              <option value="en">English</option>
+              <option value="af">Afrikaans</option>
+              <option value="ar">Arabic</option>
+              <option value="sq">Albanian</option>
+              <option value="eu">Basque</option>
+              <option value="bn">Bengali</option>
+              <option value="be">Belarusian</option>
+              <option value="bg">Bulgarian</option>
+              <option value="ca">Catalan</option>
+              <option value="zh-CN">Chinese</option>
+            </select> -->
+
+            <!--Translate -->
+
+            <ul id="translate-panel" class="collapsible" data-collapsible="accordion">
+                <li>
+                    <div class="collapsible-header"><span style="color:red;">Translate Tool</span><i class="material-icons" style="color:red;">compare_arrows</i></div>
+                    <div class="collapsible-body">
+                        <div class="row">
+                            <div class="input-field col s6 m6 l6">
+                                <select id='sourceLangSelect'>
+                                    <option value="" disabled selected>Input Language</option>
+                                    <option value="en">English</option>
+                                    <option value="es">Spanish</option>
+                                    <option value="fr">French</option>
+                                    <option value="zh-CN">Chinese</option>
+                                    </select>
+                            </div>
+                            <div class="input-field col s6 m6 l6">
+                                <select id='targetLangSelect'>
+                                    <option value="" disabled selected>Output Language</option>
+                                    <option value="en">English</option>
+                                    <option value="es">Spanish</option>
+                                    <option value="fr">French</option>
+                                    <option value="zh-CN">Chinese</option>
+                                    </select>
+                            </div>
+                        </div>
+
+                        <div class="input-field col s12 m12 l12">
+                            <textarea id="translateSourceText" class="materialize-textarea"></textarea>
+                            <label for="translateSourceText">Enter the word or phrase you wish to translate here...</label>
+                        </div>
+                        <button id="translateSourceTextButton" class="btn waves-light waves-effect red lighten-1 col s12 m12 l12">
+                            <span class="translate">Translate</span>
+                            <i class="material-icons right">translate</i>
+                        </button>
+                        <div class="row">
+                            <p id="translatedText" class="col s12 m12 l12"></p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </span>
+    </div>
+
+    <!-- <div class="row"> -->
+    <div class="col s12 m12 l10">
+        <div class="card-panel" style="margin-top: 33px;" hidden id="nothing-to-display">
+            <p class="center-align">Nothing to show yet :)</p>
+            <p class="center-align">Click a conversation on the left</p>
+            <p class="center-align">Or click <a style="color: red;" href="#add-conversation">here</a> to start one.</p>
+        </div>
+    </div>
+    <!-- Add Conversation Modal -->
+    <div id="add-conversation" class="modal">
+        <div class="modal-content">
+            <h4>Add a conversation.</h4>
+            <div class="input-field inline">
+                <input id="email-field" type="email" class="validate">
+                <label for="email-field" data-error="Email formatted incorrectly" data-success="">Email</label>
+            </div>
+            <button id="add-conversation-button" class="red lighten-1 btn waves-effect waves-light">Add Conversation</button>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Done</a>
+        </div>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyCx-2_5IcfXswoDZhjle1rPS3m-ryi3rpM",
+            authDomain: "penpalapp-6020c.firebaseapp.com",
+            databaseURL: "https://penpalapp-6020c.firebaseio.com",
+            storageBucket: "penpalapp-6020c.appspot.com",
+            messagingSenderId: "322094641122"
+        };
+        firebase.initializeApp(config);
+    </script>
+
+    <script src="scripts/ez-translate.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('select').material_select();
+            $('.collapsible').collapsible({
+                accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+            });
+
+            $('.collapsible .collapsible-header').on('click', function (event) {
+                var target = $(this);
+                setTimeout(function () {
+                    if (target.length) {
+                        event.preventDefault();
+                        $("#chat").animate({
+                            scrollTop: $('#chat').prop("scrollHeight")
+                        }, 1000);
+                    }
+                }, 300);
+            });
+        });
+    </script>
+
+    <!-- The main page script -->
+    <script src="scripts/pages/dashboard.js"></script>
+
+    <!--get user info-->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js'></script>
+    <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/moment.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data-2010-2020.min.js'></script>
+    <script src="scripts/user-info.js"></script>
+
+
+
+    <!-- Modules that add specific functionality. -->
+    <script src="scripts/get-os-details.js"></script>
+    <script src="scripts/bind-signout-button.js" buttonid="sign-out"></script>
+    <script src="scripts/bind-signout-button.js" buttonid="sign-out-mobile"></script>
+    <script src="scripts/bind-conversation-list.js" conversationlistid="conversation-list"></script>
+    <script src="scripts/bind-messages.js"></script>
+    <script src="scripts/add-conversation.js"></script>
+    <script src="scripts/bind-translate.js"></script>
+
+    <script>
+        // console.log("select "+document.getElementById('my-cool-select').style.display+" ?");
+    </script>
+
+
+
+</body>
+
+</html>

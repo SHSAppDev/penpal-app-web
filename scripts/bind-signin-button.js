@@ -17,7 +17,7 @@ BindSignIn.prototype.signIn = function() {
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
 BindSignIn.prototype.onAuthStateChanged = function(user) {
   if (user) { // User is signed in!
-    window.location.href = 'index.html';
+    window.location.href = 'dashboard.html';
   }
 };
 
