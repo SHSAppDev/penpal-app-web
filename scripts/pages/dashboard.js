@@ -5,6 +5,7 @@ function W3Dashboard() {
 
     // Shortcuts to DOM Elements.
     this.userPic = document.getElementById('user-pic');
+    this.userName = document.getElementById('user-name');
     this.initFirebase();
     this.translate = new EZTranslate();
 
@@ -73,6 +74,10 @@ W3Dashboard.prototype.onAuthStateChanged = function(user) {
         // Show user's profile and sign-out button.
         // this.userName.removeAttribute('hidden');
         this.userPic.removeAttribute('hidden');
+
+        // Unhide and set userName
+        this.userName.removeAttribute('hidden');
+        this.userName.innerHTML = this.auth.currentUser.displayName;
     }
 };
 
