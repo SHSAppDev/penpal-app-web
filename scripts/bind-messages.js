@@ -24,6 +24,8 @@ function LoadMessages(targetUID) {
     document.getElementById("nothing-to-display").removeAttribute('hidden');
     // document.getElementById("chat-container").setAttribute('hidden', true);
     document.getElementById("chat-container").style.display = 'none';
+    document.getElementById("tools-container").style.display = 'none';
+
     // console.log(document.getElementById("chat-container"));
 
     // this.messageList.setAttribute('hidden', true);

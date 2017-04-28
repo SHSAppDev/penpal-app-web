@@ -111,7 +111,7 @@
             <a id="add-people-button" class="btn-large waves-effect waves-light red lighten-1" href="#add-conversation">Add <i class=" notranslate material-icons"> people</i></a>
             </a>
         </div>
-        <div id="chat-container" class="col s12 m12 l10">
+        <div id="chat-container" class="col s8 m8 l7">
             <center>Chat</center>
             <span class="notranslate">
         <div id="chat" class="card z-depth-3">
@@ -148,22 +148,10 @@
             <form id="image-form" action="#">
                 <input id="mediaCapture" type="file" accept="image/*,capture=camera" hidden>
             </form>
-            <!-- <select>
-              <option value="en">English</option>
-              <option value="af">Afrikaans</option>
-              <option value="ar">Arabic</option>
-              <option value="sq">Albanian</option>
-              <option value="eu">Basque</option>
-              <option value="bn">Bengali</option>
-              <option value="be">Belarusian</option>
-              <option value="bg">Bulgarian</option>
-              <option value="ca">Catalan</option>
-              <option value="zh-CN">Chinese</option>
-            </select> -->
 
             <!--Translate -->
 
-            <ul id="translate-panel" class="collapsible" data-collapsible="accordion">
+            <!-- <ul id="translate-panel" class="collapsible" data-collapsible="accordion">
                 <li>
                     <div class="collapsible-header"><span style="color:red;" class="translate">Translate Tool</span><i class="material-icons" style="color:red;">compare_arrows</i></div>
                     <div class="collapsible-body">
@@ -204,10 +192,58 @@
                         </div>
                     </div>
                 </li>
-            </ul>
+            </ul> -->
         </div>
     </div>
     </span>
+    </div>
+
+    <div id="tools-container" class="col s4 m4 l3">
+        <center>Tools</center>
+        <div id="chat" class="card z-depth-3">
+          <ul id="translate-panel" class="collapsible" data-collapsible="accordion">
+              <li>
+                  <div class="collapsible-header"><span style="color:red;" class="translate">Translate Tool</span><i class="material-icons" style="color:red;">compare_arrows</i></div>
+                  <div class="collapsible-body">
+                    <span class="translate">
+                      <div class="row">
+                          <div class="input-field col s6 m6 l6">
+                              <select id='sourceLangSelect'>
+
+                                  <option value="" disabled selected>Input Language</option>
+                                  <option value="en">English</option>
+                                  <option value="es">Spanish</option>
+                                  <option value="fr">French</option>
+                                  <option value="zh-CN">Chinese</option>
+                                  </select>
+                          </div>
+                          <div class="input-field col s6 m6 l6">
+                              <select id='targetLangSelect'>
+                                  <option value="" disabled selected>Output Language</option>
+                                  <option value="en">English</option>
+                                  <option value="es">Spanish</option>
+                                  <option value="fr">French</option>
+                                  <option value="zh-CN">Chinese</option>
+                                  </select>
+                          </div>
+                      </div>
+                    </span>
+
+                      <div class="input-field col s12 m12 l12">
+                          <textarea id="translateSourceText" class="materialize-textarea"></textarea>
+                          <label for="translateSourceText"><span class="translate">Enter the word or phrase you wish to translate here...</span></label>
+                      </div>
+                      <button id="translateSourceTextButton" class="btn waves-light waves-effect red lighten-1 col s12 m12 l12">
+                          <span class="translate">Translate</span>
+                          <i class="material-icons right">translate</i>
+                      </button>
+                      <div class="row">
+                          <span class="notranslate"><p id="translatedText" class="col s12 m12 l12"></p></span>
+                      </div>
+                  </div>
+              </li>
+          </ul>
+        </div>
     </div>
 
     <!-- <div class="row"> -->
