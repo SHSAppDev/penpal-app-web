@@ -45,14 +45,14 @@
 
     <div id="google_translate_element"></div>
 
-    <!--<script type="text/javascript">
+    <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
                 pageLanguage: 'en',
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE
             }, 'google_translate_element');
         }
-    </script>-->
+    </script>
 
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
@@ -165,11 +165,13 @@
 
             <ul id="translate-panel" class="collapsible" data-collapsible="accordion">
                 <li>
-                    <div class="collapsible-header"><span style="color:red;">Translate Tool</span><i class="material-icons" style="color:red;">compare_arrows</i></div>
+                    <div class="collapsible-header"><span style="color:red;" class="translate">Translate Tool</span><i class="material-icons" style="color:red;">compare_arrows</i></div>
                     <div class="collapsible-body">
+                      <span class="translate">
                         <div class="row">
                             <div class="input-field col s6 m6 l6">
                                 <select id='sourceLangSelect'>
+
                                     <option value="" disabled selected>Input Language</option>
                                     <option value="en">English</option>
                                     <option value="es">Spanish</option>
@@ -187,10 +189,11 @@
                                     </select>
                             </div>
                         </div>
+                      </span>
 
                         <div class="input-field col s12 m12 l12">
                             <textarea id="translateSourceText" class="materialize-textarea"></textarea>
-                            <label for="translateSourceText">Enter the word or phrase you wish to translate here...</label>
+                            <label for="translateSourceText"><span class="translate">Enter the word or phrase you wish to translate here...</span></label>
                         </div>
                         <button id="translateSourceTextButton" class="btn waves-light waves-effect red lighten-1 col s12 m12 l12">
                             <span class="translate">Translate</span>
