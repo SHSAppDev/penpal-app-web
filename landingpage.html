@@ -4,6 +4,7 @@
 <head>
 <meta charset="utf-8">
 <title>Landing Page</title>
+<<<<<<< HEAD
 <meta name="viewport" content="witdth=device-width,initial-scale=1")/>
 <<<<<<< HEAD
 <link rel="stylesheet" type="text/css" href="landingpage.css")/>
@@ -14,9 +15,8 @@
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 
-=======
+<meta name="viewport" content="width=device-width,initial-scale=1")/>
 <link rel="stylesheet" type="text/css" href="styles/landingpage.css")/>
->>>>>>> 3e8269dac1228e0f158c7d741a621ae1a36c241b
 </head>
 
 <body>
@@ -43,11 +43,50 @@
 </section>
 =======
 <h1><center>Welcome to World Without Walls</center></h1>
-<a class="btn" href="login.html">Get Started</a>
+<a class="btn" href=# id="get-started">Get Started</a>
+
 </div>
 </div>
 </section>
 <p><center>The Innovative Messaging Website</center></p>
+<<<<<<< HEAD
 >>>>>>> 3e8269dac1228e0f158c7d741a621ae1a36c241b
+=======
+
+<!--Firebase-->
+<script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+      apiKey: "AIzaSyCx-2_5IcfXswoDZhjle1rPS3m-ryi3rpM",
+      authDomain: "penpalapp-6020c.firebaseapp.com",
+      databaseURL: "https://penpalapp-6020c.firebaseio.com",
+      storageBucket: "penpalapp-6020c.appspot.com",
+      messagingSenderId: "322094641122"
+  };
+  firebase.initializeApp(config);
+  var auth = firebase.auth();
+  var authStateKnown;
+  var btnClicked = false;
+  auth.onAuthStateChanged(function(user){
+    authStateKnown = true;
+    if(btnClicked) {
+      window.location.href = auth.currentUser === null ? 'login.html' : 'dashboard.html';
+    }
+  });
+
+
+  var btn = document.getElementById('get-started');
+  btn.addEventListener('click', function(){
+    btnClicked = true;
+    if(authStateKnown) {
+      window.location.href = auth.currentUser === null ? 'login.html' : 'dashboard.html';
+    }
+  });
+
+
+
+</script>
+>>>>>>> master
 </body>
 </html>
