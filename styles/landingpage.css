@@ -1,3 +1,29 @@
 body {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	background-color: #009688;
 	text-align: center;
+}
+
+#title {
+	color: white;
+	font-size: 40px;
+	font-weight: 300;
+}
+
+@media (min-width: 650px) {
+	#title {
+		font-size: 70px;
+	}
+}
+
+#www-logo {
+	width: 50vw;
+}
+
+#get-started {
+	margin-top: 20px;
 }

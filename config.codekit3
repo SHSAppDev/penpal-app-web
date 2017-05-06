@@ -160,12 +160,6 @@
 		"oAP": "\/dashboard.html",
 		"oF": 0
 		},
-	"\/firebase-debug.log": {
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "\/firebase-debug.log",
-		"oF": 0
-		},
 	"\/firebase.json": {
 		"ft": 524288,
 		"oA": 1,
