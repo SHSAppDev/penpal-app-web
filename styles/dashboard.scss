@@ -64,6 +64,11 @@ body {
     align-items: center;
 }
 
-#translate-panel {
-    @include mdElevation(2,4, 'hover');
+#special-characters-panel {
+    @include mdElevation(2,5, 'hover');
 }
+
+#translate-panel {
+    @include mdElevation(2,5, 'hover');
+}
+
