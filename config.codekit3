@@ -124,10 +124,46 @@
 		"oO": 0,
 		"oS": 1
 		},
+	"\/css\/landing.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/css\/landing-min.css",
+		"oF": 0,
+		"oS": 0
+		},
+	"\/css\/materialize.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/css\/materialize-min.css",
+		"oF": 0,
+		"oS": 0
+		},
+	"\/css\/materialize.min.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/css\/materialize.min-min.css",
+		"oF": 0,
+		"oS": 0
+		},
 	"\/dashboard.html": {
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/dashboard.html",
+		"oF": 0
+		},
+	"\/firebase-debug.log": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/firebase-debug.log",
 		"oF": 0
 		},
 	"\/firebase.json": {
@@ -137,6 +173,66 @@
 		"oF": 0,
 		"oO": 0,
 		"oS": 1
+		},
+	"\/fonts\/roboto\/Roboto-Bold.woff": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/fonts\/roboto\/Roboto-Bold.woff",
+		"oF": 0
+		},
+	"\/fonts\/roboto\/Roboto-Bold.woff2": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/fonts\/roboto\/Roboto-Bold.woff2",
+		"oF": 0
+		},
+	"\/fonts\/roboto\/Roboto-Light.woff": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/fonts\/roboto\/Roboto-Light.woff",
+		"oF": 0
+		},
+	"\/fonts\/roboto\/Roboto-Light.woff2": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/fonts\/roboto\/Roboto-Light.woff2",
+		"oF": 0
+		},
+	"\/fonts\/roboto\/Roboto-Medium.woff": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/fonts\/roboto\/Roboto-Medium.woff",
+		"oF": 0
+		},
+	"\/fonts\/roboto\/Roboto-Medium.woff2": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/fonts\/roboto\/Roboto-Medium.woff2",
+		"oF": 0
+		},
+	"\/fonts\/roboto\/Roboto-Regular.woff": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/fonts\/roboto\/Roboto-Regular.woff",
+		"oF": 0
+		},
+	"\/fonts\/roboto\/Roboto-Regular.woff2": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/fonts\/roboto\/Roboto-Regular.woff2",
+		"oF": 0
+		},
+	"\/fonts\/roboto\/Roboto-Thin.woff": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/fonts\/roboto\/Roboto-Thin.woff",
+		"oF": 0
+		},
+	"\/fonts\/roboto\/Roboto-Thin.woff2": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/fonts\/roboto\/Roboto-Thin.woff2",
+		"oF": 0
 		},
 	"\/founderspage.html": {
 		"ft": 8192,
@@ -175,10 +271,28 @@
 		"oF": 0,
 		"opt": 0
 		},
+	"\/images\/Thumbs.db": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/images\/Thumbs.db",
+		"oF": 0
+		},
 	"\/index.html": {
 		"ft": 8192,
 		"oA": 2,
 		"oAP": "\/index.html",
+		"oF": 0
+		},
+	"\/landing-template.html": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/landing-template.html",
+		"oF": 0
+		},
+	"\/landingpage.html": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/landingpage.html",
 		"oF": 0
 		},
 	"\/login.html": {
@@ -264,6 +378,15 @@
 		"sC": 1,
 		"tS": 0
 		},
+	"\/scripts\/bind-special-character-tool.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/scripts\/bind-special-character-tool-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
 	"\/scripts\/bind-translate.js": {
 		"ft": 64,
 		"mi": 1,
@@ -324,12 +447,6 @@
 		"sC": 1,
 		"tS": 0
 		},
-	"\/sidebar-conversation": {
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "\/sidebar-conversation",
-		"oF": 0
-		},
 	"\/styles\/aboutpagemain.css": {
 		"aP": 1,
 		"bl": 0,
@@ -370,6 +487,26 @@
 		"ma": 0,
 		"oA": 0,
 		"oAP": "\/styles\/founderspagemain-min.css",
+		"oF": 0,
+		"oS": 0
+		},
+	"\/styles\/landing.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/styles\/landing-min.css",
+		"oF": 0,
+		"oS": 0
+		},
+	"\/styles\/landingpage.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/styles\/landingpage-min.css",
 		"oF": 0,
 		"oS": 0
 		},
@@ -438,12 +575,6 @@
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
-		},
-	"\/test-timezone.html": {
-		"ft": 8192,
-		"oA": 2,
-		"oAP": "\/test-timezone.html",
-		"oF": 0
 		}
 	},
 "hooks": [
