@@ -9,17 +9,6 @@ body {
 	color: white;
 }
 
-section {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	align-content: center;
-	background-color: #009688;
-	text-align: center;
-	color: white;
-}
-
 h1 {
 	font-size: 40px;
 	font-weight: 300;
@@ -42,8 +31,21 @@ h2 {
 	}
 }
 
+#intro-div {
+	position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
 #www-logo {
-	width: 50vw;
+	margin-top: 50px;
 }
 
 #get-started {
@@ -72,3 +74,4 @@ h2 {
 	align-items: center;
 	justify-content: center;
 }
+
