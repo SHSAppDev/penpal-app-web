@@ -1,0 +1,100 @@
+<!doctype html>
+
+<html lang="en">
+<!-- Materialize CSS Head -->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Improve your foreign language skills by chatting with native speakers your age.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Stat Summary</title>
+    <link rel="stylesheet" type="text/css" href="styles/stat-summary.css">
+
+
+    <!-- Disable tap highlight on IE -->
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="World Without Borders">
+    <meta name="theme-color" content="#303F9F">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="World Without Borders">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
+
+    <!-- Tile icon for Win8 -->
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <meta name="msapplication-navbutton-color" content="#303F9F">
+
+    <!-- Compiled and minified CSS -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+
+</head>
+
+<body>
+    <a href="dashboard.html">Back to Conversations</a>
+
+    <!--This card contains stats of the current user-->
+    <div class="card" id="user-card">
+        <div class="card-content">
+            <span id="display-name" class="card-title center-align">Myum Nameum</span>
+            <p id="email">user@example.com</p>
+            <img id="profile-pic" src=# width="200px" height="200px"></img>
+        </div>
+    </div>
+
+    <!--This card and all the rest that follow are statistics about each individual conversation.
+    Eventually, cards like these will be programatically generated.-->
+    <div>
+      <div class="card">
+          <div class="card-content">
+              <span class="card-title center-align">Otheruserum Nameum</span>
+              <img id="profile-pic" src=# width="100px" height="100px"></img>
+              <p>anotheruser@example.com</p>
+              <p>Sent: 20 Messages, 131 Words</p>
+              <p>Received: 17 Messages, 146 Words</p>
+          </div>
+      </div>
+
+      <div class="card">
+          <div class="card-content">
+              <span class="card-title center-align">Bob Smith</span>
+              <img id="profile-pic" src=# width="100px" height="100px"></img>
+              <p>anotheruser@example.com</p>
+              <p>Sent: 23 Messages, 137 Words</p>
+              <p>Received: 21 Messages, 235 Words</p>
+          </div>
+      </div>
+  </div>
+
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCx-2_5IcfXswoDZhjle1rPS3m-ryi3rpM",
+    authDomain: "penpalapp-6020c.firebaseapp.com",
+    databaseURL: "https://penpalapp-6020c.firebaseio.com",
+    storageBucket: "penpalapp-6020c.appspot.com",
+    messagingSenderId: "322094641122"
+  };
+  firebase.initializeApp(config);
+</script>
+<!-- <script src="scripts/pages/login.js"></script>
+<script src="scripts/bind-signin-button.js" buttonID='sign-in'></script> -->
+
+</body>
+
+</html>
