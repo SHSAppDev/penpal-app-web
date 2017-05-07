@@ -6,17 +6,39 @@ body {
 	align-content: center;
 	background-color: #009688;
 	text-align: center;
+	color: white;
 }
 
-#title {
+section {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	background-color: #009688;
+	text-align: center;
 	color: white;
+}
+
+h1 {
 	font-size: 40px;
 	font-weight: 300;
 }
 
-@media (min-width: 650px) {
-	#title {
+@media (min-width: 700px) {
+	h1 {
 		font-size: 70px;
+	}
+}
+
+h2 {
+	font-size: 30px;
+	font-weight: 300;
+}
+
+@media (min-width: 700px) {
+	h2 {
+		font-size: 50px;
 	}
 }
 
@@ -26,4 +48,27 @@ body {
 
 #get-started {
 	margin-top: 20px;
+	margin-bottom: 20px;
+	font-size: 20px;
+	height: 60px;
+	display: inline-flex;
+	align-items: center;
+}
+
+#about-button {
+	color: white;
+	font-size: 15px;
+	width: 130px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#founders-button {
+	color: white;
+	font-size: 15px;
+	width: 130px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 }

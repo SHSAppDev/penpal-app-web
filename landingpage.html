@@ -36,16 +36,41 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
   <link rel="stylesheet" type="text/css" href="styles/landingpage.css">
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.4/jquery.fullpage.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.4/jquery.fullpage.min.js"></script>
+
+
 </head>
 
 <body>
-    <h1 id="title">World Without Walls</h1>
-    <img class="www-logo responsive-img" src="https://files.slack.com/files-tmb/T1UER92E9-F57FA398T-2f0c4bd52a/base_recolored_360.png"></img>
-    <a class="btn red lighten-1 waves-light waves-effect" href=# id="get-started">Get Started</a>
+  <div id="fullpage">
+    <div class="section">
+      <img class="www-logo responsive-img" src="https://files.slack.com/files-tmb/T1UER92E9-F57FA398T-2f0c4bd52a/base_recolored_360.png"></img>
+      <h1 id="title">World Without Borders</h1>
+      <a class="btn red lighten-1 waves-light waves-effect" href=# id="get-started">Get Started</a>
+      <br>
+      <a class="btn waves-light waves-effect" id="about-button" href="#aboutPage">About</a>
+      <a class="btn waves-light waves-effect" id="founders-button" href="#foundersPage">Founders</a>
 
+    </div>
+    <div class="section" id="about">
+      <h2>What is World Without Borders?</h1>
+    </div>
+
+    <div class="section" id="founders">
+      <h2>Who made World Without Borders?</h1>
+    </div>
+  </div>
   <!--Firebase-->
   <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
   <script>
+    $(document).ready(function () {
+      $('#fullpage').fullpage({
+        responsiveWidth: 700,
+        anchors: ['introPage', 'aboutPage', 'foundersPage'],
+
+      });
+    });
     // Initialize Firebase
     var config = {
       apiKey: "AIzaSyCx-2_5IcfXswoDZhjle1rPS3m-ryi3rpM",
