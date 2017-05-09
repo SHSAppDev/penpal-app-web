@@ -25,7 +25,18 @@ StatSummary.prototype.initFirebase = function() {
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
 StatSummary.prototype.onAuthStateChanged = function(user) {
   if (user) {
-    this.loadConversationStats()
+    this.loadConversationStats() //WooHoo!
+
+    // Also load own profile
+    this.database.ref('user-data/'+this.auth.currentUser.uid).once('value', function(data){
+      // const myProfile = document.getElementById('my-profile');
+      document.getElementById('display-name').textContent = data.val().displayName;
+      document.getElementById('email').textContent = data.val().email;
+      document.getElementById('profile-pic').src = data.val().photoURL;
+      document.getElementById('user-card').removeAttribute('hidden');
+
+    }.bind(this));
+
   }
 };
 
@@ -91,10 +102,10 @@ ConvStatElementMachine.prototype.addComponent = function(key, value){
        var stat = temp.firstChild;
        stat.querySelector('.card-title').textContent = this.obj['displayName'];
        stat.querySelector('.profile-pic').src = this.obj['photoURL'];
-       stat.querySelector('.email').innerHTML = this.obj['email'];
-       stat.querySelector('.sent').innerHTML = 'Sent: '+ this.obj['messagesSent'] +
+       stat.querySelector('.email').textContent = this.obj['email'];
+       stat.querySelector('.sent').textContent = 'Sent: '+ this.obj['messagesSent'] +
        ' Messages , '+this.obj['wordsSent']+' Words';
-       stat.querySelector('.received').innerHTML = 'Received: '+ this.obj['messagesReceived'] +
+       stat.querySelector('.received').textContent = 'Received: '+ this.obj['messagesReceived'] +
        ' Messages , '+this.obj['wordsReceived']+' Words';
 
 
