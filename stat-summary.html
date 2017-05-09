@@ -42,11 +42,11 @@
 
 </head>
 
-<body>
+<bod id='body'>
     <a href="dashboard.html">Back to Conversations</a>
 
     <!--This card contains stats of the current user-->
-    <div class="card" id="user-card">
+    <div class="card" id="user-card" hidden>
         <div class="card-content">
             <span id="display-name" class="card-title center-align">Myum Nameum</span>
             <p id="email">user@example.com</p>
@@ -56,7 +56,7 @@
 
     <!--This card and all the rest that follow are statistics about each individual conversation.
     Eventually, cards like these will be programatically generated.-->
-    <div>
+    <!-- <div>
       <div class="card">
           <div class="card-content">
               <span class="card-title center-align">Otheruserum Nameum</span>
@@ -76,7 +76,7 @@
               <p>Received: 21 Messages, 235 Words</p>
           </div>
       </div>
-  </div>
+  </div> -->
 
 
 <!-- Firebase -->
@@ -92,8 +92,7 @@
   };
   firebase.initializeApp(config);
 </script>
-<!-- <script src="scripts/pages/login.js"></script>
-<script src="scripts/bind-signin-button.js" buttonID='sign-in'></script> -->
+<script src="scripts/pages/stat-summary.js"></script>
 
 </body>
 
