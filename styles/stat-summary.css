@@ -8,14 +8,11 @@ body {
 }
 
 #user-card {
-    width: 300px;
-    height: 300px;
+    width: 330px;
+    height: 330px;
     display: flex;
     align-items: center;
     align-content: center;
     justify-content: center;
 }
 
-#back-button {
-    align-self: center;
-}
