@@ -100,7 +100,7 @@ ConvStatElementMachine.prototype.addComponent = function(key, value){
        var temp = document.createElement('div');
        temp.innerHTML = convStatTemplate;
        var stat = temp.firstChild;
-       stat.querySelector('.card-title').textContent = this.obj['displayName'];
+       stat.querySelector('.title').textContent = this.obj['displayName'];
        stat.querySelector('.profile-pic').src = this.obj['photoURL'];
        stat.querySelector('.email').textContent = this.obj['email'];
        stat.querySelector('.sent').textContent = 'Sent: '+ this.obj['messagesSent'] +
@@ -109,20 +109,35 @@ ConvStatElementMachine.prototype.addComponent = function(key, value){
        ' Messages , '+this.obj['wordsReceived']+' Words';
 
 
-       document.getElementById('body').appendChild(stat);
+       document.getElementById('conversation-stat-list').appendChild(stat);
   }
 };
 
 const convStatTemplate =
-"<div class='card'>" +
-    "<div class='card-content'>"+
-        "<span class='card-title center-align'>Otheruserum Nameum</span>" +
-        "<img class='profile-pic' src=# width='100px' height='100px'></img>" +
-        "<p class='email'>anotheruser@example.com</p>" +
-        "<p class='sent'>Sent: 20 Messages, 131 Words</p>" +
-        "<p class='received'>Received: 17 Messages, 146 Words</p>" +
-    "</div>" +
-"</div>";
+// "<div class='card'>" +
+//     "<div class='card-content'>"+
+//         "<span class='card-title center-align'>Otheruserum Nameum</span>" +
+//         "<img class='profile-pic circle' src=# width='100px' height='100px'></img>" +
+//         "<p class='email'>anotheruser@example.com</p>" +
+//         "<p class='sent'>Sent: 20 Messages, 131 Words</p>" +
+//         "<p class='received'>Received: 17 Messages, 146 Words</p>" +
+//     "</div>" +
+// "</div>";
+
+'<li class="collection-item avatar">' +
+      '<img src="images/yuna.jpg" alt="" class="profile-pic circle">' +
+      '<span class="title">Username</span>' +
+      '<p class="email">anotheruser@example.com</p>' +
+      '<p class="sent">Sent: 20 Messages, 131 Words</p>' +
+      '<p class="received">Received: 17 Messages, 146 Words</p>' +
+'</li>';
+
+// '<div href=# class="collection-item avatar">' +
+//   '<span><img class="pic circle" src=#></span>' +
+//   '<span class="name title">Name</span>' +
+//   '<span class="new badge">0</span>'+
+//
+// '</div>';
 
 // Stolen from stack overflow. Useful!
 // http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript

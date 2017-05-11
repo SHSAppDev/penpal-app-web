@@ -49,7 +49,7 @@ LoadConversationList.CONVERSATION_TEMPLATE =
       '<span><img class="pic circle" src=#></span>' +
       '<span class="name title">Name</span>' +
       '<span class="new badge">0</span>'+
-
+      
     '</a>';
 
 
