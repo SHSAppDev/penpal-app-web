@@ -160,6 +160,12 @@
 		"oAP": "\/dashboard.html",
 		"oF": 0
 		},
+	"\/firebase-debug.log": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/firebase-debug.log",
+		"oF": 0
+		},
 	"\/firebase.json": {
 		"ft": 524288,
 		"oA": 1,
@@ -309,6 +315,12 @@
 		"oAP": "\/manifest.webapp",
 		"oF": 0
 		},
+	"\/profilepage.html": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/profilepage.html",
+		"oF": 0
+		},
 	"\/README.md": {
 		"cS": 0,
 		"eF": 1,
@@ -426,6 +438,15 @@
 		"sC": 1,
 		"tS": 0
 		},
+	"\/scripts\/pages\/stat-summary.js": {
+		"ft": 64,
+		"mi": 1,
+		"oA": 0,
+		"oAP": "\/scripts\/pages\/stat-summary-min.js",
+		"oF": 0,
+		"sC": 1,
+		"tS": 0
+		},
 	"\/scripts\/readme.txt": {
 		"ft": 8192,
 		"oA": 2,
@@ -440,6 +461,12 @@
 		"oF": 0,
 		"sC": 1,
 		"tS": 0
+		},
+	"\/stat-summary.html": {
+		"ft": 8192,
+		"oA": 2,
+		"oAP": "\/stat-summary.html",
+		"oF": 0
 		},
 	"\/styles\/aboutpagemain.css": {
 		"aP": 1,
@@ -491,6 +518,16 @@
 		"ma": 0,
 		"oA": 0,
 		"oAP": "\/styles\/landing-min.css",
+		"oF": 0,
+		"oS": 0
+		},
+	"\/styles\/landingpage-min.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/styles\/landingpage-min-min.css",
 		"oF": 0,
 		"oS": 0
 		},
@@ -569,6 +606,16 @@
 		"oF": 0,
 		"oS": 0,
 		"uL": 1
+		},
+	"\/styles\/stat-summary.css": {
+		"aP": 1,
+		"bl": 0,
+		"ft": 16,
+		"ma": 0,
+		"oA": 0,
+		"oAP": "\/styles\/stat-summary-min.css",
+		"oF": 0,
+		"oS": 0
 		}
 	},
 "hooks": [

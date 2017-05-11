@@ -43,14 +43,16 @@
 </head>
 
 <bod id='body'>
-    <a href="dashboard.html">Back to Conversations</a>
+
+    
+    <a style="color: red;" class="center-align" id="back-button" href="dashboard.html">Back to Conversations</a>
 
     <!--This card contains stats of the current user-->
     <div class="card" id="user-card" hidden>
         <div class="card-content">
             <span id="display-name" class="card-title center-align">Myum Nameum</span>
             <img id="profile-pic" class="circle" src=# width="200px" height="200px"></img>
-            <p id="email">user@example.com</p>
+            <p id="email" class="center-align">user@example.com</p>
         </div>
     </div>
 
@@ -58,9 +60,12 @@
     <!--This card and all the rest that follow are statistics about each individual conversation.
     Eventually, cards like these will be programatically generated.-->
     <ul id="conversation-stat-list" class="collection">
-
+        <li class="collection-item avatar"><img src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg" alt="" class="profile-pic circle"><span class="title">Joshua Deng</span><p class="email">joshuakdeng@gmail.com</p><p class="sent">Sent: 9 Messages , 53 Words</p><p class="received">Received: 10 Messages , 73 Words</p></li>
+        <li class="collection-item avatar"><img src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg" alt="" class="profile-pic circle"><span class="title">Ryan Anderson</span><p class="email">rkanderson15@gmail.com</p><p class="sent">Sent: 0 Messages , 0 Words</p><p class="received">Received: 2 Messages , 10 Words</p></li>
+        <li class="collection-item avatar"><img src="https://lh4.googleusercontent.com/-u9ORZqi-k0M/AAAAAAAAAAI/AAAAAAAAAIY/k1UqAB3GKA4/photo.jpg" alt="" class="profile-pic circle"><span class="title">Ryan Anderson</span><p class="email">shnoutyanderson@gmail.com</p><p class="sent">Sent: 0 Messages , 0 Words</p><p class="received">Received: 2 Messages , 11 Words</p></li>
+        <li class="collection-item avatar"><img src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg" alt="" class="profile-pic circle"><span class="title">Kyle Seid Phan</span><p class="email">kyleseidphan@gmail.com</p><p class="sent">Sent: 0 Messages , 0 Words</p><p class="received">Received: 1 Messages , 3 Words</p></li>
     </ul>
-    <!-- <div>
+     <!--<div>
       <div class="card">
           <div class="card-content">
               <span class="card-title center-align">Otheruserum Nameum</span>
@@ -100,5 +105,6 @@
 <script src="scripts/pages/stat-summary.js"></script>
 
 </body>
+
 
 </html>
