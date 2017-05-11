@@ -43,14 +43,16 @@
 </head>
 
 <bod id='body'>
-    <a href="dashboard.html">Back to Conversations</a>
+
+    
+    <a style="color: red;" id="back-button" href="dashboard.html">Back to Conversations</a>
 
     <!--This card contains stats of the current user-->
     <div class="card" id="user-card" hidden>
         <div class="card-content">
             <span id="display-name" class="card-title center-align">Myum Nameum</span>
             <img id="profile-pic" class="circle" src=# width="200px" height="200px"></img>
-            <p id="email">user@example.com</p>
+            <p id="email" class="center-align">user@example.com</p>
         </div>
     </div>
 
@@ -60,7 +62,7 @@
     <ul id="conversation-stat-list" class="collection">
 
     </ul>
-    <!-- <div>
+     <!--<div>
       <div class="card">
           <div class="card-content">
               <span class="card-title center-align">Otheruserum Nameum</span>
@@ -83,21 +85,21 @@
   </div> -->
 
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyCx-2_5IcfXswoDZhjle1rPS3m-ryi3rpM",
-    authDomain: "penpalapp-6020c.firebaseapp.com",
-    databaseURL: "https://penpalapp-6020c.firebaseio.com",
-    storageBucket: "penpalapp-6020c.appspot.com",
-    messagingSenderId: "322094641122"
-  };
-  firebase.initializeApp(config);
-</script>
-<script src="scripts/pages/stat-summary.js"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyCx-2_5IcfXswoDZhjle1rPS3m-ryi3rpM",
+            authDomain: "penpalapp-6020c.firebaseapp.com",
+            databaseURL: "https://penpalapp-6020c.firebaseio.com",
+            storageBucket: "penpalapp-6020c.appspot.com",
+            messagingSenderId: "322094641122"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script src="scripts/pages/stat-summary.js"></script>
 
-</body>
+    </body>
 
 </html>
