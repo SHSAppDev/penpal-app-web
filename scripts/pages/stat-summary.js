@@ -42,9 +42,11 @@ StatSummary.prototype.onAuthStateChanged = function(user) {
 
 StatSummary.prototype.loadConversationStats = function() {
   this.database.ref('user-data/'+this.auth.currentUser.uid+'/conversations').once('value', function(data) {
+    if(data.val()===null) return;
     const recipientUIDs = Object.values(data.val()).map(function(convContainer){
       return convContainer.recipientUID;
     });
+    console.log(recipientUIDs);
     // recipientUIDs is an array containing all the uids that the user has conversations with
     // now, I loop through them all and somehow get all the necessary data bits.
     for(var i=0; i<recipientUIDs.length; i++) {
