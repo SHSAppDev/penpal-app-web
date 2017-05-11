@@ -20,7 +20,8 @@ BindSignOut.prototype.signOut = function() {
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
 BindSignOut.prototype.onAuthStateChanged = function(user) {
   if (!user) { // User is signed out!
-    window.location.href = 'login.html';
+    console.log("signing out");
+    window.location.href = 'landingpage.html';
   }
 };
 

@@ -1,0 +1,76 @@
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	background-color: #009688;
+	text-align: center;
+	color: white;
+}
+
+h1 {
+	font-size: 30px;
+	font-weight: 300;
+}
+
+@media (min-width: 700px) {
+	h1 {
+		font-size: 70px;
+	}
+}
+
+h2 {
+	font-size: 30px;
+	font-weight: 300;
+}
+
+@media (min-width: 700px) {
+	h2 {
+		font-size: 50px;
+	}
+}
+
+#intro-div {
+	position: absolute;
+	margin: auto;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+#www-logo {
+	margin-top: 50px;
+}
+
+#get-started {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	font-size: 20px;
+	min-height: 7vh;
+	display: inline-flex;
+	align-items: center;
+}
+
+#about-button {
+	color: white;
+	font-size: 15px;
+	min-width: 10vw;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#founders-button {
+	color: white;
+	font-size: 15px;
+	min-width: 10vw;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
