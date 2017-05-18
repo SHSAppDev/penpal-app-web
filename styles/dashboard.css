@@ -232,9 +232,10 @@ body {
 
 #chat {
   margin-top: 6.5px;
-  padding: 10px 10px 10px 10px;
+  padding: 0px 0px 0px 10px;
   overflow-y: auto;
-  height: 85vh;
+  height: 72vh;
+  margin-bottom: 0.1px;
   /*margin-left: 7.5px;*/ }
 
 #message-form {
@@ -267,5 +268,9 @@ body {
   transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1); }
   #translate-panel:hover {
     box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 5px 8px 0px rgba(0, 0, 0, 0.14), 0px 1px 14px 0px rgba(0, 0, 0, 0.12); }
+
+#message-interaction {
+  padding: 5px 15px 0px 15px;
+  margin-top: 0px; }
 
 /*# sourceMappingURL=dashboard.css.map */
