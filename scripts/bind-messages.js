@@ -1,6 +1,6 @@
 'use strict';
 
-// Initializes a list of messages and listens for more.
+// Initializes a list of messages and listens for more. Handles all things in the chat UI.
 // REQUIRES that a few html elements exist in the document with the following IDs
 function LoadMessages(targetUID) {
   document.getElementById('chat-preloader').style.display = "block";
@@ -12,13 +12,15 @@ function LoadMessages(targetUID) {
   this.submitButton = document.getElementById('submit');
   this.submitImageButton = document.getElementById('submitImage');
   this.imageForm = document.getElementById('image-form');
-  // console.log("IMAGE FORM "+this.imageForm);
-  // console.log("IMAGE BTN "+this.submitImageButton);
 
   this.mediaCapture = document.getElementById('mediaCapture');
   this.targetUID = targetUID;
 
-  if (this.targetUID === null) {
+  this.chatTitle = document.getElementById('chat-title');
+  this.userInfo = new UserInfo();
+
+  if(this.targetUID===null) {
+
     // console.log('target id = null');
     document.getElementById("nothing-to-display").removeAttribute('hidden');
     // document.getElementById("chat-container").setAttribute('hidden', true);
@@ -62,7 +64,10 @@ LoadMessages.prototype.initFirebase = function () {
 LoadMessages.prototype.onAuthStateChanged = function (user) {
   if (user) { // User is signed in!
     this.loadMessages();
-    if (this.targetUID) {
+    this.userInfo.startTrackingTime();
+    this.setChatTitle();
+    if(this.targetUID) {
+
       // We've entered the conversation, so no more messages should be unread
       var myConversationsRef = this.database.ref('user-data/' + firebase.auth().currentUser.uid + '/conversations');
       myConversationsRef.orderByChild("recipientUID").equalTo(this.targetUID).limitToFirst(1).once('value', function (data) {
@@ -97,6 +102,33 @@ LoadMessages.prototype.loadMessages = function () {
   document.getElementById('chat-preloader').style.display = "none";
 
 };
+
+LoadMessages.prototype.setChatTitle = function() {
+  if(this.targetUID) {
+    firebase.database().ref('user-data/'+this.targetUID).once('value', function(data){
+      if(!data.val()) {
+        window.alert("Uh Oh, it looks like this user doesn't exist anymore. That's strange...");
+        return;
+      }
+      const displayName = data.val().displayName;
+      this.chatTitle.querySelector('.display-name').textContent = displayName;
+
+      const timezone = data.val().timezone;
+      if(timezone) {
+        console.log('set chat title: '+data.val().timezone);
+
+        const setLocalTime = function(timezone){
+          const formattedLocalTime = this.userInfo.convertTime(timezone);
+          this.chatTitle.querySelector('.local-time').textContent = "(Local Time: "+formattedLocalTime+")";
+        }.bind(this);
+        setLocalTime(timezone);
+        setInterval(setLocalTime.bind(this, timezone), 30 * 1000);
+      }
+      this.chatTitle.removeAttribute('hidden');
+
+    }.bind(this));
+  }
+}
 
 // Saves a new message on the Firebase DB.
 LoadMessages.prototype.saveMessage = function (e) {
