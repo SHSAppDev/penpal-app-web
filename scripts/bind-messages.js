@@ -1,10 +1,9 @@
-
 'use strict';
 
 // Initializes a list of messages and listens for more. Handles all things in the chat UI.
 // REQUIRES that a few html elements exist in the document with the following IDs
 function LoadMessages(targetUID) {
-    document.getElementById('chat-preloader').style.display = "block";
+  document.getElementById('chat-preloader').style.display = "block";
   // These are the IDs:
   this.chat = document.getElementById('chat');
   this.messageList = document.getElementById('messages');
@@ -21,6 +20,7 @@ function LoadMessages(targetUID) {
   this.userInfo = new UserInfo();
 
   if(this.targetUID===null) {
+
     // console.log('target id = null');
     document.getElementById("nothing-to-display").removeAttribute('hidden');
     // document.getElementById("chat-container").setAttribute('hidden', true);
@@ -42,7 +42,7 @@ function LoadMessages(targetUID) {
   this.messageInput.addEventListener('change', buttonTogglingHandler);
 
   // Events for image upload.
-  this.submitImageButton.addEventListener('click', function() {
+  this.submitImageButton.addEventListener('click', function () {
     this.mediaCapture.click();
   }.bind(this));
   this.mediaCapture.addEventListener('change', this.saveImageMessage.bind(this));
@@ -54,25 +54,26 @@ function LoadMessages(targetUID) {
 
 }
 
-LoadMessages.prototype.initFirebase = function() {
+LoadMessages.prototype.initFirebase = function () {
   this.auth = firebase.auth();
   this.database = firebase.database();
   this.storage = firebase.storage();
   this.auth.onAuthStateChanged(this.onAuthStateChanged.bind(this));
 };
 
-LoadMessages.prototype.onAuthStateChanged = function(user) {
+LoadMessages.prototype.onAuthStateChanged = function (user) {
   if (user) { // User is signed in!
     this.loadMessages();
     this.userInfo.startTrackingTime();
     this.setChatTitle();
     if(this.targetUID) {
+
       // We've entered the conversation, so no more messages should be unread
-      var myConversationsRef = this.database.ref('user-data/'+firebase.auth().currentUser.uid+'/conversations');
-      myConversationsRef.orderByChild("recipientUID").equalTo(this.targetUID).limitToFirst(1).once('value', function(data){
+      var myConversationsRef = this.database.ref('user-data/' + firebase.auth().currentUser.uid + '/conversations');
+      myConversationsRef.orderByChild("recipientUID").equalTo(this.targetUID).limitToFirst(1).once('value', function (data) {
         var convKey = Object.keys(data.val())[0]
         var updates = {};
-        updates["/"+convKey+"/unreadMessages"] = 0
+        updates["/" + convKey + "/unreadMessages"] = 0
         myConversationsRef.update(updates);
       });
     }
@@ -80,19 +81,19 @@ LoadMessages.prototype.onAuthStateChanged = function(user) {
 };
 
 // Loads chat messages history and listens for upcoming ones.
-LoadMessages.prototype.loadMessages = function() {
+LoadMessages.prototype.loadMessages = function () {
   // Load and listens for new messages.
   // The conversation reference is /conversations/{both UIDs stuck together}
   // The order that they're stuck together is based on which one is greater in ASCII land.
   var uid1 = this.auth.currentUser.uid;
   var uid2 = getParameterByName('targetUID');
-  var uids = uid1 > uid2 ? uid1+uid2 : uid2+uid1;
-  this.messagesRef = this.database.ref('conversations/'+uids);
+  var uids = uid1 > uid2 ? uid1 + uid2 : uid2 + uid1;
+  this.messagesRef = this.database.ref('conversations/' + uids);
   this.messagesRef.off();
 
 
   // Loads the last messages and listen for new ones.
-  var setMessage = function(data) {
+  var setMessage = function (data) {
     var val = data.val();
     this.displayMessage(data.key, val.name, val.text, val.photoUrl, val.imageUrl, val.uid);
   }.bind(this);
@@ -130,7 +131,7 @@ LoadMessages.prototype.setChatTitle = function() {
 }
 
 // Saves a new message on the Firebase DB.
-LoadMessages.prototype.saveMessage = function(e) {
+LoadMessages.prototype.saveMessage = function (e) {
   e.preventDefault();
   // Check that the user entered a message and is signed in.
   if (this.messageInput.value && this.auth.currentUser) {
@@ -143,12 +144,12 @@ LoadMessages.prototype.saveMessage = function(e) {
       text: this.messageInput.value,
       photoUrl: currentUser.photoURL || '/images/profile_placeholder.png',
       uid: currentUser.uid
-    }).then(function() {
+    }).then(function () {
       // Clear message text field and SEND button state.
       LoadMessages.resetMaterialTextfield(this.messageInput);
       this.toggleButton();
       this.incrementRecipientUnreadMessages();
-    }.bind(this)).catch(function(error) {
+    }.bind(this)).catch(function (error) {
       console.error('Error writing new message to Firebase Database', error);
     });
 
@@ -156,11 +157,11 @@ LoadMessages.prototype.saveMessage = function(e) {
 };
 
 // Sets the URL of the given img element with the URL of the image stored in Firebase Storage.
-LoadMessages.prototype.setImageUrl = function(imageUri, imgElement) {
+LoadMessages.prototype.setImageUrl = function (imageUri, imgElement) {
   // If the image is a Firebase Storage URI we fetch the URL.
   if (imageUri.startsWith('gs://')) {
     imgElement.src = LoadMessages.LOADING_IMAGE_URL; // Display a loading image first.
-    this.storage.refFromURL(imageUri).getMetadata().then(function(metadata) {
+    this.storage.refFromURL(imageUri).getMetadata().then(function (metadata) {
       imgElement.src = metadata.downloadURLs[0];
     });
   } else {
@@ -170,7 +171,7 @@ LoadMessages.prototype.setImageUrl = function(imageUri, imgElement) {
 
 // Saves a new message containing an image URI in Firebase.
 // This first saves the image in Firebase storage.
-LoadMessages.prototype.saveImageMessage = function(event) {
+LoadMessages.prototype.saveImageMessage = function (event) {
   var file = event.target.files[0];
 
   // Clear the selection in the file picker input.
@@ -199,18 +200,22 @@ LoadMessages.prototype.saveImageMessage = function(event) {
       imageUrl: LoadMessages.LOADING_IMAGE_URL,
       photoUrl: currentUser.photoURL || '/images/profile_placeholder.png',
       uid: currentUser.uid
-    }).then(function(data) {
+    }).then(function (data) {
 
       // Upload the image to Firebase Storage.
       this.storage.ref(currentUser.uid + '/' + Date.now() + '/' + file.name)
-          .put(file, {contentType: file.type})
-          .then(function(snapshot) {
-            // Get the file's Storage URI and update the chat message placeholder.
-            var filePath = snapshot.metadata.fullPath;
-            data.update({imageUrl: this.storage.ref(filePath).toString()});
-          }.bind(this)).catch(function(error) {
-        console.error('There was an error uploading a file to Firebase Storage:', error);
-      });
+        .put(file, {
+          contentType: file.type
+        })
+        .then(function (snapshot) {
+          // Get the file's Storage URI and update the chat message placeholder.
+          var filePath = snapshot.metadata.fullPath;
+          data.update({
+            imageUrl: this.storage.ref(filePath).toString()
+          });
+        }.bind(this)).catch(function (error) {
+          console.error('There was an error uploading a file to Firebase Storage:', error);
+        });
     }.bind(this));
 
   }
@@ -233,25 +238,25 @@ LoadMessages.prototype.saveImageMessage = function(event) {
 // };
 
 // Resets the given MaterialTextField.
-LoadMessages.resetMaterialTextfield = function(element) {
+LoadMessages.resetMaterialTextfield = function (element) {
   element.value = '';
   // element.parentNode.MaterialTextfield.boundUpdateClassesHandler();
 };
 
 // Template for messages.
 LoadMessages.MESSAGE_TEMPLATE =
-    '<div class="message-container">' +
-      '<div class="pic"></div>' +
-      '<div class="message"></div>' +
-      '<div class="name"></div>' +
+  '<div class="message-container">' +
+  '<div class="pic"></div>' +
+  '<div class="message"></div>' +
+  '<div class="name"></div>' +
 
-    '</div>';
+  '</div>';
 
 // A loading image URL.
 LoadMessages.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
 
 // Displays a Message in the UI.
-LoadMessages.prototype.displayMessage = function(key, name, text, picUrl, imageUri, uid) {
+LoadMessages.prototype.displayMessage = function (key, name, text, picUrl, imageUri, uid) {
   var div = document.getElementById(key);
   var currentUser = this.auth.currentUser;
 
@@ -262,7 +267,7 @@ LoadMessages.prototype.displayMessage = function(key, name, text, picUrl, imageU
     div = temp.firstChild;
     div.setAttribute('id', key);
     this.messageList.appendChild(div);
-    if(uid == currentUser.uid) { // Switch positioning of message if user sent message
+    if (uid == currentUser.uid) { // Switch positioning of message if user sent message
       // console.log("switching position "+uid);
       div.style.flexDirection = "row-reverse";
       div.style.justifyContent = "flex-start"
@@ -283,7 +288,7 @@ LoadMessages.prototype.displayMessage = function(key, name, text, picUrl, imageU
     var temp = document.createElement('div');
     temp.innerHTML = '<img src=# class="materialboxed" width="300"></img>';
     var image = temp.firstChild;
-    image.addEventListener('load', function() {
+    image.addEventListener('load', function () {
       this.chat.scrollTop = this.chat.scrollHeight;
     }.bind(this));
     this.setImageUrl(imageUri, image);
@@ -293,16 +298,20 @@ LoadMessages.prototype.displayMessage = function(key, name, text, picUrl, imageU
   }
 
   var profilePic = div.querySelector('.pic');
-  if(uid == currentUser.uid) {
-      // console.log("message sent by current user");
-      messageElement.style.background = "#009688";
-      messageElement.style.color = "white";
-      profilePic.style.marginLeft = "7.5px";
+  if (uid == currentUser.uid) {
+    // console.log("message sent by current user");
+    messageElement.style.background = "#009688";
+    messageElement.style.color = "white";
+    profilePic.style.marginLeft = "7.5px";
 
+  } else {
+    messageElement.style.color = "#212121";
   }
 
   // Show the card fading-in.
-  setTimeout(function() {div.classList.add('visible')}, 1);
+  setTimeout(function () {
+    div.classList.add('visible')
+  }, 1);
   this.chat.scrollTop = this.chat.scrollHeight;
   this.messageInput.focus();
   // $("#chat").animate({ scrollTop: $('#chat').prop("scrollHeight")}, 1000);
@@ -311,7 +320,7 @@ LoadMessages.prototype.displayMessage = function(key, name, text, picUrl, imageU
 
 // Enables or disables the submit button depending on the values of the input
 // fields.
-LoadMessages.prototype.toggleButton = function() {
+LoadMessages.prototype.toggleButton = function () {
   if (this.messageInput.value) {
     this.submitButton.removeAttribute('disabled');
   } else {
@@ -319,44 +328,44 @@ LoadMessages.prototype.toggleButton = function() {
   }
 };
 
-LoadMessages.prototype.incrementRecipientUnreadMessages = function() {
+LoadMessages.prototype.incrementRecipientUnreadMessages = function () {
   //WARNING this might seem sorta confusing
-  var recipientConversationContainerRef = this.database.ref('user-data/'+this.targetUID)
+  var recipientConversationContainerRef = this.database.ref('user-data/' + this.targetUID)
     .child('conversations').orderByChild('recipientUID')
     .equalTo(this.auth.currentUser.uid).limitToFirst(1);
-    recipientConversationContainerRef.once('value',function(data){
-      // console.log(data.val());
-      // data.val() should be an object that has just one child which os the
-      // random key for the conversation. Inside that is the unreadMessages
-      // property which we can set.
-      var theWeirdKey = Object.keys(data.val())[0];
-      var cVal = data.val()[theWeirdKey].unreadMessages; // The current unread messages value
-      var newVal = 0;
-      if(cVal===null||cVal===undefined||cVal===0) {
-        newVal = 1;
-      } else {
-        newVal = cVal+1;
-      }
-      var convRef = this.database.ref('user-data/'+this.targetUID)
-        .child('conversations').child(theWeirdKey);
-      convRef.update({
-        '/unreadMessages': newVal
-      });
+  recipientConversationContainerRef.once('value', function (data) {
+    // console.log(data.val());
+    // data.val() should be an object that has just one child which os the
+    // random key for the conversation. Inside that is the unreadMessages
+    // property which we can set.
+    var theWeirdKey = Object.keys(data.val())[0];
+    var cVal = data.val()[theWeirdKey].unreadMessages; // The current unread messages value
+    var newVal = 0;
+    if (cVal === null || cVal === undefined || cVal === 0) {
+      newVal = 1;
+    } else {
+      newVal = cVal + 1;
+    }
+    var convRef = this.database.ref('user-data/' + this.targetUID)
+      .child('conversations').child(theWeirdKey);
+    convRef.update({
+      '/unreadMessages': newVal
+    });
 
-    }.bind(this));
+  }.bind(this));
 }
 
 
-var getURLParameterByName = function(name, url) {
-    if (!url) {
-      url = window.location.href;
-    }
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
+var getURLParameterByName = function (name, url) {
+  if (!url) {
+    url = window.location.href;
+  }
+  name = name.replace(/[\[\]]/g, "\\$&");
+  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+    results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, " "));
 };
 
 var targetUID = getURLParameterByName('targetUID');

@@ -112,12 +112,12 @@
         </div>
 
         <div class="col s12 m12 l10">
-        <div class="card-panel" style="margin-top: 33px;" hidden id="nothing-to-display">
-            <p class="center-align">Nothing to show yet :)</p>
-            <p class="center-align">Click a conversation from your conversation list</p>
-            <p class="center-align">Or click <a style="color: red;" href="#add-conversation">here</a> to start one.</p>
+            <div class="card-panel" style="margin-top: 33px;" hidden id="nothing-to-display">
+                <p class="center-align">Nothing to show yet :)</p>
+                <p class="center-align">Click a conversation from your conversation list</p>
+                <p class="center-align">Or click <a style="color: red;" href="#add-conversation">here</a> to start one.</p>
+            </div>
         </div>
-    </div>
 
         <div id="chat-container" class="col s9 m7 l6 teal white-text">
             <center id="chat-title" hidden>
@@ -139,30 +139,11 @@
                     </div>
                 </div>
             </div>
-            <div id="messages"><span id="message-filler"></span></div>
-        <div id="message-interaction">
-            <form id="message-form" action="#">
-                <div class="input-field inline" id="message-input">
-                    <input type="text" id="message">
-                    <label for="message"><span class="translate">Message...</span></label>
-                </div>
-                <button id="submit" disabled type="submit" class="btn waves-light waves-effect red lighten-1">
-                        <span class="translate">Send</span>
-                        <i class="material-icons right">send</i>
-                    </button>
-                <button id="submitImage" class="btn waves-light waves-effect red lighten-1" title="Add an image.">
-                        <i class="material-icons center">image</i>
-                    </button>
+            <div id="messages" style="padding-bottom: 10px;"><span id="message-filler"></span></div>
 
+        <!--Translate -->
 
-            </form>
-            <form id="image-form" action="#">
-                <input id="mediaCapture" type="file" accept="image/*,capture=camera" hidden>
-            </form>
-
-            <!--Translate -->
-
-            <!-- <ul id="translate-panel" class="collapsible" data-collapsible="accordion">
+        <!-- <ul id="translate-panel" class="collapsible" data-collapsible="accordion">
                 <li>
                     <div class="collapsible-header"><span style="color:red;" class="translate">Translate Tool</span><i class="material-icons" style="color:red;">compare_arrows</i></div>
                     <div class="collapsible-body">
@@ -204,18 +185,38 @@
                     </div>
                 </li>
             </ul> -->
-        </div>
+        <!--</div>-->
     </div>
+
     </span>
+    <div id="message-interaction" class="card">
+        <form id="message-form" action="#">
+            <div class="input-field inline" id="message-input">
+                <input type="text" id="message">
+                <label for="message"><span class="translate">Message...</span></label>
+            </div>
+            <button id="submit" disabled type="submit" class="btn waves-light waves-effect red lighten-1">
+                        <span class="translate">Send</span>
+                        <i class="material-icons right">send</i>
+                    </button>
+            <button id="submitImage" class="btn waves-light waves-effect red lighten-1" title="Add an image.">
+                        <i class="material-icons center">image</i>
+                    </button>
+        </form>
+        <form id="image-form" action="#">
+            <input id="mediaCapture" type="file" accept="image/*,capture=camera" hidden>
+        </form>
+    </div>
+
     </div>
 
     <div id="tools-container" class="col s5 m5 l4 teal" style="margin-top: 5px;">
         <center class="white-text">Tools</center>
         <!--<div id="chat" class="card z-depth-3">-->
-          <ul id="translate-panel" class="collapsible card" data-collapsible="accordion">
-              <li>
-                  <div class="collapsible-header"><span style="color:red;">Translate Tool</span><span class="translate"><i class="material-icons" style="color:red;">compare_arrows</i></span></div>
-                  <div class="collapsible-body">
+        <ul id="translate-panel" class="collapsible card" data-collapsible="accordion">
+            <li>
+                <div class="collapsible-header"><span style="color:red;">Translate Tool</span><span class="translate"><i class="material-icons" style="color:red;">compare_arrows</i></span></div>
+                <div class="collapsible-body">
                     <span class="translate">
                       <div class="row">
                           <div class="input-field col s6 m6 l6">
@@ -255,25 +256,25 @@
                       </div>
                     </span>
 
-                      <div class="input-field col s12 m12 l12">
-                          <textarea id="translateSourceText" class="materialize-textarea"></textarea>
-                          <label for="translateSourceText"><span class="translate">Enter the word or phrase you wish to translate here...</span></label>
-                      </div>
-                      <button id="translateSourceTextButton" class="btn waves-light waves-effect red lighten-1 col s12 m12 l12">
+                    <div class="input-field col s12 m12 l12">
+                        <textarea id="translateSourceText" class="materialize-textarea"></textarea>
+                        <label for="translateSourceText"><span class="translate">Enter the word or phrase you wish to translate here...</span></label>
+                    </div>
+                    <button id="translateSourceTextButton" class="btn waves-light waves-effect red lighten-1 col s12 m12 l12">
                           <span class="translate">Translate</span>
                           <!-- <i class="material-icons right">translate</i> -->
                       </button>
-                      <div class="row">
-                          <span class="notranslate"><p id="translatedText" class="col s12 m12 l12"></p></span>
-                      </div>
-                  <!--</div>-->
-              </li>
-          </ul>
+                    <div class="row">
+                        <span class="notranslate"><p id="translatedText" class="col s12 m12 l12"></p></span>
+                    </div>
+                    <!--</div>-->
+            </li>
+        </ul>
 
-          <ul id="special-characters-panel" class="collapsible card" data-collapsible="accordion">
-              <li>
-                  <div class="collapsible-header"><span style="color:red;">Special Characters</span><span class="notranslate"><i class="material-icons" style="color:red;">translate</i></span></div>
-                  <div class="collapsible-body">
+        <ul id="special-characters-panel" class="collapsible card" data-collapsible="accordion">
+            <li>
+                <div class="collapsible-header"><span style="color:red;">Special Characters</span><span class="notranslate"><i class="material-icons" style="color:red;">translate</i></span></div>
+                <div class="collapsible-body">
 
                     <a class="waves-effect waves-teal btn-flat special-character-tool-button">á</a>
                     <a class="waves-effect waves-teal btn-flat special-character-tool-button">é</a>
@@ -285,9 +286,9 @@
                     <a class="waves-effect waves-teal btn-flat special-character-tool-button">¡</a>
 
 
-                  </div>
-              </li>
-          </ul>
+                </div>
+            </li>
+        </ul>
         </div>
     </div>
 
