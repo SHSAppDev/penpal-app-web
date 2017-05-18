@@ -81,7 +81,7 @@ WWBDashboard.prototype.onAuthStateChanged = function(user) {
         this.userName.innerHTML = this.auth.currentUser.displayName;
 
         this.userInfo.startTrackingTime();
-        // console.log(this.userInfo.formattedTime);
+        // console.log(this.userInfo.convertTime('America/Mexico_City'));
     }
 };
 
