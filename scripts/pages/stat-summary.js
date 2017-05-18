@@ -33,7 +33,7 @@ StatSummary.prototype.onAuthStateChanged = function(user) {
       document.getElementById('display-name').textContent = data.val().displayName;
       document.getElementById('email').textContent = data.val().email;
       document.getElementById('profile-pic').src = data.val().photoURL;
-      document.getElementById('user-card').removeAttribute('hidden');
+      document.getElementById('user-card-container').style.display='block ';
 
     }.bind(this));
 
