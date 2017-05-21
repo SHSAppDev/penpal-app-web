@@ -6,7 +6,7 @@ function SchoolPage() {
   this.schoolCodeInput = document.getElementById('school-code-input');
   this.searchButton = document.getElementById('search-button');
   this.searchButton.addEventListener('click', function(){
-    this.initializeUserListWithSchoolCode(this.schoolCodeInput.value);
+    this.initializeAllOptions(this.schoolCodeInput.value);
   }.bind(this));
   this.optionsContainer = document.getElementById('options-container');
   this.initFirebase();
@@ -32,8 +32,7 @@ SchoolPage.prototype.onAuthStateChanged = function(user) {
   }
 };
 
-SchoolPage.prototype.initializeUserListWithSchoolCode = function(schoolCode) {
-  this.optionsContainer.innerHTML = "";
+SchoolPage.prototype.initializeUserListForGivenSchool = function(schoolCode) {
   firebase.database().ref('schools/'+schoolCode)
   .once('value',function(data){
     if(data.val()) {
@@ -56,13 +55,26 @@ SchoolPage.prototype.initializeUserListWithSchoolCode = function(schoolCode) {
         listItem.querySelector('.email').textContent = each.email;
 
         schoolListElement.appendChild(listItem);
-        console.log("item added.");
       }
-
     } else {
       window.alert("There were no schools found with that code.");
     }
   }.bind(this));
+};
+
+// Displays all the users associated with this school and all the users of the schools assocated for this given school.
+SchoolPage.prototype.initializeAllOptions = function(schoolCode) {
+  this.optionsContainer.innerHTML = "";
+  this.initializeUserListForGivenSchool(schoolCode);
+  firebase.database().ref('schools/'+schoolCode+'/associatedSchools')
+    .once('value', function(data){
+      if(data.val()===null)return;
+      const associatedSchoolCodes = Object.values(data.val());
+      console.log('associatedSchoolCodes '+associatedSchoolCodes);
+      for(var i=0; i<associatedSchoolCodes.length; i++) {
+        this.initializeUserListForGivenSchool(associatedSchoolCodes[i]);
+      }
+    }.bind(this));
 };
 
 SchoolPage.SCHOOL_LIST_TEMPLATE =
