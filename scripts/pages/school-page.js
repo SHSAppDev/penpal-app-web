@@ -8,8 +8,8 @@ function SchoolPage() {
   this.searchButton.addEventListener('click', function(){
     this.initializeUserListWithSchoolCode(this.schoolCodeInput.value);
   }.bind(this));
+  this.optionsContainer = document.getElementById('options-container');
   this.initFirebase();
-  console.log("hi");
 }
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.
@@ -33,9 +33,50 @@ SchoolPage.prototype.onAuthStateChanged = function(user) {
 };
 
 SchoolPage.prototype.initializeUserListWithSchoolCode = function(schoolCode) {
-  console.log("received code: "+schoolCode);
-  console.log("in input"+this.schoolCodeInput.value);
+  this.optionsContainer.innerHTML = "";
+  firebase.database().ref('schools/'+schoolCode)
+  .once('value',function(data){
+    if(data.val()) {
+      var temp = document.createElement('div');
+      temp.innerHTML = SchoolPage.SCHOOL_LIST_TEMPLATE;
+      const schoolListElement = temp.firstChild;
+      schoolListElement.id = schoolCode;
+      schoolListElement.querySelector('.school-name').textContent = data.val().name;
+      this.optionsContainer.appendChild(schoolListElement);
+
+      const userObjs = data.val().students?Object.values(data.val().students):[];
+      console.log(userObjs);
+      for(var i=0; i<userObjs.length; i++) {
+        const each = userObjs[i];
+        var temp = document.createElement('div');
+        temp.innerHTML = SchoolPage.USER_LIST_ITEM;
+        var listItem = temp.firstChild;
+        listItem.querySelector('.display-name').textContent = each.displayName;
+        listItem.querySelector('.photo').src = each.photoURL;
+        listItem.querySelector('.email').textContent = each.email;
+
+        schoolListElement.appendChild(listItem);
+        console.log("item added.");
+      }
+
+    } else {
+      window.alert("There were no schools found with that code.");
+    }
+  }.bind(this));
 };
+
+SchoolPage.SCHOOL_LIST_TEMPLATE =
+  '<ul class="collection with-header">' +
+    '<li class="collection-header"><h4 class="school-name">School Name</h4></li>' +
+  '</ul>';
+SchoolPage.USER_LIST_ITEM =
+  '<li class="collection-item avatar">' +
+    '<div>' +
+      '<img src=# class="circle photo"></img>' +
+      '<span class="title display-name">Alvin</span><button class="secondary-content">ADD</button>' +
+      '<p class="email"></p>' +
+    '</div>' +
+  '</li>';
 
 // Stolen from stack overflow. Useful!
 // http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
