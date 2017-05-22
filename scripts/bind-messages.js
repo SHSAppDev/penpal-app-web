@@ -17,22 +17,11 @@ function LoadMessages(targetUID) {
   this.targetUID = targetUID;
 
   this.chatTitle = document.getElementById('chat-title');
-  this.userInfo = new UserInfo();
 
   if(this.targetUID===null) {
-
-    // console.log('target id = null');
     document.getElementById("nothing-to-display").removeAttribute('hidden');
-    // document.getElementById("chat-container").setAttribute('hidden', true);
     document.getElementById("chat-container").style.display = 'none';
     document.getElementById("tools-container").style.display = 'none';
-
-    // console.log(document.getElementById("chat-container"));
-
-    // this.messageList.setAttribute('hidden', true);
-    // this.messageForm.setAttribute('hidden', true);
-    // this.messageInput.setAttribute('hidden', true);
-    // this.submitButton.setAttribute('hidden', true);
     return;
   }
 
@@ -64,6 +53,7 @@ LoadMessages.prototype.initFirebase = function () {
 LoadMessages.prototype.onAuthStateChanged = function (user) {
   if (user) { // User is signed in!
     this.loadMessages();
+    this.userInfo = new UserInfo();
     this.userInfo.startTrackingTime();
     this.setChatTitle();
     if(this.targetUID) {
