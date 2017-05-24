@@ -8,6 +8,7 @@ function UserInfo() {
 		sessionStorage.setItem('timezone', tz.name());
 	}
 	this.currTz = sessionStorage.getItem('timezone');
+	this.saveTimezoneToFirebase(this.currTz);
 	// this.loadTime();
 	this.formattedTime = this.convertTime(this.currTz);
 
@@ -66,8 +67,8 @@ UserInfo.prototype.convertTime = function(timezone) {
 UserInfo.prototype.saveTimezoneToFirebase = function(timezone) {
 	// console.log("saving to firebase")
 	if(firebase.auth().currentUser === null) {
-		console.log("Unable to save to firebase due to the user not yet being " +
-		"authenticated. Avoid calling startTrackingTime before the user has been authenticated.");
+		console.log("Unable to save timezone to firebase due to the user not yet being " +
+		"authenticated. Avoid creating a UserInfo object before being authenticated.");
 		return;
 	}
 	// Make a firebase reference to the currentUser
@@ -75,7 +76,7 @@ UserInfo.prototype.saveTimezoneToFirebase = function(timezone) {
 	var userRef = firebase.database().ref('user-data/' + myUID);
 	//Push updates
 	var updates = {};
-	updates['/timezone'] = timezone; // b
+	updates['/timezone'] = timezone;
 
 	userRef.update(updates);
 };
@@ -83,7 +84,6 @@ UserInfo.prototype.saveTimezoneToFirebase = function(timezone) {
 UserInfo.prototype.startTrackingTime = function() {
 	setInterval(function(){
 		this.formattedTime = this.convertTime(this.currTz);
-		this.saveTimezoneToFirebase(this.currTz);
 	}.bind(this), 60*1000);
 };
 // console.log("got user info");
