@@ -32,11 +32,16 @@ Visit 'localhost' link provided (usually http://localhost:5000).
 - [x] UI for viewing conversations
 - [x] Direct Messaging
 - [x] Add new friends functionality
-- [ ] Translate words to different languages right in the message text box
-- [ ] Logo
+- [x] Translate words to different languages right in the message text box
+- [x] Logo
 - [ ] About Page
 - [ ] Founders Page
 - [ ] Login / Sign-Up Page
+- [ ] Landing Page
+- [ ] Better responsive mobile design
+
+
+
 
 
 ## Site Built With:

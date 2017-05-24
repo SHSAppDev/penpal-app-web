@@ -42,7 +42,7 @@ function convertTime(theTime) {
 
 	getTimeZone(); // sets currTz
 	// console.log("currTz: " + currTz);
-	var tzTime = momentTime.tz(currTz);
+	var tzTime = momentTime.tz(this.currTz);
 	var formattedTime = tzTime.format('h:mm A');
 
 	// console.log("formatted time: " + formattedTime);

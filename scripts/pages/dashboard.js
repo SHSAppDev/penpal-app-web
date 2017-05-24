@@ -1,13 +1,14 @@
 'use strict';
 
-// Initializes W3Dashboard.
-function W3Dashboard() {
+// Initializes WWBDashboard.
+function WWBDashboard() {
 
     // Shortcuts to DOM Elements.
     this.userPic = document.getElementById('user-pic');
     this.userName = document.getElementById('user-name');
     this.initFirebase();
     this.translate = new EZTranslate();
+    this.userInfo = new UserInfo();
 
     // Example of how to do the translate:
     // translate method takes in sourceLang, targetLang, sourceText, and a callBack
@@ -18,12 +19,12 @@ function W3Dashboard() {
 }
 
 
-W3Dashboard.URL_PROFILE_PLACEHOLDER = '/images/profile_placeholder.png';
-W3Dashboard.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
+WWBDashboard.URL_PROFILE_PLACEHOLDER = '/images/profile_placeholder.png';
+WWBDashboard.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
 
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.
-W3Dashboard.prototype.initFirebase = function() {
+WWBDashboard.prototype.initFirebase = function() {
     // Initialize Firebase.
     // Shortcuts to Firebase SDK features.
     this.auth = firebase.auth();
@@ -37,7 +38,7 @@ W3Dashboard.prototype.initFirebase = function() {
 
 // Checks if the given userID is registered in user-data, and if it's not,
 // the userID gets registered
-W3Dashboard.prototype.checkForFirstTimeUser = function(userId) {
+WWBDashboard.prototype.checkForFirstTimeUser = function(userId) {
   var userRef = this.database.ref('user-data/'+userId);
   userRef.once('value', function(snapshot) {
     if(snapshot.val() === null
@@ -49,7 +50,7 @@ W3Dashboard.prototype.checkForFirstTimeUser = function(userId) {
       userRef.set({
         email: this.auth.currentUser.email,
         displayName: this.auth.currentUser.displayName,
-        photoURL: this.auth.currentUser.photoURL || W3Dashboard.URL_PROFILE_PLACEHOLDER,
+        photoURL: this.auth.currentUser.photoURL || WWBDashboard.URL_PROFILE_PLACEHOLDER,
         registered: true
       });
     }
@@ -57,7 +58,7 @@ W3Dashboard.prototype.checkForFirstTimeUser = function(userId) {
 }
 
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
-W3Dashboard.prototype.onAuthStateChanged = function(user) {
+WWBDashboard.prototype.onAuthStateChanged = function(user) {
     if (user) { // User is signed in!
         //First, check for first time user.
         // console.log("on auth change");
@@ -78,6 +79,9 @@ W3Dashboard.prototype.onAuthStateChanged = function(user) {
         // Unhide and set userName
         this.userName.removeAttribute('hidden');
         this.userName.innerHTML = this.auth.currentUser.displayName;
+
+        this.userInfo.startTrackingTime();
+        // console.log(this.userInfo.convertTime('America/Mexico_City'));
     }
 };
 
@@ -96,7 +100,7 @@ function getParameterByName(name, url) {
 }
 
 window.onload = function() {
-    window.dashboardScript = new W3Dashboard();
+    window.dashboardScript = new WWBDashboard();
     // document.getElementById('button-collapse').sideNav(); //DISABLED because js says sideNav() isn't a function.
 };
 
