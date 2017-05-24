@@ -86,6 +86,7 @@ LoadMessages.prototype.loadMessages = function () {
   var setMessage = function (data) {
     var val = data.val();
     this.displayMessage(data.key, val.name, val.text, val.photoUrl, val.imageUrl, val.uid);
+    // Display a notification right here....
   }.bind(this);
   this.messagesRef.limitToLast(30).on('child_added', setMessage);
   this.messagesRef.limitToLast(30).on('child_changed', setMessage);
