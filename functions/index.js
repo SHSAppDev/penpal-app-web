@@ -8,9 +8,23 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
  response.send("Hello from Firebase! Ryan was here.");
 })
 
-function registerInSchool(event, params) {
-  console.log("Register in school called! params: "+params.toString());
-  console.log("obj "+JSON.stringify(event));
+function registerInSchool(event, uid, params) {
+  const userRef = admin.database().ref('/user-data/'+uid);
+
+  userRef.once('value', function(data){
+    const displayName = data.val().displayName;
+    const email = data.val().email;
+    const photoURL = data.val().photoURL;
+    const schoolRef = admin.database().ref('/schools/'+params.schoolCode);
+    schoolRef.child('students').push({
+      'displayName': displayName,
+      'email': email,
+      'photoURL': photoURL,
+      'uid': uid
+    });
+    userRef.update({'/schoolCode': params.schoolCode});
+  });
+
 
 }
 
@@ -28,6 +42,7 @@ exports.requestFunction = functions.database.ref('/function-requests/{pushId}')
       const req = event.data.val();
       const action = req.action;
       const params = req.params;
+      const uid = req.uid;
       console.log("function requested!");
       console.log("action: "+action);
       console.log("params: "+params);
@@ -40,7 +55,7 @@ exports.requestFunction = functions.database.ref('/function-requests/{pushId}')
           default:
             console.error("The requested function ''"+ action + "'' does not exist.");
         }
-        if(func) func(event, params);
+        if(func) func(event, uid, params);
       } else {
         console.error("Data for function request must have action and params children.");
       }
