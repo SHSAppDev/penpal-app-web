@@ -8,7 +8,7 @@ function WWBDashboard() {
     this.userName = document.getElementById('user-name');
     this.initFirebase();
     this.translate = new EZTranslate();
-    this.userInfo = new UserInfo();
+    // this.userInfo = new UserInfo();
 
     // Example of how to do the translate:
     // translate method takes in sourceLang, targetLang, sourceText, and a callBack
@@ -38,31 +38,31 @@ WWBDashboard.prototype.initFirebase = function() {
 
 // Checks if the given userID is registered in user-data, and if it's not,
 // the userID gets registered
-WWBDashboard.prototype.checkForFirstTimeUser = function(userId) {
-  var userRef = this.database.ref('user-data/'+userId);
-  userRef.once('value', function(snapshot) {
-    if(snapshot.val() === null
-    || snapshot.val().registered == false
-    || snapshot.val().registered == null
-    || snapshot.val().registered == undefined) {
-      // We have ourselves a first time user!
-      // console.log("this="+this);
-      userRef.set({
-        email: this.auth.currentUser.email,
-        displayName: this.auth.currentUser.displayName,
-        photoURL: this.auth.currentUser.photoURL || WWBDashboard.URL_PROFILE_PLACEHOLDER,
-        registered: true
-      });
-    }
-  }.bind(this));
-}
+// WWBDashboard.prototype.checkForFirstTimeUser = function(userId) {
+//   var userRef = this.database.ref('user-data/'+userId);
+//   userRef.once('value', function(snapshot) {
+//     if(snapshot.val() === null
+//     || snapshot.val().registered == false
+//     || snapshot.val().registered == null
+//     || snapshot.val().registered == undefined) {
+//       // We have ourselves a first time user!
+//       // console.log("this="+this);
+//       userRef.set({
+//         email: this.auth.currentUser.email,
+//         displayName: this.auth.currentUser.displayName,
+//         photoURL: this.auth.currentUser.photoURL || WWBDashboard.URL_PROFILE_PLACEHOLDER,
+//         registered: true
+//       });
+//     }
+//   }.bind(this));
+// }
 
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
 WWBDashboard.prototype.onAuthStateChanged = function(user) {
     if (user) { // User is signed in!
         //First, check for first time user.
         // console.log("on auth change");
-        this.checkForFirstTimeUser(this.auth.currentUser.uid);
+        // this.checkForFirstTimeUser(this.auth.currentUser.uid);
 
         // Get profile pic and user's name from the Firebase user object.
         var profilePicUrl = user.photoURL; // Get profile pic.
@@ -80,7 +80,7 @@ WWBDashboard.prototype.onAuthStateChanged = function(user) {
         this.userName.removeAttribute('hidden');
         this.userName.innerHTML = this.auth.currentUser.displayName;
 
-        this.userInfo.startTrackingTime();
+        // this.userInfo.startTrackingTime();
         // console.log(this.userInfo.convertTime('America/Mexico_City'));
     }
 };

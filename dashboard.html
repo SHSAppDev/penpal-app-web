@@ -146,51 +146,6 @@
             </div>
             <div id="messages" style="padding-bottom: 10px;"><span id="message-filler"></span></div>
 
-        <!--Translate -->
-
-        <!-- <ul id="translate-panel" class="collapsible" data-collapsible="accordion">
-                <li>
-                    <div class="collapsible-header"><span style="color:red;" class="translate">Translate Tool</span><i class="material-icons" style="color:red;">compare_arrows</i></div>
-                    <div class="collapsible-body">
-                      <span class="translate">
-                        <div class="row">
-                            <div class="input-field col s6 m6 l6">
-                                <select id='sourceLangSelect'>
-
-                                    <option value="" disabled selected>Input Language</option>
-                                    <option value="en">English</option>
-                                    <option value="es">Spanish</option>
-                                    <option value="fr">French</option>
-                                    <option value="zh-CN">Chinese</option>
-                                    </select>
-                            </div>
-                            <div class="input-field col s6 m6 l6">
-                                <select id='targetLangSelect'>
-                                    <option value="" disabled selected>Output Language</option>
-                                    <option value="en">English</option>
-                                    <option value="es">Spanish</option>
-                                    <option value="fr">French</option>
-                                    <option value="zh-CN">Chinese</option>
-                                    </select>
-                            </div>
-                        </div>
-                      </span>
-
-                        <div class="input-field col s12 m12 l12">
-                            <textarea id="translateSourceText" class="materialize-textarea"></textarea>
-                            <label for="translateSourceText"><span class="translate">Enter the word or phrase you wish to translate here...</span></label>
-                        </div>
-                        <button id="translateSourceTextButton" class="btn waves-light waves-effect red lighten-1 col s12 m12 l12">
-                            <span class="translate">Translate</span>
-                            <i class="material-icons right">translate</i>
-                        </button>
-                        <div class="row">
-                            <p id="translatedText" class="col s12 m12 l12"></p>
-                        </div>
-                    </div>
-                </li>
-            </ul> -->
-        <!--</div>-->
     </div>
 
     </span>
@@ -280,7 +235,7 @@
             <li>
                 <div class="collapsible-header"><span style="color:red;">Special Characters</span><span class="notranslate"><i class="material-icons" style="color:red;">translate</i></span></div>
                 <div class="collapsible-body">
-
+                    <span class="notranslate">
                     <a class="waves-effect waves-teal btn-flat special-character-tool-button">á</a>
                     <a class="waves-effect waves-teal btn-flat special-character-tool-button">é</a>
                     <a class="waves-effect waves-teal btn-flat special-character-tool-button">í</a>
@@ -289,7 +244,7 @@
                     <a class="waves-effect waves-teal btn-flat special-character-tool-button">ñ</a>
                     <a class="waves-effect waves-teal btn-flat special-character-tool-button">¿</a>
                     <a class="waves-effect waves-teal btn-flat special-character-tool-button">¡</a>
-
+                    </span>
 
                 </div>
             </li>
@@ -301,6 +256,7 @@
     <div id="add-conversation" class="modal">
         <div class="modal-content">
             <h4>Add a conversation.</h4>
+            <h5>Don't know specific emails? Click <a href="school-page.html">here</a> to see your options based on your school.</h5>
             <div class="input-field inline">
                 <input id="email-field" type="email" class="validate">
                 <label for="email-field" data-error="Email formatted incorrectly" data-success="">Email</label>

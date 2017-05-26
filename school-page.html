@@ -8,8 +8,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Improve your foreign language skills by chatting with native speakers your age.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Stat Summary</title>
-    <link rel="stylesheet" type="text/css" href="styles/stat-summary.css">
+    <title>My School Page</title>
+    <link rel="stylesheet" type="text/css" href="styles/school-page.css">
 
 
     <!-- Disable tap highlight on IE -->
@@ -42,13 +42,26 @@
 
 </head>
 
-<body id='body'>
+<body>
+
+    <a style="color: white;" class="center-align" id="back-button" href="dashboard.html">Back to Conversations</a>
+
+    <p>Type your school code in here to see a list of options.</p>
+    <input type="text" id="school-code-input"></input>
+    <button id="search-button">Search</button>
 
 
-    <a id="back-button" style="color: red;" class="center-align" class="btn-large waves-effect waves-light red lighten-1"  href="dashboard.html">Back to Conversations</a>
+    <div id="options-container">
+      <!-- <ul class="collection with-header">
+        <li class="collection-header"><h4>Saratoga High</h4></li>
+        <li class="collection-item"><div>Alvin<button class="secondary-content">ADD</button></div></li>
+        <li class="collection-item"><div>Alvin<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+        <li class="collection-item"><div>Alvin<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+        <li class="collection-item"><div>Alvin<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>
+      </ul> -->
+    </div>
 
-    <!--This card contains stats of the current user-->
-    <div id="user-card-container" style="display:none">
+    <!-- <div id="user-card-container" style="display:block">
       <div class="card" id="user-card">
           <div class="card-content">
               <span id="display-name" class="card-title center-align">Myum Nameum</span>
@@ -56,7 +69,7 @@
               <p id="email" class="center-align">user@example.com</p>
           </div>
       </div>
-    </div>
+    </div> -->
 
 
     <!--This card and all the rest that follow are statistics about each individual conversation.
@@ -67,27 +80,7 @@
         <li class="collection-item avatar"><img src="https://lh4.googleusercontent.com/-u9ORZqi-k0M/AAAAAAAAAAI/AAAAAAAAAIY/k1UqAB3GKA4/photo.jpg" alt="" class="profile-pic circle"><span class="title">Ryan Anderson</span><p class="email">shnoutyanderson@gmail.com</p><p class="sent">Sent: 0 Messages , 0 Words</p><p class="received">Received: 2 Messages , 11 Words</p></li>
         <li class="collection-item avatar"><img src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg" alt="" class="profile-pic circle"><span class="title">Kyle Seid Phan</span><p class="email">kyleseidphan@gmail.com</p><p class="sent">Sent: 0 Messages , 0 Words</p><p class="received">Received: 1 Messages , 3 Words</p></li> -->
     </ul>
-     <!--<div>
-      <div class="card">
-          <div class="card-content">
-              <span class="card-title center-align">Otheruserum Nameum</span>
-              <img id="profile-pic" src=# width="100px" height="100px"></img>
-              <p>anotheruser@example.com</p>
-              <p>Sent: 20 Messages, 131 Words</p>
-              <p>Received: 17 Messages, 146 Words</p>
-          </div>
-      </div>
 
-      <div class="card">
-          <div class="card-content">
-              <span class="card-title center-align">Bob Smith</span>
-              <img id="profile-pic" src=# width="100px" height="100px"></img>
-              <p>anotheruser@example.com</p>
-              <p>Sent: 23 Messages, 137 Words</p>
-              <p>Received: 21 Messages, 235 Words</p>
-          </div>
-      </div>
-  </div> -->
 
 
     <!-- Firebase -->
@@ -103,8 +96,8 @@
         };
         firebase.initializeApp(config);
     </script>
-    <script src="scripts/pages/stat-summary.js"></script>
+    <script src="scripts/pages/school-page.js"></script>
 
-    </body>
+  </body>
 
 </html>
