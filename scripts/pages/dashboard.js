@@ -80,18 +80,18 @@ WWBDashboard.prototype.onAuthStateChanged = function(user) {
         this.userName.removeAttribute('hidden');
         this.userName.innerHTML = this.auth.currentUser.displayName;
 
-        this.command = new Command();
-        this.command.requestFunction('registerInSchool', {
-          'schoolCode': '95070'
-        },
-        {
-          'success': function() {
-            console.log('function successfully requested.');
-          },
-          'error': function(error) {
-
-          }
-        });
+        // this.command = new Command();
+        // this.command.requestFunction('registerInSchool', {
+        //   'schoolCode': '95070'
+        // },
+        // {
+        //   'success': function() {
+        //     console.log('function successfully requested.');
+        //   },
+        //   'error': function(error) {
+        //
+        //   }
+        // });
 
         // this.userInfo.startTrackingTime();
         // console.log(this.userInfo.convertTime('America/Mexico_City'));

@@ -31,9 +31,9 @@ function registerInSchool(event, uid, params) {
 exports.requestFunction = functions.database.ref('/function-requests/{pushId}')
     .onWrite(event => {
       // Only edit data when it is first created.
-      // if (event.data.previous.exists()) {
-      //   return;
-      // }
+      if (event.data.previous.exists()) {
+        return;
+      }
       // Exit when the data is deleted.
       if (!event.data.exists()) {
         return;
@@ -59,9 +59,15 @@ exports.requestFunction = functions.database.ref('/function-requests/{pushId}')
       } else {
         console.error("Data for function request must have action and params children.");
       }
+});
 
-      // You must return a Promise when performing asynchronous tasks inside a Functions such as
-      // writing to the Firebase Realtime Database.
-      // Setting an "uppercase" sibling in the Realtime Database returns a Promise.
-      // return event.data.ref.parent.child('uppercase').set(uppercase);
+exports.deleteFuncReq = functions.database.ref('/function-requests/{pushId}/delete')
+    .onWrite(event => {
+      // Exit when the data is deleted.
+      if(!event.data.exists()) {
+        return;
+      }
+      if(event.data.val() === true) {
+        return event.data.ref.parent.set({});
+      }
 });

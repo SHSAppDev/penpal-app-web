@@ -18,5 +18,6 @@ Command.prototype.requestFunction = function(action, params, callback) {
 		"action": action,
 		"params": params,
 		"uid": firebase.auth().currentUser.uid
-	}).then(callback.success).catch(callback.error);
+	}).then(callback.success)
+	// .catch(callback.error);
 };

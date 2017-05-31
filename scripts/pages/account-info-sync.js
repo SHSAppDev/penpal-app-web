@@ -63,22 +63,21 @@ AccountInfoSync.prototype.submit = function(){
     var updates = {}
     updates['/displayName'] = this.fullNameField.value;
     updates['/email'] = this.emailField.value;
-    // updates['/registered'] = true;
     this.userRef.update(updates)
-    $.ajax({
-            type: "GET",
-            url: 'https://us-central1-penpalapp-6020c.cloudfunctions.net/helloWorld'
-,
-            success: function(data) {
-                // console.log(data);
-								console.log('received: '+data);
-            },
-            error: function(resp, b){
-                console.log('error: '+resp);
-            }
-        });
+    this.command = new Command();
+    this.command.requestFunction('registerInSchool',{
+      'schoolCode': this.schoolCodeField.value
+    }, {
+      'success': function() {
+        this.userRef.update({'/registered': true});
+        window.location.href = 'dashboard.html';
+      }.bind(this),
+      'error': function(err) {
+        window.alert('Some errror occured whilst trying to register for the school.')
+      }.bind(this)
+    });
   } else {
-
+    window.alert('Error: '+err);
   }
 
 };
