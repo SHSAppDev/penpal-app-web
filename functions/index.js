@@ -75,11 +75,14 @@ exports.requestFunction = functions.database.ref('/function-requests/{pushId}')
 
 exports.deleteFuncReq = functions.database.ref('/function-requests/{pushId}/delete')
     .onWrite(event => {
+      console.log('delete was modified');
       // Exit when the data is deleted.
       if(!event.data.exists()) {
         return;
       }
+      console.log('and it was not deleted');
       if(event.data.val()) {
+        console.log('now its deleted');
         return event.data.ref.parent.set({});
       }
 });

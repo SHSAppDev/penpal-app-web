@@ -24,14 +24,16 @@ Command.prototype.requestFunction = function(action, params, callback) {
 		// Watch the response child for something and call success if something appears there.
 		this.reqRef.child(reqPromise.key+'/response').on('value', function(data){
 			if(data.val()) {
-				this.reqRef.child(reqPromise.key+'/delete').set(true);
+				this.reqRef.child(reqPromise.key).remove();
+				this.reqRef.child(reqPromise.key+'/response').off();
 				return callback.success(data.val());
 			}
 		}.bind(this));
 		// Also watch error and see if something appears there.
 		this.reqRef.child(reqPromise.key+'/error').on('value', function(data){
 			if(data.val()) {
-				this.reqRef.child(reqPromise.key+'/delete').set(true);
+				this.reqRef.child(reqPromise.key).remove();
+				this.reqRef.child(reqPromise.key+'/error').off();
 				return callback.error(data.val());
 			}
 		}.bind(this));
