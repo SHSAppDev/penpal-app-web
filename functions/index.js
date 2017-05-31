@@ -8,6 +8,15 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
  response.send("Hello from Firebase! Ryan was here.");
 })
 
+function sayHi(event, uid, params) {
+  const err = params.err;
+  if(err){
+    return event.data.ref.child('error').set('ERROR: Because you told me to....');
+  } else {
+    return event.data.ref.child('response').set('Hello, World!');
+  }
+}
+
 function registerInSchool(event, uid, params) {
   const userRef = admin.database().ref('/user-data/'+uid);
 
@@ -52,10 +61,13 @@ exports.requestFunction = functions.database.ref('/function-requests/{pushId}')
           case 'registerInSchool':
             func = registerInSchool;
             break;
+          case 'sayHi':
+            func = sayHi;
+            break;
           default:
             console.error("The requested function ''"+ action + "'' does not exist.");
         }
-        if(func) func(event, uid, params);
+        if(func) return func(event, uid, params);
       } else {
         console.error("Data for function request must have action and params children.");
       }
@@ -67,7 +79,7 @@ exports.deleteFuncReq = functions.database.ref('/function-requests/{pushId}/dele
       if(!event.data.exists()) {
         return;
       }
-      if(event.data.val() === true) {
+      if(event.data.val()) {
         return event.data.ref.parent.set({});
       }
 });

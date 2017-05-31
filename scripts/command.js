@@ -14,10 +14,30 @@ function Command() {
 // Callback should be an object that contains two functions,
 // one for success and one for error.
 Command.prototype.requestFunction = function(action, params, callback) {
-	this.reqRef.push({
+	const reqPromise = this.reqRef.push({
 		"action": action,
 		"params": params,
 		"uid": firebase.auth().currentUser.uid
-	}).then(callback.success)
-	// .catch(callback.error);
+	});
+	// console.log(reqPromise.key);
+	reqPromise.then(function(){
+		// Watch the response child for something and call success if something appears there.
+		this.reqRef.child(reqPromise.key+'/response').on('value', function(data){
+			if(data.val()) {
+				this.reqRef.child(reqPromise.key+'/delete').set(true);
+				return callback.success(data.val());
+			}
+		}.bind(this));
+		// Also watch error and see if something appears there.
+		this.reqRef.child(reqPromise.key+'/error').on('value', function(data){
+			if(data.val()) {
+				this.reqRef.child(reqPromise.key+'/delete').set(true);
+				return callback.error(data.val());
+			}
+		}.bind(this));
+
+	}.bind(this));
+	reqPromise.catch(function(err){
+		callback.error(err);
+	}.bind(this));
 };
