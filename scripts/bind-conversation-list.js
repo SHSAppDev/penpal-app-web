@@ -49,7 +49,7 @@ LoadConversationList.CONVERSATION_TEMPLATE =
       '<span><img class="pic circle" src=#></span>' +
       '<span class="name title">Name</span>' +
       '<span class="new badge">0</span>'+
-      
+
     '</a>';
 
 
@@ -58,7 +58,6 @@ LoadConversationList.prototype.displayConversation = function(recipientUID, myCo
   // this.userDataRef.child(recipientUID).once('value', function(snapshot){
   this.database.ref('user-data/'+recipientUID).once('value').then(function(snapshot){
     if(snapshot.val()===null) {return;}
-
     var div = document.getElementById(recipientUID);
     if(!div) {
       var container = document.createElement('div');
