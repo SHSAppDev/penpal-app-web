@@ -51,36 +51,47 @@ AccountInfoSync.prototype.initForm = function() {
 AccountInfoSync.prototype.submit = function(){
   // -Validate field content
   // -Submit to firebase
-  var submit = true;
+  // var submit = true;
   var err = null;
-  if(!validateEmail(this.emailField.value)) {
-    submit = false;
-    err = "Invalid email."
-    console.log('email invalid');
-  }
-
-  if(submit) {
+  if(validateEmail(this.emailField.value)) {
     var updates = {}
     updates['/displayName'] = this.fullNameField.value;
     updates['/email'] = this.emailField.value;
-    this.userRef.update(updates)
-    this.command = new Command();
-    this.command.requestFunction('registerInSchool',{
-      'schoolCode': this.schoolCodeField.value
-    }, {
-      'success': function() {
-        this.userRef.update({'/registered': true});
-        window.location.href = 'dashboard.html';
-      }.bind(this),
-      'error': function(err) {
-        window.alert('Some errror occured whilst trying to register for the school.')
-      }.bind(this)
-    });
+    this.userRef.update(updates);
+    if(this.schoolCodeField.value) {
+      this.command = new Command();
+      this.command.requestFunction('registerInSchool', {
+        'schoolCode': this.schoolCodeField.value
+      },
+      {
+        'success': function(result) {
+          this.success();
+        }.bind(this),
+        'error': function(err) {
+          this.fail('Some error occurred while trying to register for the school.');
+        }.bind(this)
+      });
+    } else {
+      this.success();
+    }
   } else {
-    window.alert('Error: '+err);
+    this.fail('Invalid email.');
   }
-
 };
+
+AccountInfoSync.prototype.success = function() {
+  // Set the user's registered property to true, and move on to the dashboard.
+  this.userRef.update({'/registered':true}).then(function(){
+    window.location.href = 'dashboard.html';
+  }.bind(this));
+
+}
+
+AccountInfoSync.prototype.fail = function(message) {
+  // Display something to the user to indicate to them what is wrong with their form.
+  //TODO write something better.
+  window.alert(message)
+}
 
 // Stolen from stack overflow. Useful!
 // http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
