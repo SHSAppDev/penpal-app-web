@@ -1,9 +1,16 @@
 var functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const nodemailer = require('nodemailer');
+
 admin.initializeApp(functions.config().firebase);
-// // Start writing Firebase Functions
-// // https://firebase.google.com/functions/write-firebase-functions
-//
+const gmailEmail = encodeURIComponent(functions.config().gmail.email);
+const gmailPassword = encodeURIComponent(functions.config().gmail.password);
+const mailTransport = nodemailer.createTransport(
+    `smtps://${gmailEmail}:${gmailPassword}@smtp.gmail.com`);
+
+const APP_NAME = 'World Without Borders ePenPal service';
+
+
 exports.helloWorld = functions.https.onRequest((request, response) => {
  response.send("Hello from Firebase! Ryan was here.");
 })
@@ -15,6 +22,11 @@ function sayHi(event, uid, params) {
   } else {
     return event.data.ref.child('response').set('Hello, World!');
   }
+}
+
+function emailSendCommand(event, uid, params) {
+  sendAnEmail(params.emailAddress, params.subject, params.text);
+  return event.data.ref.child('response').set('Email sent successfully to '+params.emailAddress);
 }
 
 function registerInSchool(event, uid, params) {
@@ -83,6 +95,9 @@ exports.requestFunction = functions.database.ref('/function-requests/{pushId}')
           case 'sayHi':
             func = sayHi;
             break;
+          case 'emailSendCommand':
+            func = emailSendCommand;
+            break;
           default:
             console.error("The requested function ''"+ action + "'' does not exist.");
         }
@@ -105,3 +120,44 @@ exports.deleteFuncReq = functions.database.ref('/function-requests/{pushId}/dele
         return event.data.ref.parent.set({});
       }
 });
+
+// [START onCreateTrigger]
+exports.sendWelcomeEmail = functions.auth.user().onCreate(event => {
+// [END onCreateTrigger]
+  // [START eventAttributes]
+  const user = event.data; // The Firebase user.
+
+  const email = user.email; // The email of the user.
+  const displayName = user.displayName; // The display name of the user.
+  // [END eventAttributes]
+
+  return sendWelcomeEmail(email, displayName);
+});
+// [END sendWelcomeEmail]
+
+// Sends a welcome email to the given user.
+function sendWelcomeEmail(email, displayName) {
+  const mailOptions = {
+    from: `${APP_NAME} <noreply@firebase.com>`,
+    to: email
+  };
+
+  // The user subscribed to the newsletter.
+  mailOptions.subject = `Welcome to ${APP_NAME}!`;
+  mailOptions.text = `Hey ${displayName || ''}! Welcome to ${APP_NAME}. I hope you will enjoy our service.`;
+  return mailTransport.sendMail(mailOptions).then(() => {
+    console.log('New welcome email sent to:', email);
+  });
+}
+
+function sendAnEmail(emailAddress, subject, text) {
+  const mailOptions = {
+    from: `${APP_NAME} <noreply@firebase.com>`,
+    to: emailAddress,
+    subject: subject,
+    text: text
+  };
+  return mailTransport.sendMail(mailOptions).then(() => {
+    console.log('New email sent to:', email);
+  });
+}
