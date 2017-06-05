@@ -22,63 +22,50 @@ function Command(event, uid, params) {
 }
 
 Command.prototype.success = function(resp) {
-  return this.event.data.ref.child('response').set(resp);
+
 };
 
-Command.prototype.error = function(err) {
-  return this.event.data.ref.child('error').set(err);
-};
-
-Command.prototype.sayHi = function() {
-  const err = this.params.err;
-  if(err) {
-    this.error("Error because you told me to.");
+function sayHi(event, uid, params) {
+  const err = params.err;
+  if(err){
+    return event.data.ref.child('error').set('ERROR: Because you told me to....');
   } else {
-    this.success("Hi, buddY!");
+    return event.data.ref.child('response').set('Hello, World!');
   }
-};
+}
 
-// function sayHi(event, uid, params) {
-//   const err = params.err;
-//   if(err){
-//     return event.data.ref.child('error').set('ERROR: Because you told me to....');
-//   } else {
-//     return event.data.ref.child('response').set('Hello, World!');
-//   }
-// }
-//
-// function emailSendCommand(event, uid, params) {
-//   sendAnEmail(params.emailAddress, params.subject, params.text);
-//   return event.data.ref.child('response').set('Email sent successfully to '+params.emailAddress);
-// }
-//
-// function registerInSchool(event, uid, params) {
-//   const userRef = admin.database().ref('/user-data/'+uid);
-//
-//   userRef.once('value', function(data) {
-//     const displayName = data.val().displayName;
-//     const email = data.val().email;
-//     const photoURL = data.val().photoURL;
-//     const schoolRef = admin.database().ref('/schools/'+params.schoolCode);
-//     return schoolRef.once('value', function(data){
-//       if(data.val()) {
-//         schoolRef.child('students').push({
-//           'displayName': displayName,
-//           'email': email,
-//           'photoURL': photoURL,
-//           'uid': uid
-//         }).then(function(){
-//           userRef.update({'/schoolCode': params.schoolCode}).then(function(){
-//             return event.data.ref.child('response').set('Successfully registered for school! '+params.schoolCode);
-//           });
-//         });
-//       } else {
-//         return event.data.ref.child('error').set('The school does not exist.');
-//       }
-//     });
-//   });
-//
-// }
+function emailSendCommand(event, uid, params) {
+  sendAnEmail(params.emailAddress, params.subject, params.text);
+  return event.data.ref.child('response').set('Email sent successfully to '+params.emailAddress);
+}
+
+function registerInSchool(event, uid, params) {
+  const userRef = admin.database().ref('/user-data/'+uid);
+
+  userRef.once('value', function(data) {
+    const displayName = data.val().displayName;
+    const email = data.val().email;
+    const photoURL = data.val().photoURL;
+    const schoolRef = admin.database().ref('/schools/'+params.schoolCode);
+    return schoolRef.once('value', function(data){
+      if(data.val()) {
+        schoolRef.child('students').push({
+          'displayName': displayName,
+          'email': email,
+          'photoURL': photoURL,
+          'uid': uid
+        }).then(function(){
+          userRef.update({'/schoolCode': params.schoolCode}).then(function(){
+            return event.data.ref.child('response').set('Successfully registered for school! '+params.schoolCode);
+          });
+        });
+      } else {
+        return event.data.ref.child('error').set('The school does not exist.');
+      }
+    });
+  });
+
+}
 
 // function registerInSchool(event, uid, params) {
 //   const userRef = admin.database().ref('/user-data/'+uid);
@@ -109,19 +96,24 @@ exports.requestFunction = functions.database.ref('/function-requests/{pushId}')
       console.log("function requested!");
       console.log("action: "+action);
       console.log("params: "+params);
-      const cmd = new Command(event, uid, params);
-      var func = cmd[action] ? cmd[action].bind(cmd): null;
-
-      if(action && params && uid) {
-        if(func) {
-          func();
-        } else {
-          console.error("The requested function ''"+ action + "'' does not exist.");
-          cmd.error("The requested function ''"+ action + "'' does not exist.");
+      if(action && params) {
+        var func = null;
+        switch(action) {
+          case 'registerInSchool':
+            func = registerInSchool;
+            break;
+          case 'sayHi':
+            func = sayHi;
+            break;
+          case 'emailSendCommand':
+            func = emailSendCommand;
+            break;
+          default:
+            console.error("The requested function ''"+ action + "'' does not exist.");
         }
+        if(func) return func(event, uid, params);
       } else {
         console.error("Data for function request must have action and params children.");
-        cmd.error("Data for function request must have action and params children.");
       }
 });
 
