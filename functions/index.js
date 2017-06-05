@@ -8,12 +8,12 @@ const gmailPassword = encodeURIComponent(functions.config().gmail.password);
 const mailTransport = nodemailer.createTransport(
     `smtps://${gmailEmail}:${gmailPassword}@smtp.gmail.com`);
 
-const APP_NAME = 'World Without Borders ePenPal service';
+const APP_NAME = 'World Without Borders';
 
 
-exports.helloWorld = functions.https.onRequest((request, response) => {
- response.send("Hello from Firebase! Ryan was here.");
-})
+// exports.hello = functions.https.onRequest((request, response) => {
+//  response.send("Hello from Firebase!");
+// })
 
 function Command(event, uid, params) {
     this.event = event;
@@ -29,28 +29,49 @@ Command.prototype.error = function(err) {
   return this.event.data.ref.child('error').set(err);
 };
 
+// All command functions defined MUST eventually call either the success or error function.
 Command.prototype.sayHi = function() {
   const err = this.params.err;
   if(err) {
     this.error("Error because you told me to.");
   } else {
-    this.success("Hi, buddY!");
+    this.success("Hi, buddy!");
   }
 };
 
-// function sayHi(event, uid, params) {
-//   const err = params.err;
-//   if(err){
-//     return event.data.ref.child('error').set('ERROR: Because you told me to....');
-//   } else {
-//     return event.data.ref.child('response').set('Hello, World!');
-//   }
-// }
-//
-// function emailSendCommand(event, uid, params) {
-//   sendAnEmail(params.emailAddress, params.subject, params.text);
-//   return event.data.ref.child('response').set('Email sent successfully to '+params.emailAddress);
-// }
+Command.prototype.sendEmail = function() {
+  sendAnEmail(this.params.emailAddress, this.params.subject, this.params.text);
+  this.success('Email sent successfully to '+this.params.emailAddress);
+};
+
+Command.prototype.registerInSchool = function() {
+    const userRef = admin.database().ref('/user-data/'+this.uid);
+
+    userRef.once('value', function(data) {
+      const displayName = data.val().displayName;
+      const email = data.val().email;
+      const photoURL = data.val().photoURL;
+      const schoolRef = admin.database().ref('/schools/'+this.params.schoolCode);
+      return schoolRef.once('value', function(data){
+        if(data.val()) {
+          schoolRef.child('students').push({
+            'displayName': displayName,
+            'email': email,
+            'photoURL': photoURL,
+            'uid': this.uid
+          }).then(function(){
+            userRef.update({'/schoolCode': this.params.schoolCode}).then(function(){
+              this.success('Successfully registered for school! '+this.params.schoolCode);
+            });
+          });
+        } else {
+          this.error('The school does not exist.');
+        }
+      });
+    });
+};
+
+
 //
 // function registerInSchool(event, uid, params) {
 //   const userRef = admin.database().ref('/user-data/'+uid);
