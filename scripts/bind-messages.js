@@ -44,7 +44,7 @@ function LoadMessages(targetUID) {
       this.displayMessageNotifications = true;
       // this is a gross hack. but it works for now.
       // By having this variable be set to true after a few seconds,
-      // I can avoid showing notifications for the messages getting 
+      // I can avoid showing notifications for the messages getting
       // loaded initially.
     }.bind(this), 5000);
   } else {
@@ -248,13 +248,13 @@ LoadMessages.prototype.makeNotification = function(val) {
 
 LoadMessages.prototype.displayNotification = function(val) {
   // this.displayMessage(data.key, val.name, val.text, val.photoUrl, val.imageUrl, val.uid);
-  console.log(val);
+  // console.log(val);
   const title = val.name;
   const options = {
     body: val.text,
     icon: val.photoUrl
   }
-  console.log(options);
+  // console.log(options);
   var n = new Notification(title, options);
   setTimeout(n.close.bind(n), 5000);
 }

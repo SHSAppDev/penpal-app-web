@@ -16,6 +16,7 @@ function WWBDashboard() {
     // this.translate.translate("en", "es", "What's up?", function(translatedText){
     //     console.log("translatedText: "+translatedText);
     // });
+
 }
 
 
@@ -82,6 +83,7 @@ WWBDashboard.prototype.onAuthStateChanged = function(user) {
 
         // this.userInfo.startTrackingTime();
         // console.log(this.userInfo.convertTime('America/Mexico_City'));
+
     }
 };
 
