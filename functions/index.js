@@ -66,20 +66,27 @@ Command.prototype.sendMessage = function() {
     // Also increment recipient user's unreadMessages as appropriate.
     // Since it's not absolutely crucial for this step to work, I won't call sucess when done.
     // Success already is called when the main message object is saved (code above).
+    // unread messages won't get incremented if the recipeient user is online.
     console.log('about to set unreadMessages');
-    const recipientConvContainerRef = admin.database()
-      .ref('user-data/'+recipientUID+'/conversations')
-      .orderByChild('recipientUID').equalTo(this.uid).limitToFirst(1);
-    recipientConvContainerRef.once('value', function(snapshot){
-      // Snapshot.val() should contain 1 child that has an arbitray pushId
-      // The value is the recipient's conversation obj
-      console.log('got conv container val');
-      const pushId = Object.keys(snapshot.val())[0];
-      const unreadMessages = snapshot.val()[pushId].unreadMessages;
-      console.log('conversation object: '+recipientConvContainerRef.path);
-      console.log('is it a func? '+recipientConvContainerRef.child);
-      admin.database().ref(recipientConvContainerRef.path+'/'+pushId+'/unreadMessages')
-        .set(unreadMessages + 1);
+    admin.database().ref('presence/'+recipientUID).once('value', function(snapshot){
+      if(snapshot.val()) {
+        console.log('was going to increment unread messages but user is online');
+      } else {
+        const recipientConvContainerRef = admin.database()
+          .ref('user-data/'+recipientUID+'/conversations')
+          .orderByChild('recipientUID').equalTo(this.uid).limitToFirst(1);
+        recipientConvContainerRef.once('value', function(snapshot){
+          // Snapshot.val() should contain 1 child that has an arbitray pushId
+          // The value is the recipient's conversation obj
+          console.log('got conv container val');
+          const pushId = Object.keys(snapshot.val())[0];
+          const unreadMessages = snapshot.val()[pushId].unreadMessages;
+          console.log('conversation object: '+recipientConvContainerRef.path);
+          console.log('is it a func? '+recipientConvContainerRef.child);
+          admin.database().ref(recipientConvContainerRef.path+'/'+pushId+'/unreadMessages')
+            .set(unreadMessages + 1);
+        }.bind(this));
+      }
     }.bind(this));
 
 
