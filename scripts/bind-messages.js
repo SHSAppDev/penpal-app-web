@@ -44,7 +44,7 @@ function LoadMessages(targetUID) {
       this.displayMessageNotifications = true;
       // this is a gross hack. but it works for now.
       // By having this variable be set to true after a few seconds,
-      // I can avoid showing notifications for the messages getting 
+      // I can avoid showing notifications for the messages getting
       // loaded initially.
     }.bind(this), 5000);
   } else {
@@ -68,6 +68,7 @@ LoadMessages.prototype.onAuthStateChanged = function (user) {
     this.userInfo = new UserInfo();
     this.userInfo.startTrackingTime();
     this.setChatTitle();
+    this.command = new Command();
     if(this.targetUID) {
 
       // We've entered the conversation, so no more messages should be unread
@@ -140,24 +141,61 @@ LoadMessages.prototype.setChatTitle = function() {
 LoadMessages.prototype.saveMessage = function (e) {
   e.preventDefault();
   // Check that the user entered a message and is signed in.
+  // if (this.messageInput.value && this.auth.currentUser) {
+  //
+  //   // Push new message to Firebase.
+  //   var currentUser = this.auth.currentUser;
+  //   // Add a new message entry to the Firebase Database.
+  //   this.messagesRef.push({
+  //     name: currentUser.displayName,
+  //     text: this.messageInput.value,
+  //     photoUrl: currentUser.photoURL || '/images/profile_placeholder.png',
+  //     uid: currentUser.uid
+  //   }).then(function () {
+  //     // Clear message text field and SEND button state.
+  //     LoadMessages.resetMaterialTextfield(this.messageInput);
+  //     this.toggleButton();
+  //     this.incrementRecipientUnreadMessages();
+  //   }.bind(this)).catch(function (error) {
+  //     console.error('Error writing new message to Firebase Database', error);
+  //   });
+
+  // Check that the user entered a message and is signed in.
   if (this.messageInput.value && this.auth.currentUser) {
 
     // Push new message to Firebase.
     var currentUser = this.auth.currentUser;
     // Add a new message entry to the Firebase Database.
-    this.messagesRef.push({
-      name: currentUser.displayName,
+    this.command.requestFunction('sendMessage', {
+      displayName: currentUser.displayName,
       text: this.messageInput.value,
       photoUrl: currentUser.photoURL || '/images/profile_placeholder.png',
-      uid: currentUser.uid
-    }).then(function () {
-      // Clear message text field and SEND button state.
-      LoadMessages.resetMaterialTextfield(this.messageInput);
-      this.toggleButton();
-      this.incrementRecipientUnreadMessages();
-    }.bind(this)).catch(function (error) {
-      console.error('Error writing new message to Firebase Database', error);
+      recipientUID: this.targetUID
+    }, {
+      'success': function(resp){
+
+      }.bind(this),
+      'error': function(err){
+        console.error('Error writing new message to Firebase Database', err);
+        //TODO display a sending error in ui
+      }.bind(this)
     });
+    LoadMessages.resetMaterialTextfield(this.messageInput);
+    this.toggleButton();
+
+    // this.messagesRef.push({
+    //   name: currentUser.displayName,
+    //   text: this.messageInput.value,
+    //   photoUrl: currentUser.photoURL || '/images/profile_placeholder.png',
+    //   uid: currentUser.uid
+    // }).then(function () {
+    //   // Clear message text field and SEND button state.
+    //   LoadMessages.resetMaterialTextfield(this.messageInput);
+    //   this.toggleButton();
+    //   // this.incrementRecipientUnreadMessages();
+    // }.bind(this)).catch(function (error) {
+    //   console.error('Error writing new message to Firebase Database', error);
+    // });
 
   }
 };
@@ -248,13 +286,13 @@ LoadMessages.prototype.makeNotification = function(val) {
 
 LoadMessages.prototype.displayNotification = function(val) {
   // this.displayMessage(data.key, val.name, val.text, val.photoUrl, val.imageUrl, val.uid);
-  console.log(val);
+  // console.log(val);
   const title = val.name;
   const options = {
     body: val.text,
     icon: val.photoUrl
   }
-  console.log(options);
+  // console.log(options);
   var n = new Notification(title, options);
   setTimeout(n.close.bind(n), 5000);
 }
