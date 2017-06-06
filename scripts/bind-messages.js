@@ -175,7 +175,6 @@ LoadMessages.prototype.saveMessage = function (e) {
       'success': function(resp){
         LoadMessages.resetMaterialTextfield(this.messageInput);
         this.toggleButton();
-        console.log("sent message");
       }.bind(this),
       'error': function(err){
         console.error('Error writing new message to Firebase Database', err);

@@ -50,8 +50,9 @@ Command.prototype.sendMessage = function() {
   const text = this.params.text;
   const photoUrl = this.params.photoUrl;
   if(recipientUID && displayName && text && photoUrl) {
+    //Add the message to the conversation.
     const convKey = this.uid > recipientUID ? this.uid+recipientUID : recipientUID+this.uid;
-    const convRef = admin.database().ref('conversations/'+convKey).push({
+    admin.database().ref('conversations/'+convKey).push({
       name: displayName,
       text: text,
       photoUrl: photoUrl,
@@ -61,6 +62,27 @@ Command.prototype.sendMessage = function() {
     }.bind(this)).catch(function(err){
       this.error("Error occured while trying to push message object: "+err);
     }.bind(this));
+
+    // Also increment recipient user's unreadMessages as appropriate.
+    // Since it's not absolutely crucial for this step to work, I won't call sucess when done.
+    // Success already is called when the main message object is saved (code above).
+    console.log('about to set unreadMessages');
+    const recipientConvContainerRef = admin.database()
+      .ref('user-data/'+recipientUID+'/conversations')
+      .orderByChild('recipientUID').equalTo(this.uid).limitToFirst(1);
+    recipientConvContainerRef.once('value', function(snapshot){
+      // Snapshot.val() should contain 1 child that has an arbitray pushId
+      // The value is the recipient's conversation obj
+      console.log('got conv container val');
+      const pushId = Object.keys(snapshot.val())[0];
+      const unreadMessages = snapshot.val()[pushId].unreadMessages;
+      console.log('conversation object: '+recipientConvContainerRef.path);
+      console.log('is it a func? '+recipientConvContainerRef.child);
+      admin.database().ref(recipientConvContainerRef.path+'/'+pushId+'/unreadMessages')
+        .set(unreadMessages + 1);
+    }.bind(this));
+
+
   } else {
     return this.error("sendMessage command must have parameters for recipientUID, displayName, text, and photoURL");
   }
