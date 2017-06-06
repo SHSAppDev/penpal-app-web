@@ -27,12 +27,12 @@
         var auth = firebase.auth();
         auth.onAuthStateChanged(function(user){
           if(user) {
-            var action = "sayHiiii";
+            var action = "registerInSchool";
             var params = {
+              scho: '95070000'
               // emailAddress: 'rkanderson15@gmail.com',
               // subject: 'Hello, Ryan',
               // text: 'This message was sent automatically.'
-              'err': true
             };
             var command = new Command();
             command.requestFunction(action, params, {

@@ -51,6 +51,7 @@ Command.prototype.registerInSchool = function() {
       const displayName = data.val().displayName;
       const email = data.val().email;
       const photoURL = data.val().photoURL;
+      // console.log(this.params);
       const schoolRef = admin.database().ref('/schools/'+this.params.schoolCode);
       return schoolRef.once('value', function(data){
         if(data.val()) {
@@ -62,55 +63,15 @@ Command.prototype.registerInSchool = function() {
           }).then(function(){
             userRef.update({'/schoolCode': this.params.schoolCode}).then(function(){
               this.success('Successfully registered for school! '+this.params.schoolCode);
-            });
-          });
+            }.bind(this));
+          }.bind(this));
         } else {
           this.error('The school does not exist.');
         }
-      });
-    });
+      }.bind(this));
+    }.bind(this));
 };
 
-
-//
-// function registerInSchool(event, uid, params) {
-//   const userRef = admin.database().ref('/user-data/'+uid);
-//
-//   userRef.once('value', function(data) {
-//     const displayName = data.val().displayName;
-//     const email = data.val().email;
-//     const photoURL = data.val().photoURL;
-//     const schoolRef = admin.database().ref('/schools/'+params.schoolCode);
-//     return schoolRef.once('value', function(data){
-//       if(data.val()) {
-//         schoolRef.child('students').push({
-//           'displayName': displayName,
-//           'email': email,
-//           'photoURL': photoURL,
-//           'uid': uid
-//         }).then(function(){
-//           userRef.update({'/schoolCode': params.schoolCode}).then(function(){
-//             return event.data.ref.child('response').set('Successfully registered for school! '+params.schoolCode);
-//           });
-//         });
-//       } else {
-//         return event.data.ref.child('error').set('The school does not exist.');
-//       }
-//     });
-//   });
-//
-// }
-
-// function registerInSchool(event, uid, params) {
-//   const userRef = admin.database().ref('/user-data/'+uid);
-//
-//   userRef.once('value', function(data){
-//     const displayName = data.val().displayName;
-//     const email = data.val().email;
-//     const photoURL = data.val().photoURL;
-//     const schoolRef = admin.database().ref('/schools/'+params.schoolCode);
-//     return schoolRef.once();
-// }
 
 exports.requestFunction = functions.database.ref('/function-requests/{pushId}')
     .onWrite(event => {
@@ -146,19 +107,19 @@ exports.requestFunction = functions.database.ref('/function-requests/{pushId}')
       }
 });
 
-exports.deleteFuncReq = functions.database.ref('/function-requests/{pushId}/delete')
-    .onWrite(event => {
-      console.log('delete was modified');
-      // Exit when the data is deleted.
-      if(!event.data.exists()) {
-        return;
-      }
-      console.log('and it was not deleted');
-      if(event.data.val()) {
-        console.log('now its deleted');
-        return event.data.ref.parent.set({});
-      }
-});
+// exports.deleteFuncReq = functions.database.ref('/function-requests/{pushId}/delete')
+//     .onWrite(event => {
+//       console.log('delete was modified');
+//       // Exit when the data is deleted.
+//       if(!event.data.exists()) {
+//         return;
+//       }
+//       console.log('and it was not deleted');
+//       if(event.data.val()) {
+//         console.log('now its deleted');
+//         return event.data.ref.parent.set({});
+//       }
+// });
 
 // [START onCreateTrigger]
 exports.sendWelcomeEmail = functions.auth.user().onCreate(event => {
