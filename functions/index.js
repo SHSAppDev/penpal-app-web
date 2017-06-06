@@ -44,6 +44,34 @@ Command.prototype.sendEmail = function() {
   this.success('Email sent successfully to '+this.params.emailAddress);
 };
 
+Command.prototype.sendMessage = function() {
+  const recipientUID = this.params.recipientUID;
+  const displayName = this.params.displayName;
+  const text = this.params.text;
+  const photoUrl = this.params.photoUrl;
+  if(recipientUID && displayName && text && photoUrl) {
+    const convKey = this.uid > recipientUID ? this.uid+recipientUID : recipientUID+this.uid;
+    const convRef = admin.database().ref('conversations/'+convKey).push({
+      name: displayName,
+      text: text,
+      photoUrl: photoUrl,
+      uid: this.uid
+    }).then(function(){
+      this.success("Successfully sent message to uid "+recipientUID);
+    }.bind(this)).catch(function(err){
+      this.error("Error occured while trying to push message object: "+err);
+    }.bind(this));
+  } else {
+    return this.error("sendMessage command must have parameters for recipientUID, displayName, text, and photoURL");
+  }
+};
+// this.messagesRef.push({
+//   name: currentUser.displayName,
+//   text: this.messageInput.value,
+//   photoUrl: currentUser.photoURL || '/images/profile_placeholder.png',
+//   uid: currentUser.uid
+// }).t
+
 Command.prototype.registerInSchool = function() {
     const userRef = admin.database().ref('/user-data/'+this.uid);
 

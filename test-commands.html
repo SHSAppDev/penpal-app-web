@@ -27,9 +27,14 @@
         var auth = firebase.auth();
         auth.onAuthStateChanged(function(user){
           if(user) {
-            var action = "sayHi";
+            var action = "sendMessage";
             var params = {
-              schoo: '95070000'
+              recipientUID: 'sO29oc5YXmY3VPZbbhZ2dI3Bnmx1',
+              text: 'Hi. Sent via cmd',
+              displayName: firebase.auth().currentUser.displayName,
+              photoUrl: firebase.auth().currentUser.photoURL
+
+              // schoo: '95070000'
               // emailAddress: 'rkanderson15@gmail.com',
               // subject: 'Hello, Ryan',
               // text: 'This message was sent automatically.'
