@@ -173,13 +173,15 @@ LoadMessages.prototype.saveMessage = function (e) {
       recipientUID: this.targetUID
     }, {
       'success': function(resp){
-        LoadMessages.resetMaterialTextfield(this.messageInput);
-        this.toggleButton();
+
       }.bind(this),
       'error': function(err){
         console.error('Error writing new message to Firebase Database', err);
+        //TODO display a sending error in ui
       }.bind(this)
     });
+    LoadMessages.resetMaterialTextfield(this.messageInput);
+    this.toggleButton();
 
     // this.messagesRef.push({
     //   name: currentUser.displayName,
