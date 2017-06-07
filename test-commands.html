@@ -27,12 +27,12 @@
         var auth = firebase.auth();
         auth.onAuthStateChanged(function(user){
           if(user) {
-            var action = "sendMessage";
+            var action = "addConversation";
             var params = {
               recipientUID: 'sO29oc5YXmY3VPZbbhZ2dI3Bnmx1',
-              text: 'Hi. Sent via cmd',
-              displayName: firebase.auth().currentUser.displayName,
-              photoUrl: firebase.auth().currentUser.photoURL
+              // text: 'Hi. Sent via cmd',
+              // displayName: firebase.auth().currentUser.displayName,
+              // photoUrl: firebase.auth().currentUser.photoURL
 
               // schoo: '95070000'
               // emailAddress: 'rkanderson15@gmail.com',

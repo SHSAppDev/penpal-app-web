@@ -84,7 +84,21 @@ Command.prototype.sendMessage = function() {
           console.log('conversation object: '+recipientConvContainerRef.path);
           console.log('is it a func? '+recipientConvContainerRef.child);
           admin.database().ref(recipientConvContainerRef.path+'/'+pushId+'/unreadMessages')
-            .set(unreadMessages + 1);
+            .set(unreadMessages + 1).then(function(){
+              // Send a fun email if the unreadMessages is a multiple of 3
+              if((unreadMessages + 1) % 3 === 0) {
+                admin.database().ref('user-data/'+recipientUID).once('value', function(snapshot){
+                  const recipientEmail = snapshot.val().email;
+                  const recipientName = snapshot.val().displayName;
+                  sendAnEmail(recipientEmail,
+                    'You have '+(unreadMessages+1)+' new messages from '+displayName+'.',
+                    'Hello '+(recipientName?recipientName:'')+'! You have '+(unreadMessages+1)+
+                    ' new messages from '+displayName+'. Don\'t keep your ePenPal waiting. ' +
+                    'Log into http://worldwithoutborders.ml/ to send a reply!');
+                }.bind(this));
+              }
+            }.bind(this));
+
         }.bind(this));
       }
     }.bind(this));
@@ -94,6 +108,34 @@ Command.prototype.sendMessage = function() {
     return this.error("sendMessage command must have parameters for recipientUID, displayName, text, and photoURL");
   }
 };
+
+Command.prototype.addConversation = function() {
+  const recipientUID = this.params.recipientUID;
+  const recipientEmail = this.params.recipeientEmail;
+  if(recipientUID) {
+    // It's easiest to do this if we just know the recipientUID
+    //   1) Add to my own conversation
+    admin.database().ref('user-data/'+this.uid+'/conversations').push({
+      recipientUID: recipientUID,
+      unreadMessages: 0
+    }).then(function(){
+      //  2) Add to the recipient's conversations
+      admin.database().ref('user-data/'+recipientUID+'/conversations').push({
+        recipientUID: this.uid,
+        unreadMessages: 0
+      }).then(function(){
+        this.success("Successfully added conversation with uid "+recipientUID);
+      }.bind(this));
+    }.bind(this));
+  } else if(recipientEmail) {
+    // A little harder but still doable. TODO Make it work.
+    this.error("Adding by email not supported yet. Sry.");
+  } else {
+    // Best error.
+    this.console.error("For addConversation please supply parameter for " +
+      "either recipeientEmail or recipientUID");
+  }
+}
 // this.messagesRef.push({
 //   name: currentUser.displayName,
 //   text: this.messageInput.value,
