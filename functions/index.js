@@ -152,7 +152,7 @@ Command.prototype.registerInSchool = function() {
       const photoURL = data.val().photoURL;
       // console.log(this.params);
       const schoolRef = admin.database().ref('/schools/'+this.params.schoolCode);
-      return schoolRef.once('value', function(data){
+      return schoolRef.once('value', function(data) {
         if(data.val()) {
           schoolRef.child('students').push({
             'displayName': displayName,
@@ -189,7 +189,7 @@ exports.requestFunction = functions.database.ref('/function-requests/{pushId}')
       const uid = req.uid;
       console.log("function requested!");
       console.log("action: "+action);
-      console.log("params: "+params);
+      console.log("params: "+stringObjRecursive(req));
       const cmd = new Command(event, uid, params);
       var func = cmd[action] ? cmd[action].bind(cmd): null;
 
@@ -259,4 +259,42 @@ function sendAnEmail(emailAddress, subject, text) {
   return mailTransport.sendMail(mailOptions).then(() => {
     console.log('New email sent to:', email);
   });
+}
+
+function stringObj(obj) {
+  const keys = Object.keys(obj);
+  const vals = keys.map(function(key) {
+    return obj[key];
+  });
+  var str = '';
+  for(var i=0; i<keys.length; i++) {
+    str += keys[i]+': '+vals[i]+'\n';
+  }
+  return str;
+}
+
+function stringObjRecursive(obj, indentLevel) {
+  const keys = Object.keys(obj);
+  const vals = keys.map(function(key) {
+    return obj[key];
+  });
+  var indents;
+  if(indentLevel) {
+    indents = indentLevel;
+  } else {
+    indents = 0;
+  }
+
+  var str = '';
+  for(var i=0; i<keys.length; i++) {
+    for(var j=0; j<indents; j++) {
+      str += '   ';
+    }
+    if(vals[i] instanceof Object) {
+      str += keys[i]+': {\n'+stringObj(vals[i], indents+1)+'}\n';
+    } else {
+      str += keys[i]+': '+vals[i]+'\n';
+    }
+  }
+  return str;
 }
