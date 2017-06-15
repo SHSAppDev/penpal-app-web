@@ -15,6 +15,7 @@ function BindSignOut(buttonID) {
 
 BindSignOut.prototype.signOut = function() {
   firebase.auth().signOut();
+  new Presence().setState(false);
 };
 
 // Triggers when the auth state change for instance when the user signs-in or signs-out.

@@ -1,0 +1,65 @@
+<!doctype html>
+
+<html lang="en">
+<!-- Materialize CSS Head -->
+
+<head>
+    <meta charset="utf-8">
+
+</head>
+
+<body>
+    <h3>Open the javascript console to see stuff.</p>
+    <!-- Firebase -->
+    <script src="scripts/command.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyCx-2_5IcfXswoDZhjle1rPS3m-ryi3rpM",
+            authDomain: "penpalapp-6020c.firebaseapp.com",
+            databaseURL: "https://penpalapp-6020c.firebaseio.com",
+            storageBucket: "penpalapp-6020c.appspot.com",
+            messagingSenderId: "322094641122"
+        };
+        firebase.initializeApp(config);
+
+        var auth = firebase.auth();
+        auth.onAuthStateChanged(function(user){
+          if(user) {
+            var action = "sendMessage";
+            var params = {
+              recipientUID: 'sO29oc5YXmY3VPZbbhZ2dI3Bnmx1',
+              text: 'Hi. Sent via cmd',
+              displayName: firebase.auth().currentUser.displayName,
+              photoUrl: firebase.auth().currentUser.photoURL
+
+              // schoo: '95070000'
+              // emailAddress: 'rkanderson15@gmail.com',
+              // subject: 'Hello, Ryan',
+              // text: 'This message was sent automatically.'
+            };
+            var command = new Command();
+            command.requestFunction(action, params, {
+              'success': function(resp){
+                console.log("SUCCESS: "+resp);
+              },
+              'error': function(err){
+                console.log("ERROR: "+err);
+              }
+            });
+            console.log("Requesting command named "+action);
+          }
+        });
+
+
+
+
+    </script>
+
+
+
+
+</body>
+
+</html>
