@@ -84,7 +84,21 @@ Command.prototype.sendMessage = function() {
           console.log('conversation object: '+recipientConvContainerRef.path);
           console.log('is it a func? '+recipientConvContainerRef.child);
           admin.database().ref(recipientConvContainerRef.path+'/'+pushId+'/unreadMessages')
-            .set(unreadMessages + 1);
+            .set(unreadMessages + 1).then(function(){
+              // Send a fun email if the unreadMessages is a multiple of 3
+              if((unreadMessages + 1) % 3 === 0) {
+                admin.database().ref('user-data/'+recipientUID).once('value', function(snapshot){
+                  const recipientEmail = snapshot.val().email;
+                  const recipientName = snapshot.val().displayName;
+                  sendAnEmail(recipientEmail,
+                    'You have '+(unreadMessages+1)+' new messages from '+displayName+'.',
+                    'Hello '+(recipientName?recipientName:'')+'! You have '+(unreadMessages+1)+
+                    ' new messages from '+displayName+'. Don\'t keep your ePenPal waiting. ' +
+                    'Log into http://worldwithoutborders.ml/ to send a reply!');
+                }.bind(this));
+              }
+            }.bind(this));
+
         }.bind(this));
       }
     }.bind(this));
@@ -94,6 +108,34 @@ Command.prototype.sendMessage = function() {
     return this.error("sendMessage command must have parameters for recipientUID, displayName, text, and photoURL");
   }
 };
+
+Command.prototype.addConversation = function() {
+  const recipientUID = this.params.recipientUID;
+  const recipientEmail = this.params.recipeientEmail;
+  if(recipientUID) {
+    // It's easiest to do this if we just know the recipientUID
+    //   1) Add to my own conversation
+    admin.database().ref('user-data/'+this.uid+'/conversations').push({
+      recipientUID: recipientUID,
+      unreadMessages: 0
+    }).then(function(){
+      //  2) Add to the recipient's conversations
+      admin.database().ref('user-data/'+recipientUID+'/conversations').push({
+        recipientUID: this.uid,
+        unreadMessages: 0
+      }).then(function(){
+        this.success("Successfully added conversation with uid "+recipientUID);
+      }.bind(this));
+    }.bind(this));
+  } else if(recipientEmail) {
+    // A little harder but still doable. TODO Make it work.
+    this.error("Adding by email not supported yet. Sry.");
+  } else {
+    // Best error.
+    this.console.error("For addConversation please supply parameter for " +
+      "either recipeientEmail or recipientUID");
+  }
+}
 // this.messagesRef.push({
 //   name: currentUser.displayName,
 //   text: this.messageInput.value,
@@ -110,7 +152,7 @@ Command.prototype.registerInSchool = function() {
       const photoURL = data.val().photoURL;
       // console.log(this.params);
       const schoolRef = admin.database().ref('/schools/'+this.params.schoolCode);
-      return schoolRef.once('value', function(data){
+      return schoolRef.once('value', function(data) {
         if(data.val()) {
           schoolRef.child('students').push({
             'displayName': displayName,
@@ -147,7 +189,7 @@ exports.requestFunction = functions.database.ref('/function-requests/{pushId}')
       const uid = req.uid;
       console.log("function requested!");
       console.log("action: "+action);
-      console.log("params: "+params);
+      console.log("params: "+stringObjRecursive(req));
       const cmd = new Command(event, uid, params);
       var func = cmd[action] ? cmd[action].bind(cmd): null;
 
@@ -217,4 +259,42 @@ function sendAnEmail(emailAddress, subject, text) {
   return mailTransport.sendMail(mailOptions).then(() => {
     console.log('New email sent to:', email);
   });
+}
+
+function stringObj(obj) {
+  const keys = Object.keys(obj);
+  const vals = keys.map(function(key) {
+    return obj[key];
+  });
+  var str = '';
+  for(var i=0; i<keys.length; i++) {
+    str += keys[i]+': '+vals[i]+'\n';
+  }
+  return str;
+}
+
+function stringObjRecursive(obj, indentLevel) {
+  const keys = Object.keys(obj);
+  const vals = keys.map(function(key) {
+    return obj[key];
+  });
+  var indents;
+  if(indentLevel) {
+    indents = indentLevel;
+  } else {
+    indents = 0;
+  }
+
+  var str = '';
+  for(var i=0; i<keys.length; i++) {
+    for(var j=0; j<indents; j++) {
+      str += '   ';
+    }
+    if(vals[i] instanceof Object) {
+      str += keys[i]+': {\n'+stringObj(vals[i], indents+1)+'}\n';
+    } else {
+      str += keys[i]+': '+vals[i]+'\n';
+    }
+  }
+  return str;
 }
