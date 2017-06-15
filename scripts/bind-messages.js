@@ -358,7 +358,7 @@ LoadMessages.prototype.displayNotification = function(val) {
   }
   // console.log(options);
   var n = new Notification(title, options);
-  setTimeout(n.close.bind(n), 5000);
+  setTimeout(n.close.bind(n), 10000);
 }
 
 //
@@ -468,32 +468,32 @@ LoadMessages.prototype.toggleButton = function () {
   }
 };
 
-LoadMessages.prototype.incrementRecipientUnreadMessages = function () {
-  //WARNING this might seem sorta confusing
-  var recipientConversationContainerRef = this.database.ref('user-data/' + this.targetUID)
-    .child('conversations').orderByChild('recipientUID')
-    .equalTo(this.auth.currentUser.uid).limitToFirst(1);
-  recipientConversationContainerRef.once('value', function (data) {
-    // console.log(data.val());
-    // data.val() should be an object that has just one child which os the
-    // random key for the conversation. Inside that is the unreadMessages
-    // property which we can set.
-    var theWeirdKey = Object.keys(data.val())[0];
-    var cVal = data.val()[theWeirdKey].unreadMessages; // The current unread messages value
-    var newVal = 0;
-    if (cVal === null || cVal === undefined || cVal === 0) {
-      newVal = 1;
-    } else {
-      newVal = cVal + 1;
-    }
-    var convRef = this.database.ref('user-data/' + this.targetUID)
-      .child('conversations').child(theWeirdKey);
-    convRef.update({
-      '/unreadMessages': newVal
-    });
-
-  }.bind(this));
-}
+// LoadMessages.prototype.incrementRecipientUnreadMessages = function () {
+//   //WARNING this might seem sorta confusing
+//   var recipientConversationContainerRef = this.database.ref('user-data/' + this.targetUID)
+//     .child('conversations').orderByChild('recipientUID')
+//     .equalTo(this.auth.currentUser.uid).limitToFirst(1);
+//   recipientConversationContainerRef.once('value', function (data) {
+//     // console.log(data.val());
+//     // data.val() should be an object that has just one child which os the
+//     // random key for the conversation. Inside that is the unreadMessages
+//     // property which we can set.
+//     var theWeirdKey = Object.keys(data.val())[0];
+//     var cVal = data.val()[theWeirdKey].unreadMessages; // The current unread messages value
+//     var newVal = 0;
+//     if (cVal === null || cVal === undefined || cVal === 0) {
+//       newVal = 1;
+//     } else {
+//       newVal = cVal + 1;
+//     }
+//     var convRef = this.database.ref('user-data/' + this.targetUID)
+//       .child('conversations').child(theWeirdKey);
+//     convRef.update({
+//       '/unreadMessages': newVal
+//     });
+//
+//   }.bind(this));
+// }
 
 
 var getURLParameterByName = function (name, url) {

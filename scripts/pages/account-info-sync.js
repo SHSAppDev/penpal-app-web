@@ -46,6 +46,17 @@ AccountInfoSync.prototype.initForm = function() {
   Materialize.updateTextFields();
 
   this.submitButton.addEventListener('click', this.submit.bind(this));
+
+  // console.log(stringObj({
+  //   a: 'b',
+  //   c: {
+  //     a: 'b',
+  //     c: 'd'
+  //   },
+  //   d: {
+  //     x: 'y'
+  //   }
+  // }));
 };
 
 AccountInfoSync.prototype.submit = function(){
@@ -113,8 +124,29 @@ function validateEmail(email) {
     return re.test(email);
 }
 
-window.onload = function() {
-};
+function stringObj(obj, indentLevel) {
+  const keys = Object.keys(obj);
+  const vals = Object.values(obj);
+  var indents;
+  if(indentLevel) {
+    indents = indentLevel;
+  } else {
+    indents = 0;
+  }
+
+  var str = '';
+  for(var i=0; i<keys.length; i++) {
+    for(var j=0; j<indents; j++) {
+      str += '   ';
+    }
+    if(vals[i] instanceof Object) {
+      str += keys[i]+': {\n'+stringObj(vals[i], indents+1)+'}\n';
+    } else {
+      str += keys[i]+': '+vals[i]+'\n';
+    }
+  }
+  return str;
+}
 
 $(document).ready(function() {
     Materialize.updateTextFields();
