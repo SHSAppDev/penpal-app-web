@@ -138,7 +138,7 @@ LoadMessages.prototype.loadMessages = function () {
         setTimeout(n.close,bind(n), 5000);
     }
 
-    functio n randomNotification() {
+    function randomNotification() {
         var randomQuote = quoteChooser();
         var options = {
             body: randomQuote, 
@@ -148,9 +148,9 @@ LoadMessages.prototype.loadMessages = function () {
     var n = new Notification('World Withou Borders says', options);
     setTimeout(n.close.bind(n), 5000);
 }
-=======
+
     // Display a notification right here....
->>>>>>> master
+
   }.bind(this);
   this.messagesRef.limitToLast(30).on('child_added', setMessage);
   this.messagesRef.limitToLast(30).on('child_changed', setMessage);
