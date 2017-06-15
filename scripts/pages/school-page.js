@@ -28,7 +28,9 @@ SchoolPage.prototype.initFirebase = function() {
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
 SchoolPage.prototype.onAuthStateChanged = function(user) {
   if (user) { // User is signed in!
-
+    // firebase.database().ref('schools').once('value', function(data){
+    //   console.log('all schools '+data.val())
+    // }.bind(this));
   }
 };
 
@@ -44,9 +46,9 @@ SchoolPage.prototype.initializeUserListForGivenSchool = function(schoolCode) {
       this.optionsContainer.appendChild(schoolListElement);
 
       const userObjs = data.val().students?Object.values(data.val().students):[];
-      console.log(userObjs);
       for(var i=0; i<userObjs.length; i++) {
         const each = userObjs[i];
+        if(each.uid == firebase.auth().currentUser.uid) continue;
         var temp = document.createElement('div');
         temp.innerHTML = SchoolPage.USER_LIST_ITEM;
         var listItem = temp.firstChild;
@@ -70,7 +72,7 @@ SchoolPage.prototype.initializeAllOptions = function(schoolCode) {
     .once('value', function(data){
       if(data.val()===null)return;
       const associatedSchoolCodes = Object.values(data.val());
-      console.log('associatedSchoolCodes '+associatedSchoolCodes);
+      // console.log('associatedSchoolCodes '+associatedSchoolCodes);
       for(var i=0; i<associatedSchoolCodes.length; i++) {
         this.initializeUserListForGivenSchool(associatedSchoolCodes[i]);
       }

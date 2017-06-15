@@ -36,11 +36,23 @@ function LoadMessages(targetUID) {
   }.bind(this));
   this.mediaCapture.addEventListener('change', this.saveImageMessage.bind(this));
 
-
   this.messageForm.addEventListener('submit', this.saveMessage.bind(this));
 
-  this.initFirebase();
+  if(Notification) {
+    Notification.requestPermission();
+    setTimeout(function(){
+      this.displayMessageNotifications = true;
+      // this is a gross hack. but it works for now.
+      // By having this variable be set to true after a few seconds,
+      // I can avoid showing notifications for the messages getting
+      // loaded initially.
+    }.bind(this), 5000);
+  } else {
+    console.log("Notifications are not supported.");
+  }
 
+
+  this.initFirebase();
 }
 
 LoadMessages.prototype.initFirebase = function () {
@@ -56,6 +68,7 @@ LoadMessages.prototype.onAuthStateChanged = function (user) {
     this.userInfo = new UserInfo();
     this.userInfo.startTrackingTime();
     this.setChatTitle();
+    this.command = new Command();
     if(this.targetUID) {
 
       // We've entered the conversation, so no more messages should be unread
@@ -84,6 +97,9 @@ LoadMessages.prototype.loadMessages = function () {
   // Loads the last messages and listen for new ones.
   var setMessage = function (data) {
     var val = data.val();
+    if(val.uid !== firebase.auth().currentUser.uid && this.displayMessageNotifications) {
+      this.makeNotification(val);
+    }
     this.displayMessage(data.key, val.name, val.text, val.photoUrl, val.imageUrl, val.uid);
 <<<<<<< HEAD
 
@@ -189,24 +205,61 @@ LoadMessages.prototype.setChatTitle = function() {
 LoadMessages.prototype.saveMessage = function (e) {
   e.preventDefault();
   // Check that the user entered a message and is signed in.
+  // if (this.messageInput.value && this.auth.currentUser) {
+  //
+  //   // Push new message to Firebase.
+  //   var currentUser = this.auth.currentUser;
+  //   // Add a new message entry to the Firebase Database.
+  //   this.messagesRef.push({
+  //     name: currentUser.displayName,
+  //     text: this.messageInput.value,
+  //     photoUrl: currentUser.photoURL || '/images/profile_placeholder.png',
+  //     uid: currentUser.uid
+  //   }).then(function () {
+  //     // Clear message text field and SEND button state.
+  //     LoadMessages.resetMaterialTextfield(this.messageInput);
+  //     this.toggleButton();
+  //     this.incrementRecipientUnreadMessages();
+  //   }.bind(this)).catch(function (error) {
+  //     console.error('Error writing new message to Firebase Database', error);
+  //   });
+
+  // Check that the user entered a message and is signed in.
   if (this.messageInput.value && this.auth.currentUser) {
 
     // Push new message to Firebase.
     var currentUser = this.auth.currentUser;
     // Add a new message entry to the Firebase Database.
-    this.messagesRef.push({
-      name: currentUser.displayName,
+    this.command.requestFunction('sendMessage', {
+      displayName: currentUser.displayName,
       text: this.messageInput.value,
       photoUrl: currentUser.photoURL || '/images/profile_placeholder.png',
-      uid: currentUser.uid
-    }).then(function () {
-      // Clear message text field and SEND button state.
-      LoadMessages.resetMaterialTextfield(this.messageInput);
-      this.toggleButton();
-      this.incrementRecipientUnreadMessages();
-    }.bind(this)).catch(function (error) {
-      console.error('Error writing new message to Firebase Database', error);
+      recipientUID: this.targetUID
+    }, {
+      'success': function(resp){
+
+      }.bind(this),
+      'error': function(err){
+        console.error('Error writing new message to Firebase Database', err);
+        //TODO display a sending error in ui
+      }.bind(this)
     });
+    LoadMessages.resetMaterialTextfield(this.messageInput);
+    this.toggleButton();
+
+    // this.messagesRef.push({
+    //   name: currentUser.displayName,
+    //   text: this.messageInput.value,
+    //   photoUrl: currentUser.photoURL || '/images/profile_placeholder.png',
+    //   uid: currentUser.uid
+    // }).then(function () {
+    //   // Clear message text field and SEND button state.
+    //   LoadMessages.resetMaterialTextfield(this.messageInput);
+    //   this.toggleButton();
+    //   // this.incrementRecipientUnreadMessages();
+    // }.bind(this)).catch(function (error) {
+    //   console.error('Error writing new message to Firebase Database', error);
+    // });
 
   }
 };
@@ -275,6 +328,38 @@ LoadMessages.prototype.saveImageMessage = function (event) {
 
   }
 };
+
+LoadMessages.prototype.makeNotification = function(val) {
+  // Attempts to create a notification. Will show if permission is granted.
+  // Will do nothing if permission is denied.
+  // Will request if permission is default.
+  if(!Notification) return;
+  switch(Notification.permission) {
+    case "granted":
+      this.displayNotification(val);
+      break;
+    case "default":
+      Notification.requestPermission(function(permission){
+        if(permission === 'granted') this.displayNotification(val);
+      }.bind(this));
+      break;
+    default:
+      console.log('attempted showing notification but permission was denied.');
+  }
+};
+
+LoadMessages.prototype.displayNotification = function(val) {
+  // this.displayMessage(data.key, val.name, val.text, val.photoUrl, val.imageUrl, val.uid);
+  // console.log(val);
+  const title = val.name;
+  const options = {
+    body: val.text,
+    icon: val.photoUrl
+  }
+  // console.log(options);
+  var n = new Notification(title, options);
+  setTimeout(n.close.bind(n), 5000);
+}
 
 //
 // // Returns true if user is signed-in. Otherwise false and displays a message.
