@@ -78,12 +78,14 @@ Command.prototype.sendMessage = function() {
         recipientConvContainerRef.once('value', function(snapshot){
           // Snapshot.val() should contain 1 child that has an arbitray pushId
           // The value is the recipient's conversation obj
+          console.log('got conv container val');
           const pushId = Object.keys(snapshot.val())[0];
           const unreadMessages = snapshot.val()[pushId].unreadMessages;
+          console.log('conversation object: '+recipientConvContainerRef.path);
+          console.log('is it a func? '+recipientConvContainerRef.child);
           admin.database().ref(recipientConvContainerRef.path+'/'+pushId+'/unreadMessages')
-            .transaction(function(unreadMessages){
-              return (unreadMessages || 0) + 1;
-            }.bind(this)).then(function(){
+            .set(unreadMessages + 1).then(function(){
+              // Send a fun email if the unreadMessages is a multiple of 3
               if((unreadMessages + 1) % 3 === 0) {
                 admin.database().ref('user-data/'+recipientUID).once('value', function(snapshot){
                   const recipientEmail = snapshot.val().email;
