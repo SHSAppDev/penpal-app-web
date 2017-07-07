@@ -3,6 +3,11 @@
 
 // Initializes AccountInfoSync.
 function AccountInfoSync() {
+  this.editProfile = getParameterByName('editProfile');
+  // if(this.editProfile) {
+  //   getElementById('welcome-text').innerHTML = '';
+  // }
+  console.log(this.editProfile);
   firebase.auth().onAuthStateChanged(this.onAuthStateChanged.bind(this));
 }
 
@@ -21,13 +26,25 @@ AccountInfoSync.prototype.onAuthStateChanged = function(user) {
 
     //This might be their first time using the app, so good to check
     this.userRef.child('registered').once('value', function(data){
-      if(data.val() && data.val()===true) {
+      if(!this.editProfile && data.val() && data.val()===true) {
         //Already registered!!! Go on to the app!
         window.location.href = 'dashboard.html'
       } else {
-        // Not yet registered. Unhide the content ui.
+        // Not yet registered. Or the profile is being editted. Unhide the content ui.
         document.getElementById('content').style.display = 'block';
         this.initForm();
+
+        //UI tweaks if profile is simply being editted.
+        document.getElementById('welcome-text').style.display = 'none';
+        document.getElementById('submit-button').innerHTML = 'Save';
+
+        //Might we also need to display a special message?
+        const message = getParameterByName('message');
+        if(message) {
+          //TODO display the message in a much more appropriately-style material design way.
+          window.alert(message);
+        }
+
       }
     }.bind(this));
 
