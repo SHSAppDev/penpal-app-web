@@ -3,6 +3,11 @@
 
 // Initializes AccountInfoSync.
 function AccountInfoSync() {
+  this.editProfile = getParameterByName('editProfile');
+  // if(this.editProfile) {
+  //   getElementById('welcome-text').innerHTML = '';
+  // }
+  console.log(this.editProfile);
   firebase.auth().onAuthStateChanged(this.onAuthStateChanged.bind(this));
 }
 
@@ -10,24 +15,40 @@ function AccountInfoSync() {
 AccountInfoSync.prototype.onAuthStateChanged = function(user) {
   if (user) { // User is signed in!
 
-    //ASAP update the user's profile as much as you can
     this.userRef = firebase.database().ref('user-data/'+firebase.auth().currentUser.uid);
-    var updates = {};
-    updates['/displayName'] = firebase.auth().currentUser.displayName;
-    updates['/email'] = firebase.auth().currentUser.email;
-    updates['/photoURL'] = firebase.auth().currentUser.photoURL;
-    updates['/uid'] = firebase.auth().currentUser.uid;
-    this.userRef.update(updates);
+
+    if(!this.editProfile) {
+      //ASAP update the user's profile as much as you can.
+      var updates = {};
+      updates['/displayName'] = firebase.auth().currentUser.displayName;
+      updates['/email'] = firebase.auth().currentUser.email;
+      updates['/photoURL'] = firebase.auth().currentUser.photoURL;
+      updates['/uid'] = firebase.auth().currentUser.uid;
+      this.userRef.update(updates);
+    }
+
 
     //This might be their first time using the app, so good to check
     this.userRef.child('registered').once('value', function(data){
-      if(data.val() && data.val()===true) {
+      if(!this.editProfile && data.val() && data.val()===true) {
         //Already registered!!! Go on to the app!
         window.location.href = 'dashboard.html'
       } else {
-        // Not yet registered. Unhide the content ui.
+        // Not yet registered. Or the profile is being editted. Unhide the content ui.
         document.getElementById('content').style.display = 'block';
         this.initForm();
+
+        //UI tweaks if profile is simply being editted.
+        document.getElementById('welcome-text').style.display = 'none';
+        document.getElementById('submit-button').innerHTML = 'Save';
+
+        //Might we also need to display a special message?
+        const message = getParameterByName('message');
+        if(message) {
+          //TODO display the message in a much more appropriately-style material design way.
+          window.alert(message);
+        }
+
       }
     }.bind(this));
 
@@ -41,9 +62,21 @@ AccountInfoSync.prototype.initForm = function() {
   this.submitButton = document.getElementById('submit-button');
 
   // Try to fill out as much as you can.
-  this.fullNameField.value = firebase.auth().currentUser.displayName;
-  this.emailField.value = firebase.auth().currentUser.email;
-  Materialize.updateTextFields();
+  if(this.editProfile) {
+    // In the case of a profile edit, everything will be pre-filled with stuff stored in user-data
+    firebase.database().ref('user-data/'+firebase.auth().currentUser.uid)
+      .once('value', function(snapshot){
+      console.log(snapshot.val());
+      this.fullNameField.value = snapshot.val().displayName;
+      this.emailField.value = snapshot.val().email;
+      this.schoolCodeField.value = snapshot.val().schoolCode;
+      Materialize.updateTextFields();
+    }.bind(this));
+  } else {
+    this.fullNameField.value = firebase.auth().currentUser.displayName;
+    this.emailField.value = firebase.auth().currentUser.email;
+    Materialize.updateTextFields();
+  }
 
   this.submitButton.addEventListener('click', this.submit.bind(this));
 
