@@ -15,14 +15,18 @@ function AccountInfoSync() {
 AccountInfoSync.prototype.onAuthStateChanged = function(user) {
   if (user) { // User is signed in!
 
-    //ASAP update the user's profile as much as you can
     this.userRef = firebase.database().ref('user-data/'+firebase.auth().currentUser.uid);
-    var updates = {};
-    updates['/displayName'] = firebase.auth().currentUser.displayName;
-    updates['/email'] = firebase.auth().currentUser.email;
-    updates['/photoURL'] = firebase.auth().currentUser.photoURL;
-    updates['/uid'] = firebase.auth().currentUser.uid;
-    this.userRef.update(updates);
+
+    if(!this.editProfile) {
+      //ASAP update the user's profile as much as you can.
+      var updates = {};
+      updates['/displayName'] = firebase.auth().currentUser.displayName;
+      updates['/email'] = firebase.auth().currentUser.email;
+      updates['/photoURL'] = firebase.auth().currentUser.photoURL;
+      updates['/uid'] = firebase.auth().currentUser.uid;
+      this.userRef.update(updates);
+    }
+
 
     //This might be their first time using the app, so good to check
     this.userRef.child('registered').once('value', function(data){
@@ -58,9 +62,21 @@ AccountInfoSync.prototype.initForm = function() {
   this.submitButton = document.getElementById('submit-button');
 
   // Try to fill out as much as you can.
-  this.fullNameField.value = firebase.auth().currentUser.displayName;
-  this.emailField.value = firebase.auth().currentUser.email;
-  Materialize.updateTextFields();
+  if(this.editProfile) {
+    // In the case of a profile edit, everything will be pre-filled with stuff stored in user-data
+    firebase.database().ref('user-data/'+firebase.auth().currentUser.uid)
+      .once('value', function(snapshot){
+      console.log(snapshot.val());
+      this.fullNameField.value = snapshot.val().displayName;
+      this.emailField.value = snapshot.val().email;
+      this.schoolCodeField.value = snapshot.val().schoolCode;
+      Materialize.updateTextFields();
+    }.bind(this));
+  } else {
+    this.fullNameField.value = firebase.auth().currentUser.displayName;
+    this.emailField.value = firebase.auth().currentUser.email;
+    Materialize.updateTextFields();
+  }
 
   this.submitButton.addEventListener('click', this.submit.bind(this));
 
