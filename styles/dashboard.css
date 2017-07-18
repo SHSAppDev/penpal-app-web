@@ -208,6 +208,17 @@ md-elevation-transition {
 body {
   background-color: #009688; }
 
+.active-green-circle {
+      width: 10px;
+      height: 10px;
+      -webkit-border-radius: 25px;
+      -moz-border-radius: 25px;
+      border-radius: 25px;
+      background: green;
+      display: inline-block;
+      margin: 5px;
+}
+
 #user-pic {
   background-image: url("/images/profile_placeholder.png");
   background-repeat: no-repeat;
