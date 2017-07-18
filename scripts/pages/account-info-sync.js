@@ -92,6 +92,7 @@ AccountInfoSync.prototype.submit = function() {
   // Tell update manager which processes must be completed in order for the profile to have been successfully modified.
   // Do each process, telling update manager each time one has been finished. Update manager should, once all aare
   // finished set the user's registered propery to true and go to the dashboard.
+  document.getElementById('progress-bar').style.display = 'block';
   var updateManager = new ProfileUpdateManager(['simple']);
   if(!validateEmail(this.emailField.value)) {
     this.fail('Invalid email address.');
@@ -190,7 +191,8 @@ ProfileUpdateManager.prototype.processDone = function(processName) {
 AccountInfoSync.prototype.fail = function(message) {
   // Display something to the user to indicate to them what is wrong with their form.
   //TODO write something better.
-  window.alert(message)
+  window.alert(message);
+  document.getElementById('progress-bar').style.display = 'none';
 };
 
 // Stolen from stack overflow. Useful!
