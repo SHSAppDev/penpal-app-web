@@ -4,10 +4,6 @@
 // Initializes AccountInfoSync.
 function AccountInfoSync() {
   this.editProfile = getParameterByName('editProfile');
-  // if(this.editProfile) {
-  //   getElementById('welcome-text').innerHTML = '';
-  // }
-  console.log(this.editProfile);
   firebase.auth().onAuthStateChanged(this.onAuthStateChanged.bind(this));
 }
 
@@ -69,73 +65,133 @@ AccountInfoSync.prototype.initForm = function() {
       console.log(snapshot.val());
       this.fullNameField.value = snapshot.val().displayName;
       this.emailField.value = snapshot.val().email;
-      this.schoolCodeField.value = snapshot.val().schoolCode;
+      this.schoolCodeField.value = snapshot.val().schoolCode?snapshot.val().schoolCode:'';
       Materialize.updateTextFields();
+      this.saveInitialValues();
     }.bind(this));
   } else {
     this.fullNameField.value = firebase.auth().currentUser.displayName;
     this.emailField.value = firebase.auth().currentUser.email;
     Materialize.updateTextFields();
+    this.saveInitialValues();
   }
 
   this.submitButton.addEventListener('click', this.submit.bind(this));
-
-  // console.log(stringObj({
-  //   a: 'b',
-  //   c: {
-  //     a: 'b',
-  //     c: 'd'
-  //   },
-  //   d: {
-  //     x: 'y'
-  //   }
-  // }));
 };
 
-AccountInfoSync.prototype.submit = function(){
-  // -Validate field content
-  // -Submit to firebase
-  // var submit = true;
-  var err = null;
-  if(validateEmail(this.emailField.value)) {
-    var updates = {}
+AccountInfoSync.prototype.saveInitialValues = function() {
+  this.initValues = {}; // Will contain initial values of each field
+  this.initValues['full-name'] = this.fullNameField.value;
+  this.initValues['email'] = this.emailField.value;
+  this.initValues['school-code'] = this.schoolCodeField.value;
+};
+
+
+AccountInfoSync.prototype.submit = function() {
+  // Know what to update based on if the field values changed.
+  // Tell update manager which processes must be completed in order for the profile to have been successfully modified.
+  // Do each process, telling update manager each time one has been finished. Update manager should, once all aare
+  // finished set the user's registered propery to true and go to the dashboard.
+  var updateManager = new ProfileUpdateManager(['simple']);
+  if(!validateEmail(this.emailField.value)) {
+    this.fail('Invalid email address.');
+    return;
+  }
+
+  var updates = {};
+  if(this.initValues['full-name'] !== this.fullNameField.value) {
     updates['/displayName'] = this.fullNameField.value;
+  }
+
+  if(this.initValues['email'] !== this.emailField.value) {
     updates['/email'] = this.emailField.value;
-    this.userRef.update(updates);
-    if(this.schoolCodeField.value) {
-      this.command = new Command();
-      this.command.requestFunction('registerInSchool', {
-        'schoolCode': this.schoolCodeField.value
-      },
-      {
-        'success': function(result) {
-          this.success();
-        }.bind(this),
-        'error': function(err) {
-          this.fail('Some error occurred while trying to register for the school.');
-        }.bind(this)
-      });
-    } else {
-      this.success();
-    }
+  }
+
+  // The 'Simple' process refers to the things that can be updated with a simple call of update.
+  this.userRef.update(updates).then(function(){
+    updateManager.processDone('simple');
+  }.bind(this));
+
+  if(this.initValues['school-code'] !== this.schoolCodeField.value) {
+    updateManager.processes['schoolRegistration'] = false;
+    this.command = new Command();
+    this.command.requestFunction('registerInSchool', {
+      'schoolCode': this.schoolCodeField.value
+    },
+    {
+      'success': function(result) {
+        updateManager.processDone('schoolRegistration');
+      }.bind(this),
+      'error': function(err) {
+        this.fail('Some error occurred while trying to register for the school.');
+      }.bind(this)
+    });
+  }
+
+  // if(validateEmail(this.emailField.value)) {
+  //   var updates = {}
+  //   updates['/displayName'] = this.fullNameField.value;
+  //   updates['/email'] = this.emailField.value;
+  //   this.userRef.update(updates);
+  //   if(this.schoolCodeField.value) {
+  //     this.command = new Command();
+  //     this.command.requestFunction('registerInSchool', {
+  //       'schoolCode': this.schoolCodeField.value
+  //     },
+  //     {
+  //       'success': function(result) {
+  //         this.success();
+  //       }.bind(this),
+  //       'error': function(err) {
+  //         this.fail('Some error occurred while trying to register for the school.');
+  //       }.bind(this)
+  //     });
+  //   } else {
+  //     this.success();
+  //   }
+  // } else {
+  //   this.fail('Invalid email.');
+  // }
+};
+
+function ProfileUpdateManager(processNames) {
+  // Object to help profile updates. Ensures page is not exited until every single
+  // part of the user's profile is successfully updated.
+  // In processes object, false indicates an unfinished process.
+  this.processes = {};
+  for(var i=0; i<processNames.length; i++) {
+    this.processes[processNames[i]] = false;
+  }
+}
+ProfileUpdateManager.prototype.processDone = function(processName) {
+  this.processes[processName] = true;
+  // See if there are any other unfinished processes.
+  if(Object.values(this.processes).indexOf(false) > -1) {
+    // Unfinied processes left.
+    return;
   } else {
-    this.fail('Invalid email.');
+    // Everything's done!
+    // Set the user's registered property to true, and move on to the dashboard.
+    this.userRef = firebase.database().ref('user-data/'+firebase.auth().currentUser.uid);
+    this.userRef.update({'/registered':true}).then(function(){
+      window.location.href = 'dashboard.html';
+    }.bind(this));
   }
 };
 
-AccountInfoSync.prototype.success = function() {
-  // Set the user's registered property to true, and move on to the dashboard.
-  this.userRef.update({'/registered':true}).then(function(){
-    window.location.href = 'dashboard.html';
-  }.bind(this));
-
-}
+// AccountInfoSync.prototype.success = function() {
+//   // Set the user's registered property to true, and move on to the dashboard.
+//   this.userRef.update({'/registered':true}).then(function(){
+//     window.location.href = 'dashboard.html';
+//   }.bind(this));
+//
+// };
 
 AccountInfoSync.prototype.fail = function(message) {
   // Display something to the user to indicate to them what is wrong with their form.
   //TODO write something better.
   window.alert(message)
-}
+};
 
 // Stolen from stack overflow. Useful!
 // http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript

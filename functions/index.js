@@ -170,6 +170,7 @@ Command.prototype.registerInSchool = function() {
 };
 
 
+
 exports.requestFunction = functions.database.ref('/function-requests/{pushId}')
     .onWrite(event => {
       // Only edit data when it is first created.
