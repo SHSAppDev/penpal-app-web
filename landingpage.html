@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="description" content="Improve your foreign language skills by chatting with native speakers your age.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <span class="notranslate"><title>World Without Borders Landing Page</title></span>
+  <span class="notranslate"><title>World Without Borders</title></span>
 
   <!-- Disable tap highlight on IE -->
   <meta name="msapplication-tap-highlight" content="no">
@@ -40,7 +40,7 @@
 
 <body>
     <h1 id="title">World Without Borders</h1>
-    <img class="www-logo responsive-img" src="https://files.slack.com/files-tmb/T1UER92E9-F57FA398T-2f0c4bd52a/base_recolored_360.png"></img>
+    <img class="www-logo responsive-img" src="images/base_recolored_360.png"></img>
     <a class="btn red lighten-1 waves-light waves-effect" href=# id="get-started">Get Started</a>
 
   <!--Firebase-->
@@ -62,7 +62,7 @@
     auth.onAuthStateChanged(function (user) {
       authStateKnown = true;
       if (btnClicked) {
-        window.location.href = auth.currentUser === null ? 'login.html' : 'dashboard.html';
+        window.location.href = auth.currentUser === null ? 'login.html' : 'account-info-sync.html';
       }
     });
 
@@ -71,7 +71,7 @@
     btn.addEventListener('click', function () {
       btnClicked = true;
       if (authStateKnown) {
-        window.location.href = auth.currentUser === null ? 'login.html' : 'dashboard.html';
+        window.location.href = auth.currentUser === null ? 'login.html' : 'account-info-sync.html';
       }
     });
   </script>

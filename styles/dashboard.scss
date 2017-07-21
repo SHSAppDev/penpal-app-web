@@ -1,6 +1,4 @@
 @import "md-material-shadows.scss";
-
-
 body {
     background-color: #009688;
 }
@@ -32,11 +30,11 @@ body {
 }
 
 #chat {
-    color: black;
     margin-top: 6.5px;
-    padding: 10px 10px 10px 10px;
+    padding: 0px 0px 0px 10px;
     overflow-y: auto;
-    height: 85vh;
+    height: 72vh;
+    margin-bottom: 0.1px;
     /*margin-left: 7.5px;*/
 }
 
@@ -65,10 +63,18 @@ body {
 }
 
 #special-characters-panel {
-    @include mdElevation(2,5, 'hover');
+    @include mdElevation(2,
+    5,
+    'hover');
 }
 
 #translate-panel {
-    @include mdElevation(2,5, 'hover');
+    @include mdElevation(2,
+    5,
+    'hover');
 }
 
+#message-interaction {
+    padding: 5px 15px 0px 15px;
+    margin-top: 0px;
+}

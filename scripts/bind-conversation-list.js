@@ -48,8 +48,10 @@ LoadConversationList.CONVERSATION_TEMPLATE =
     '<a href=# class="collection-item avatar">' +
       '<span><img class="pic circle" src=#></span>' +
       '<span class="name title">Name</span>' +
+      '<div class="active-indicator">' +
+        '<div class="active-green-circle"></div><span>Online</span>' +
+      '</div>' +
       '<span class="new badge">0</span>'+
-      
     '</a>';
 
 
@@ -58,7 +60,6 @@ LoadConversationList.prototype.displayConversation = function(recipientUID, myCo
   // this.userDataRef.child(recipientUID).once('value', function(snapshot){
   this.database.ref('user-data/'+recipientUID).once('value').then(function(snapshot){
     if(snapshot.val()===null) {return;}
-
     var div = document.getElementById(recipientUID);
     if(!div) {
       var container = document.createElement('div');
@@ -89,6 +90,18 @@ LoadConversationList.prototype.displayConversation = function(recipientUID, myCo
       } else {
         div.querySelector('.new').removeAttribute('hidden');
         div.querySelector('.new').textContent = unreadMessages;
+      }
+    }.bind(this));
+
+    //SYNC LIVE
+    var presenceRef = this.database.ref('presence/'+recipientUID);
+    presenceRef.off();
+    presenceRef.on('value', function(snapshot){
+      const live = snapshot.val();
+      if(live){
+        div.querySelector('.active-indicator').removeAttribute('hidden');
+      } else {
+        div.querySelector('.active-indicator').setAttribute('hidden', true);
       }
     }.bind(this));
 
