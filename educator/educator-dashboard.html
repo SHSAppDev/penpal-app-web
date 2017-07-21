@@ -34,46 +34,58 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="styles/landingpage.css">
+  <link rel="stylesheet" type="text/css" href="educator-dashboard.css">
 
 </head>
 
 <body>
-    <h1 id="title">World Without Borders</h1>
+    <!-- <h1 id="title">World Without Borders</h1>
     <img class="www-logo responsive-img" src="images/base_recolored_360.png"></img>
-    <a class="btn red lighten-1 waves-light waves-effect" href=# id="get-started">Get Started</a>
+    <a class="btn red lighten-1 waves-light waves-effect" href=# id="get-started">Get Started</a> -->
+      <span class="notranslate">
+  <ul id="user-dropdown" class="dropdown-content">
+      <li>
+          <a id="sign-out">Sign-out</a>
+          <a href="account-info-sync.html?editProfile=true">Edit Profile</a>
+          <a href="stat-summary.html">View Stat Summary</a>
+      </li>
+  </ul>
+  <nav>
+      <div class="nav-wrapper teal" id="nav-bar">
+          <a href="#" class="brand-logo"><i class="large material-icons">textsms</i>World Without Borders</a>
+          <a href="#" data-activates="mobile-demo" class="button-collapse" id="button-collapse"><i class="material-icons">menu</i></a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+              <li>
+                  <!-- <a href="aboutpage.html">About</a> -->
+                  <a id="user-name" href='profile-page.html' hidden>Username</a>
+              </li>
+              <li>
+                  <a class="dropdown-button" href="#!" data-activates="user-dropdown" id="user-pic" hidden></a>
+              </li>
+          </ul>
+          <ul class="side-nav" id="mobile-demo">
+              <li>
+                  <a id="sign-out-mobile">Sign-out</a>
+              </li>
+          </ul>
+      </div>
+    </nav>
+  </span>
 
   <!--Firebase-->
   <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
   <script>
-    // Initialize Firebase
-    var config = {
-      apiKey: "AIzaSyCx-2_5IcfXswoDZhjle1rPS3m-ryi3rpM",
-      authDomain: "penpalapp-6020c.firebaseapp.com",
-      databaseURL: "https://penpalapp-6020c.firebaseio.com",
-      storageBucket: "penpalapp-6020c.appspot.com",
-      messagingSenderId: "322094641122"
-    };
-    firebase.initializeApp(config);
-    var auth = firebase.auth();
-    var authStateKnown;
-    var btnClicked = false;
-    auth.onAuthStateChanged(function (user) {
-      authStateKnown = true;
-      if (btnClicked) {
-        window.location.href = auth.currentUser === null ? 'login.html' : 'account-info-sync.html';
-      }
-    });
-
-
-    var btn = document.getElementById('get-started');
-    btn.addEventListener('click', function () {
-      btnClicked = true;
-      if (authStateKnown) {
-        window.location.href = auth.currentUser === null ? 'login.html' : 'account-info-sync.html';
-      }
-    });
+      // Initialize Firebase
+      var config = {
+          apiKey: "AIzaSyCx-2_5IcfXswoDZhjle1rPS3m-ryi3rpM",
+          authDomain: "penpalapp-6020c.firebaseapp.com",
+          databaseURL: "https://penpalapp-6020c.firebaseio.com",
+          storageBucket: "penpalapp-6020c.appspot.com",
+          messagingSenderId: "322094641122"
+      };
+      firebase.initializeApp(config);
   </script>
+  <script src="educator-dashboard.js"></script>
 </body>
 
 </html>
