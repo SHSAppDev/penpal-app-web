@@ -11,9 +11,9 @@ const mailTransport = nodemailer.createTransport(
 const APP_NAME = 'World Without Borders';
 
 
-// exports.hello = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// })
+exports.hello = functions.https.onRequest((request, response) => {
+ response.send("Hello from Firebase!");
+})
 
 function Command(event, uid, params) {
     this.event = event;
@@ -256,7 +256,7 @@ function sendAnEmail(emailAddress, subject, text) {
     text: text
   };
   return mailTransport.sendMail(mailOptions).then(() => {
-    console.log('New email sent to:', email);
+    console.log('New email sent to:', emailAddress);
   });
 }
 
