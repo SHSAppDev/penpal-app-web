@@ -11,9 +11,9 @@ const mailTransport = nodemailer.createTransport(
 const APP_NAME = 'World Without Borders';
 
 
-// exports.hello = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// })
+exports.hello = functions.https.onRequest((request, response) => {
+ response.send("Hello from Firebase!");
+})
 
 function Command(event, uid, params) {
     this.event = event;
@@ -78,14 +78,12 @@ Command.prototype.sendMessage = function() {
         recipientConvContainerRef.once('value', function(snapshot){
           // Snapshot.val() should contain 1 child that has an arbitray pushId
           // The value is the recipient's conversation obj
-          console.log('got conv container val');
           const pushId = Object.keys(snapshot.val())[0];
           const unreadMessages = snapshot.val()[pushId].unreadMessages;
-          console.log('conversation object: '+recipientConvContainerRef.path);
-          console.log('is it a func? '+recipientConvContainerRef.child);
           admin.database().ref(recipientConvContainerRef.path+'/'+pushId+'/unreadMessages')
-            .set(unreadMessages + 1).then(function(){
-              // Send a fun email if the unreadMessages is a multiple of 3
+            .transaction(function(unreadMessages){
+              return (unreadMessages || 0) + 1;
+            }.bind(this)).then(function(){
               if((unreadMessages + 1) % 3 === 0) {
                 admin.database().ref('user-data/'+recipientUID).once('value', function(snapshot){
                   const recipientEmail = snapshot.val().email;
@@ -170,6 +168,7 @@ Command.prototype.registerInSchool = function() {
       }.bind(this));
     }.bind(this));
 };
+
 
 
 exports.requestFunction = functions.database.ref('/function-requests/{pushId}')
@@ -257,10 +256,11 @@ function sendAnEmail(emailAddress, subject, text) {
     text: text
   };
   return mailTransport.sendMail(mailOptions).then(() => {
-    console.log('New email sent to:', email);
+    console.log('New email sent to:', emailAddress);
   });
 }
 
+// Creates a string version of any object that shows all key and value pairs.
 function stringObj(obj) {
   const keys = Object.keys(obj);
   const vals = keys.map(function(key) {
@@ -273,6 +273,9 @@ function stringObj(obj) {
   return str;
 }
 
+// Creates a string version of any object that shows all key and value pairs.
+// This recursive version will show the string versions of objects as values.
+// e.g. {a: b, c: { a: b }}
 function stringObjRecursive(obj, indentLevel) {
   const keys = Object.keys(obj);
   const vals = keys.map(function(key) {

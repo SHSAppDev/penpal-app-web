@@ -39,6 +39,8 @@
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
 
+    <script src="scripts/google-analytics-tracking.js"></script>
+
 </head>
 
 <body>
@@ -61,6 +63,8 @@
 <ul id="user-dropdown" class="dropdown-content">
     <li>
         <a id="sign-out">Sign-out</a>
+        <a href="account-info-sync.html?editProfile=true">Edit Profile</a>
+        <a href="stat-summary.html">View Stat Summary</a>
     </li>
 </ul>
 <nav>
@@ -70,7 +74,9 @@
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li>
                 <!-- <a href="aboutpage.html">About</a> -->
-                <a id="user-name" href='stat-summary.html' hidden>Username</a>
+                <!-- <a id="user-name" href='profile-page.html' hidden>Username</a> -->
+                <a id="user-name" href=# hidden>Username</a> <!--Made dead link while profile-page is under development-->
+
             </li>
             <li>
                 <a class="dropdown-button" href="#!" data-activates="user-dropdown" id="user-pic" hidden></a>
@@ -79,6 +85,9 @@
         <ul class="side-nav" id="mobile-demo">
             <li>
                 <a id="sign-out-mobile">Sign-out</a>
+                <a href="account-info-sync.html?editProfile=true">Edit Profile</a>
+                <a href="stat-summary.html">View Stat Summary</a>
+
             </li>
         </ul>
     </div>
@@ -302,7 +311,6 @@
     <!-- The main page script -->
     <script src="scripts/pages/dashboard.js"></script>
 
-    <!--get user info-->
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js'></script>
     <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/moment.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data-2010-2020.min.js'></script>
