@@ -128,7 +128,7 @@ const convStatTemplate =
 // "</div>";
 '<a class="link" href=# style="color:gray">' +
 '<li class="collection-item avatar">' +
-      '<img src="images/yuna.jpg" alt="" class="profile-pic circle">' +
+      '<img src=# alt="" class="profile-pic circle">' +
       '<span class="title" style="color:black">Username</span>' +
       '<p class="email">anotheruser@example.com</p>' +
       '<p class="sent">Sent: 20 Messages, 131 Words</p>' +
