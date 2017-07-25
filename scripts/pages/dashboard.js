@@ -20,10 +20,7 @@ function WWBDashboard() {
         console.log('changed name');
     }.bind(this));
 
-    firebase.database().ref('user-data/'+firebase.auth().currentUser.uid).once('value',
-      function(snapshot){
-        this.myProfile = snapshot.val();
-    }.bind(this));
+
     // this.userInfo = new UserInfo();
 
     // Example of how to do the translate:
@@ -81,6 +78,14 @@ WWBDashboard.prototype.onAuthStateChanged = function(user) {
         // console.log("on auth change");
         // this.checkForFirstTimeUser(this.auth.currentUser.uid);
 
+        firebase.database().ref('user-data/'+firebase.auth().currentUser.uid).once('value',
+          function(snapshot){
+            this.myProfile = snapshot.val();
+            // Unhide and set userName
+            this.userName.removeAttribute('hidden');
+            this.userName.innerHTML = this.myProfile.displayName;
+        }.bind(this));
+
         // Get profile pic and user's name from the Firebase user object.
         var profilePicUrl = user.photoURL; // Get profile pic.
         // var userName = user.displayName;        // Get user's name.
@@ -93,9 +98,6 @@ WWBDashboard.prototype.onAuthStateChanged = function(user) {
         // this.userName.removeAttribute('hidden');
         this.userPic.removeAttribute('hidden');
 
-        // Unhide and set userName
-        this.userName.removeAttribute('hidden');
-        this.userName.innerHTML = this.auth.currentUser.displayName;
 
         //presence
         new Presence();
