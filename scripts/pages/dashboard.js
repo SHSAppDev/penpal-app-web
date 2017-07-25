@@ -1,11 +1,16 @@
 'use strict';
+console.log("Hi. I am the dashboard script!!!!");
+
 
 // Initializes WWBDashboard.
 function WWBDashboard() {
 
     // Shortcuts to DOM Elements.
+    console.log("Hi. I am the dashboard script!!!!");
     this.userPic = document.getElementById('user-pic');
     this.userName = document.getElementById('user-name');
+    // this.bell = document.get('bell');
+    // this.bell.addEventListener('click',function());
     this.initFirebase();
     this.translate = new EZTranslate();
     // this.userInfo = new UserInfo();
@@ -15,6 +20,17 @@ function WWBDashboard() {
     // Here I do English to Spanish
     // this.translate.translate("en", "es", "What's up?", function(translatedText){
     //     console.log("translatedText: "+translatedText);
+    // });
+
+    // this.command.requestFunction('sendEmail', {
+    //   'emailAddress': 'kyleseidphan@gmail.com',
+    //   'subject': 'The Bell has been rung!',
+    //   'text': 'Log on and start messaging.'
+    // }, {
+    //   'success': function(resp){
+    //     window.alert('The email was successfully sent');
+    //   }.bind(this),
+    //   'error': function(resp){}.bind(this)
     // });
 
 }

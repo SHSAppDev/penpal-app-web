@@ -1,0 +1,144 @@
+<!doctype html>
+
+<html lang="en">
+<!-- Materialize CSS Head -->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Improve your foreign language skills by chatting with native speakers your age.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructor login</title>
+    <link rel="stylesheet" type="text/css" href="../styles/login.css">
+
+
+    <!-- Disable tap highlight on IE -->
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="World Without Borders">
+    <meta name="theme-color" content="#303F9F">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="World Without Borders">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
+
+    <!-- Tile icon for Win8 -->
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <meta name="msapplication-navbutton-color" content="#303F9F">
+
+    <!-- Compiled and minified CSS -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+
+</head>
+
+<body>
+    <div class="card" id="login-card">
+        <div class="card-content">
+          <span class="card-title center-align">Create Account</span>
+            <div class="row">
+              <form class="col s12" id="create-account-form">
+                <div class="row">
+
+                  <div class="input-field col s6">
+                    <input id="email-address" type="text" class="validate">
+                    <label for="email">Email Address</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="password" type="text" class="validate">
+                    <label for="password">Password</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="school-code" type="text" class="validate">
+                    <label>School Code</label>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+            <a id="create-account-btn" class="waves-effect waves-light btn"><i class="material-icons left">account_circle</i>Create My Account!</a>
+        </div>
+    </div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCx-2_5IcfXswoDZhjle1rPS3m-ryi3rpM",
+    authDomain: "penpalapp-6020c.firebaseapp.com",
+    databaseURL: "https://penpalapp-6020c.firebaseio.com",
+    storageBucket: "penpalapp-6020c.appspot.com",
+    messagingSenderId: "322094641122"
+  };
+  firebase.initializeApp(config);
+
+  const database = firebase.database();
+  const auth = firebase.auth();
+
+  function EducatorCreateAccount() {
+    document.getElementById('create-account-btn').addEventListener('click', function(){
+      const createAccountForm = document.getElementById('create-account-form');
+      this.responses = renderForm(createAccountForm);
+      const email = this.responses['email-address'];
+      const password = this.responses['password'];
+      auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
+         var errorCode = error.code;
+         var errorMessage = error.message;
+         console.log(error);
+         window.alert("Uh oh, something's up! An error ocurred whilst trying to create your account.");
+      }.bind(this));
+      console.log('creating account');
+    }.bind(this));
+
+    auth.onAuthStateChanged(function(user){
+      if(user) {
+        // We're signed in! Do some quick info sync.
+        console.log('signed in! Doing info sync.')
+        var myData = {};
+        myData['email'] = auth.currentUser.email;
+        myData['schoolCode'] = this.responses['email-address'];
+        database.ref('educator-data/'+auth.currentUser.uid).set(myData)
+          .then(function(){
+            // And now we're good Lessgo!
+            window.location.href = "./educator-dashboard.html";
+          }.bind(this));
+      }
+    }.bind(this));
+  }
+  new EducatorCreateAccount();
+
+
+  function renderForm(form) {
+    // Returns an object where the keys are the input id's and the values
+    // are the values that the user inputted. Useful to me 😏
+    var resp = {};
+    const elements = form.elements;
+    for(var i=0; i<elements.length; i++) {
+      const input = elements[i];
+      resp[input.id] = input.value;
+    }
+    return resp;
+  }
+
+
+</script>
+<!-- <script src="scripts/pages/login.js"></script>
+<script src="scripts/bind-signin-button.js" buttonID='sign-in'></script> -->
+
+</body>
+
+</html>
