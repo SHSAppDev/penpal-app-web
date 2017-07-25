@@ -132,6 +132,7 @@
             <center id="chat-title" hidden>
               <span class="display-name"></span>
               <span class="local-time"></span>
+              <span><a href="#bell-modal" id="bell"><i class="material-icons">notifications_active</i></a></span>
             </center>
             <span class="notranslate">
         <div id="chat" class="card z-depth-3">
@@ -272,6 +273,18 @@
         </div>
     </div>
 
+    <!-- bell-modal -->
+    <div id="bell-modal" class="modal">
+        <div class="modal-content">
+            <h4>Are you sure you want to notify this friend?</h4>
+            <button id="send-notification" class="red lighten-1 btn waves-effect waves-light">Yes</button>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+        </div>
+    </div>
+
+
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
     <script>
@@ -309,13 +322,16 @@
     </script>
 
     <!-- The main page script -->
-    <script src="scripts/pages/dashboard.js"></script>
+        <script src="scripts/command.js"></script>
 
+    <script src="scripts/pages/dashboard.js"></script>
+    <script>
+    console.log('hi');
+     </script> 
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js'></script>
     <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/moment.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data-2010-2020.min.js'></script>
     <script src="scripts/user-info-new.js"></script>
-    <script src="scripts/command.js"></script>
 
 
 

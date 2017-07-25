@@ -1,17 +1,29 @@
+
 'use strict';
-console.log("Hi. I am the dashboard script!!!!");
-
-
+ console.log("The dashboard");
 // Initializes WWBDashboard.
 function WWBDashboard() {
 
     // Shortcuts to DOM Elements.
-    console.log("Hi. I am the dashboard script!!!!");
+    this.command = new Command();
     this.userPic = document.getElementById('user-pic');
     this.userName = document.getElementById('user-name');
-    // this.bell = document.get('bell');
-    // this.bell.addEventListener('click',function());
-    this.initFirebase();
+    this.sendNotification = document.getElementById('send-notification');
+    console.log('reached here');
+    this.sendNotification.addEventListener('click',function(){
+        console.log("bell clicked");
+        this.command.requestFunction('sendEmail', {
+            'emailAddress':'kyleseidphan@gmail.com',
+            'subject':"The bell has been rung!",
+            'text': "Log on and start messaging."
+        }, {
+            'success': function(resp){
+                window.alert('The email was sucessfully sent');
+            }.bind(this),
+            'error': function(resp){}.bind(this),
+        });
+    }.bind(this));
+    this.intFirebase();
     this.translate = new EZTranslate();
     // this.userInfo = new UserInfo();
 
