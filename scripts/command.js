@@ -43,3 +43,4 @@ Command.prototype.requestFunction = function(action, params, callback) {
 		callback.error(err);
 	}.bind(this));
 };
+
