@@ -18,22 +18,13 @@ function EducatorLogin() {
       var errorMessage = error.message;
       $('.btn').attr('disabled', false);
       $('#login-card .progress').css('display', 'none');
-
-
-      // ...
+      // TODO be more specific in messages.
       Materialize.toast("Something went wrong while trying to log in! :(", 4000);
     });
     // Stuff to make ui look nice
     $('.btn').attr('disabled', true);
     $('#login-card .progress').css('display', 'block');
-    // console.log(this.responses);
-    // auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
-    //    var errorCode = error.code;
-    //    var errorMessage = error.message;
-    //    console.log(error);
-    //    window.alert("Uh oh, something's up! An error ocurred whilst trying to create your account.");
-    // }.bind(this));
-    // console.log('creating account');
+
   }.bind(this));
 
   auth.onAuthStateChanged(function(user){
@@ -41,15 +32,7 @@ function EducatorLogin() {
       // We're signed in! Do some quick info sync.
       console.log('signed in!');
       // change page to dashboard
-      window.location.href = './educator-dashboard.html';
-      // var myData = {};
-      // myData['email'] = auth.currentUser.email;
-      // myData['schoolCode'] = this.responses['email-address'];
-      // database.ref('educator-data/'+auth.currentUser.uid).set(myData)
-      //   .then(function(){
-      //     // And now we're good Lessgo!
-      //     window.location.href = "./educator-dashboard.html";
-      //   }.bind(this));
+      window.location.href = './educator-account-info-sync.html';
     }
   }.bind(this));
 
@@ -91,11 +74,11 @@ function EducatorCreateAccount() {
       console.log('signed in! Doing info sync.')
       var myData = {};
       myData['email'] = auth.currentUser.email;
-      myData['schoolCode'] = this.responses['school-code'];
+      myData['schoolName'] = this.responses['school-name'];
       database.ref('educator-data/'+auth.currentUser.uid).set(myData)
         .then(function(){
           // And now we're good Lessgo!
-          window.location.href = "./educator-dashboard.html";
+          window.location.href = "./educator-account-info-sync.html";
         }.bind(this));
     }
   }.bind(this));
