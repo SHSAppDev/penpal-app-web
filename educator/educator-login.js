@@ -4,9 +4,10 @@ const auth = firebase.auth();
 
 // Meant to handle just regular logins NOT account creation. THat's the next class
 function EducatorLogin() {
+  const loginForm = document.getElementById('login-form');
+  this.loginCard = document.getElementById('login-card');
+
   document.getElementById('login-btn').addEventListener('click', function(){
-    this.loginCard = document.getElementById('login-card');
-    const loginForm = document.getElementById('login-form');
     this.responses = renderForm(loginForm);
     const email = this.responses['email-address'];
     const password = this.responses['password'];
@@ -51,15 +52,19 @@ function EducatorLogin() {
       //   }.bind(this));
     }
   }.bind(this));
+
+  monitorFormIsFull(loginForm);
+
+
 }
 
 // This class is meant to handle just the account creation scenario.
 function EducatorCreateAccount() {
+  const createAccountForm = document.getElementById('create-account-form');
+  this.createAccountCard = document.getElementById('create-account-card');
   document.getElementById('create-account-btn').addEventListener('click', function(){
-    this.createAccountCard = document.getElementById('create-account-card');
-    const createAccountForm = document.getElementById('create-account-form');
     this.responses = renderForm(createAccountForm);
-    console.log(stringObjRecursive(this.responses));
+    // console.log(stringObjRecursive(this.responses));
     const email = this.responses['email-address'];
     const password = this.responses['password'];
     auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
@@ -94,6 +99,8 @@ function EducatorCreateAccount() {
         }.bind(this));
     }
   }.bind(this));
+
+  monitorFormIsFull(createAccountForm);
 }
 
 
@@ -107,6 +114,28 @@ function renderForm(form) {
     resp[input.name] = input.value;
   }
   return resp;
+}
+
+function monitorFormIsFull(form) {
+  // Makes sure ALL fields in form contain SOMETHING. Disables all elements
+  // with .btn class if just one field is empty.
+  var $inputs = $(form).find('input');
+  $inputs.keyup(function(){
+    var full = true;
+    $inputs.each(function(){
+      if($(this).val() === '') {
+        full = false;
+      }
+    });
+    var $btn = $(form).find('.btn');
+    if(full) {
+      $btn.removeAttr('disabled');
+      // console.log('remove disabled');
+    } else {
+      $btn.attr('disabled', 'disabled');
+      // console.log('set disable true');
+    }
+  });
 }
 
 // Creates a string version of any object that shows all key and value pairs.
