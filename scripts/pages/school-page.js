@@ -100,7 +100,8 @@ SchoolPage.USER_LIST_ITEM =
   '<li class="collection-item avatar">' +
     '<div>' +
       '<img src=# class="circle photo"></img>' +
-      '<span class="title display-name">Alvin</span><button class="secondary-content">ADD</button>' +
+      '<span class="title display-name">Alvin</span>' +
+      //'<button class="secondary-content">ADD</button>' +
       '<p class="email"></p>' +
     '</div>' +
   '</li>';
