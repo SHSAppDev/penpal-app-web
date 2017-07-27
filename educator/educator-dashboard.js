@@ -14,7 +14,16 @@ function EducatorDashboard() {
 
 EducatorDashboard.prototype.onAuthStateChanged = function(user) {
   if(user) {
+    this.database.ref('educator-data/'+this.auth.currentUser.uid).once('value', function(snapshot){
+      this.myData = snapshot.val();
+      // Unhide body.
+      const schoolName = this.myData.schoolName;
+      const schoolCode = this.myData.schoolCode;
+      document.getElementById('school-name').innerHTML = schoolName;
+      document.getElementById('school-code').innerHTML = schoolCode;
+      $('body').css('display', 'block');
 
+    }.bind(this));
   } else {
     // Signed out
     window.location.href = './educator-login.html';
