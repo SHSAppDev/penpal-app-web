@@ -23,7 +23,7 @@ function WWBDashboard() {
             'error': function(resp){}.bind(this),
         });
     }.bind(this));
-    this.intFirebase();
+    this.initFirebase();
     this.translate = new EZTranslate();
     // this.userInfo = new UserInfo();
 

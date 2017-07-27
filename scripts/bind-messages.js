@@ -114,7 +114,9 @@ LoadMessages.prototype.setChatTitle = function() {
   if(this.targetUID) {
     firebase.database().ref('user-data/'+this.targetUID).once('value', function(data){
       if(!data.val()) {
-        window.alert("Uh Oh, it looks like this user doesn't exist anymore. That's strange...");
+        // window.alert("Uh Oh, it looks like this user doesn't exist anymore. That's strange...");
+        Materialize.toast("Uh Oh, it looks like this user doesn't exist anymore. That's strange...", 3000);
+
         return;
       }
       const displayName = data.val().displayName;

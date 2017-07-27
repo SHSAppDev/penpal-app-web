@@ -45,7 +45,8 @@ AddConversation.prototype.addConversationToDatabase = function() {
         this.addUidToMyConversations(uid, value[uid].displayName);
         this.addUidToOtherUsersConversations(uid);
       } else {
-        window.alert("No user was found with that email: "+email);
+        // window.alert("No user was found with that email: "+email);
+        Materialize.toast("No user was found with that email: "+email, 3000);
       }
     }.bind(this));
 
@@ -56,10 +57,13 @@ AddConversation.prototype.addUidToMyConversations = function(uid, displayName) {
   myConversationsRef.push({
     recipientUID: uid
   }).then(function(){
-    window.alert(displayName+" has been added to your conversations!");
+    // window.alert(displayName+" has been added to your conversations!");
+    Materialize.toast(displayName+" has been added to your conversations!", 3000);
+
     this.emailField.value = "";
   }.bind(this)).catch(function(error) {
-    window.alert("Uh Oh. Something went wrong. The conversation wasn't added. Sry.")
+    // window.alert("Uh Oh. Something went wrong. The conversation wasn't added. Sry.")
+    Materialize.toast("Uh Oh. Something went wrong. The conversation wasn't added. Sry.", 3000);
   });
 };
 
