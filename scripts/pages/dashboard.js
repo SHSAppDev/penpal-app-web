@@ -32,7 +32,6 @@ function WWBDashboard() {
 
 }
 
-
 WWBDashboard.URL_PROFILE_PLACEHOLDER = '/images/profile_placeholder.png';
 WWBDashboard.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
 
