@@ -38,11 +38,11 @@
 
 </head>
 
-<body>
+<body hidden>
     <!-- <h1 id="title">World Without Borders</h1>
     <img class="www-logo responsive-img" src="images/base_recolored_360.png"></img>
     <a class="btn red lighten-1 waves-light waves-effect" href=# id="get-started">Get Started</a> -->
-      <span class="notranslate">
+<span class="notranslate">
   <ul id="user-dropdown" class="dropdown-content">
       <li>
           <a id="sign-out">Sign-out</a>
@@ -70,22 +70,29 @@
           </ul>
       </div>
     </nav>
-  </span>
+    <h1 id="school-name"></h1>
+    <h3>Your Code: <span id="school-code"></span></h3>
 
-  <!--Firebase-->
-  <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
-  <script>
-      // Initialize Firebase
-      var config = {
-          apiKey: "AIzaSyCx-2_5IcfXswoDZhjle1rPS3m-ryi3rpM",
-          authDomain: "penpalapp-6020c.firebaseapp.com",
-          databaseURL: "https://penpalapp-6020c.firebaseio.com",
-          storageBucket: "penpalapp-6020c.appspot.com",
-          messagingSenderId: "322094641122"
-      };
-      firebase.initializeApp(config);
-  </script>
-  <script src="educator-dashboard.js"></script>
+    
+
+    <div id="users-container">
+    </div>
+</span>
+
+<!--Firebase-->
+<script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyCx-2_5IcfXswoDZhjle1rPS3m-ryi3rpM",
+        authDomain: "penpalapp-6020c.firebaseapp.com",
+        databaseURL: "https://penpalapp-6020c.firebaseio.com",
+        storageBucket: "penpalapp-6020c.appspot.com",
+        messagingSenderId: "322094641122"
+    };
+    firebase.initializeApp(config);
+</script>
+<script src="educator-dashboard.js"></script>
 </body>
 
 </html>

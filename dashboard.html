@@ -249,248 +249,28 @@
         <ul id="special-characters-panel" class="collapsible card" data-collapsible="accordion">
             <li>
                 <div class="collapsible-header"><span style="color:red;">Special Characters</span><span class="notranslate"><i class="material-icons" style="color:red;">translate</i></span></div>
+                <div class="collapsible-body">
+                  <div class="input-field col s12">
+                    <select id="special-characterset-select">
+                      <option value="es">Spanish</option>
+                      <option value="fr" selected>French</option>
+                      <option value="de">German</option>
+                      <option value="emoji">Emoji-Speak</option>
+                    </select>
+                    <label>Character Set</label>
+                  </div>
+                  <div class="button-container"></div>
 
-                <ul class="collapsible" data-collapsible="accordion">
-    <li>
-      <div class="collapsible-header">Spanish</div>
-      <div class="collapsible-body"><span class="notranslate">
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">á</a>
+                    <!-- <a class="waves-effect waves-teal btn-flat special-character-tool-button">á</a>
+
                     <a class="waves-effect waves-teal btn-flat special-character-tool-button">é</a>
                     <a class="waves-effect waves-teal btn-flat special-character-tool-button">í</a>
                     <a class="waves-effect waves-teal btn-flat special-character-tool-button">ó</a>
                     <a class="waves-effect waves-teal btn-flat special-character-tool-button">ú</a>
                     <a class="waves-effect waves-teal btn-flat special-character-tool-button">ñ</a>
                     <a class="waves-effect waves-teal btn-flat special-character-tool-button">¿</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">¡</a>
-                    </span></div>
-    </li>
-    
-<li>
-      <div class="collapsible-header">French</div>
-      <div class="collapsible-body"><span class="notranslate">
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">é</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">à</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">è</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">ù</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">â</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">ê</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">î</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">ô</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">û</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">ç</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">ë</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">ï</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">ü</a>
-                    </span></div>
-    </li>
-
-<li>
-      <div class="collapsible-header">Chinese</div>
-      <div class="collapsible-body"><span class="notranslate">
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">安</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">吧</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">爸</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">八</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">百</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">北</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">不</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">大</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">岛</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">的</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">弟</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">地</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">东</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">都</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">对</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">儿</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">二</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">方</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">港</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">哥</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">个</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">关</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">贵</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">国</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">过</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">海</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">好</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">很</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">会</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">家</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">见</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">叫</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">姐</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">京</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">九</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">可</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">老</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">李</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">零</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">六</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">吗</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">妈</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">么</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">没</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">美</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">妹</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">们</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">明</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">名</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">哪</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">南</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">你</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">您</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">朋</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">七</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">起</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">千</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">去</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">人</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">认</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">日</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">三</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">上</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">谁</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">什</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">生</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">师</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">识</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">十</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">是</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">四</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">他</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">她</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">台</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">天</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">湾</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">万</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">王</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">我</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">五</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">西</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">息</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">系</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">先</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">香</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">想</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">小</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">谢</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">姓</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">休</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">学</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">也</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">一</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">亿</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">英</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">友</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">月</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">再</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">张</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">这</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">中</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">字</a>
-                    </span></div>
-    </li>
-
-<li>
-      <div class="collapsible-header">Japanese</div>
-      <div class="collapsible-body"><span class="notranslate">
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    </span></div>
-    </li>
-
-<li>
-      <div class="collapsible-header">Arabic</div>
-      <div class="collapsible-body"><span class="notranslate">
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    </span></div>
-    </li>
-
-<li>
-      <div class="collapsible-header">Korean</div>
-      <div class="collapsible-body"><span class="notranslate">
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    </span></div>
-    </li>
-
-<li>
-      <div class="collapsible-header">Persian</div>
-      <div class="collapsible-body"><span class="notranslate">
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    </span></div>
-    </li>
-
-<li>
-      <div class="collapsible-header">Russian</div>
-      <div class="collapsible-body"><span class="notranslate">
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    </span></div>
-    </li>
-
-<li>
-      <div class="collapsible-header">German</div>
-      <div class="collapsible-body"><span class="notranslate">
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">ä</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">Ä</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">é</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">ö</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">Ö</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">ü</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">Ü</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">ß</a>
-                    </span></div>
-    </li>
-
-<li>
-      <div class="collapsible-header">Emojis</div>
-      <div class="collapsible-body"><span class="notranslate">
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button"></a>
-                    </span></div>
-    </li>
-
-  </ul>
+                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">¡</a> -->
+                </div>
             </li>
         </ul>
         </div>
