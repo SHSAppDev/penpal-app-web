@@ -5,26 +5,23 @@
 function WWBDashboard() {
 
     // Shortcuts to DOM Elements.
-    this.command = new Command();
     this.userPic = document.getElementById('user-pic');
     this.userName = document.getElementById('user-name');
-    this.sendNotification = document.getElementById('send-notification');
-    console.log('reached here');
-    this.sendNotification.addEventListener('click',function(){
-        console.log("bell clicked");
-        this.command.requestFunction('sendEmail', {
-            'emailAddress':'kyleseidphan@gmail.com',
-            'subject':"The bell has been rung!",
-            'text': "Log on and start messaging."
-        }, {
-            'success': function(resp){
-                window.alert('The email was sucessfully sent');
-            }.bind(this),
-            'error': function(resp){}.bind(this),
-        });
-    }.bind(this));
+
+    this.sendNotificationButton = document.getElementById('send-notification');
+    this.sendNotificationButton.addEventListener('click', this.sendNotificationEmail.bind(this));
     this.initFirebase();
     this.translate = new EZTranslate();
+    this.command = new Command();
+    this.targetUID = getParameterByName('targetUID');
+    firebase.database().ref('user-data/'+targetUID).once('value',
+      function(snapshot){
+        this.recipientProfile = snapshot.val();
+        $('#bell-modal h4 > span').html(this.recipientProfile.displayName);
+        console.log('changed name');
+    }.bind(this));
+
+
     // this.userInfo = new UserInfo();
 
     // Example of how to do the translate:
@@ -46,7 +43,6 @@ function WWBDashboard() {
     // });
 
 }
-
 
 WWBDashboard.URL_PROFILE_PLACEHOLDER = '/images/profile_placeholder.png';
 WWBDashboard.LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
@@ -93,6 +89,14 @@ WWBDashboard.prototype.onAuthStateChanged = function(user) {
         // console.log("on auth change");
         // this.checkForFirstTimeUser(this.auth.currentUser.uid);
 
+        firebase.database().ref('user-data/'+firebase.auth().currentUser.uid).once('value',
+          function(snapshot){
+            this.myProfile = snapshot.val();
+            // Unhide and set userName
+            this.userName.removeAttribute('hidden');
+            this.userName.innerHTML = this.myProfile.displayName;
+        }.bind(this));
+
         // Get profile pic and user's name from the Firebase user object.
         var profilePicUrl = user.photoURL; // Get profile pic.
         // var userName = user.displayName;        // Get user's name.
@@ -105,15 +109,36 @@ WWBDashboard.prototype.onAuthStateChanged = function(user) {
         // this.userName.removeAttribute('hidden');
         this.userPic.removeAttribute('hidden');
 
-        // Unhide and set userName
-        this.userName.removeAttribute('hidden');
-        this.userName.innerHTML = this.auth.currentUser.displayName;
 
         //presence
         new Presence();
 
     }
 };
+
+WWBDashboard.prototype.sendNotificationEmail = function(){
+    console.log("sending notification");
+
+    document.getElementById('send-notification-progress').style.display = 'block';
+    this.sendNotificationButton.setAttribute('DISABLED', true);
+    this.command.requestFunction('sendEmail', {
+        'emailAddress': this.recipientProfile.email,
+        'subject': this.myProfile.displayName+" has rung the bell!",
+        'text': "Don't keep your penpal waiting! Log onto http://worldwithoutborders.ml/ and keep your conversation going!"
+    }, {
+        'success': function(resp){
+          window.alert('Thanks for ringing the bell! An email was sent to '+this.recipientProfile.displayName+'.');
+          $('#bell-modal').modal('close');
+          document.getElementById('send-notification-progress').style.display = 'none';
+          this.sendNotificationButton.removeAttribute('DISABLED');
+        }.bind(this),
+        'error': function(resp){
+          window.alert("Some error occurred while trying to send the email :(");
+          document.getElementById('send-notification-progress').style.display = 'none';
+          this.sendNotificationButton.removeAttribute('DISABLED');
+        }.bind(this)
+    });
+}
 
 // Stolen from stack overflow. Useful!
 // http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript

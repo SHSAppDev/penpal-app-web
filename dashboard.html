@@ -54,6 +54,7 @@
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE
             }, 'google_translate_element');
         }
+
     </script>
 
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
@@ -74,8 +75,13 @@
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li>
                 <!-- <a href="aboutpage.html">About</a> -->
+
+
+        
+
                 <!-- <a id="user-name" href='profile-page.html' hidden>Username</a> -->
                 <a id="user-name" href=# hidden>Username</a> <!--Made dead link while profile-page is under development-->
+
 
             </li>
             <li>
@@ -132,7 +138,11 @@
             <center id="chat-title" hidden>
               <span class="display-name"></span>
               <span class="local-time"></span>
-              <span><a href="#bell-modal" id="bell"><i class="material-icons">notifications_active</i></a></span>
+              <span>
+                <a href="#bell-modal" id="bell" style='color:white;'>
+                  <i class="material-icons">notifications_active</i>
+                </a>
+              </span>
             </center>
             <span class="notranslate">
         <div id="chat" class="card z-depth-3">
@@ -252,6 +262,7 @@
                   <div class="button-container"></div>
 
                     <!-- <a class="waves-effect waves-teal btn-flat special-character-tool-button">á</a>
+
                     <a class="waves-effect waves-teal btn-flat special-character-tool-button">é</a>
                     <a class="waves-effect waves-teal btn-flat special-character-tool-button">í</a>
                     <a class="waves-effect waves-teal btn-flat special-character-tool-button">ó</a>
@@ -284,8 +295,27 @@
     <!-- bell-modal -->
     <div id="bell-modal" class="modal">
         <div class="modal-content">
-            <h4>Are you sure you want to notify this friend?</h4>
-            <button id="send-notification" class="red lighten-1 btn waves-effect waves-light">Yes</button>
+            <h4>Are you sure you want to notify <span>name</span>?</h4>
+            <button id="send-notification" class="red lighten-1 btn waves-effect waves-light">
+              </span>Yes</span>
+            </button>
+            <button class="modal-action modal-close red lighten-1 btn waves-effect waves-light">
+              </span>No Thanks</span>
+            </button>
+            <div id="send-notification-progress" class="progress" style="display:none;">
+               <div class="indeterminate"></div>
+            </div>
+            <!-- <div class="preloader-wrapper small active">
+              <div class="spinner-layer spinner-white-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                  <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div> -->
         </div>
         <div class="modal-footer">
             <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
