@@ -2,6 +2,7 @@
 'use strict';
 
 var message = document.getElementById('message');
+var specialCharactersetSelect = document.getElementById('special-characterset-select');
 
 // Initialize all the special character things
 
@@ -22,7 +23,7 @@ function setCharsetInUI(charsetIdentifier){
     var btnHTML = BTN_TEMPLATE.replace('INSERT-CHAR', char);
     insertHTML += btnHTML;
   }
-  $('#special-characters-panel .collapsible-body').html(insertHTML);
+  $('#special-characters-panel .collapsible-body .button-container').html(insertHTML);
   $('.special-character-tool-button').click(function(){
     var character = this.textContent;
     message.focus();
@@ -31,6 +32,10 @@ function setCharsetInUI(charsetIdentifier){
 }
 
 
+$(specialCharactersetSelect).change(function(){
+  console.log("lang selected");
+  setCharsetInUI($(this).val());
+});
 
 
-setCharsetInUI('es');
+setCharsetInUI(specialCharactersetSelect.value);
