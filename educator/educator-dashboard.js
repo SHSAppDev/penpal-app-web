@@ -21,11 +21,16 @@ EducatorDashboard.prototype.onAuthStateChanged = function(user) {
       this.myData = snapshot.val();
       const schoolName = this.myData.schoolName;
       const schoolCode = this.myData.schoolCode;
+      const mySchoolRef = this.database.ref('schools/'+schoolCode);
       document.getElementById('school-name').innerHTML = schoolName;
       document.getElementById('school-code').innerHTML = schoolCode;
 
       // Show user list
       this.initializeUserListForGivenSchool(schoolCode);
+      // For other schools too
+      mySchoolRef.child('associatedSchools').on('child_added', function(snapshot){
+        this.initializeUserListForGivenSchool(snapshot.val());
+      }.bind(this));
 
       monitorFormIsFull(this.addSchoolForm);
       // Allow adding of schools
@@ -48,9 +53,7 @@ EducatorDashboard.prototype.signOut = function() {
 EducatorDashboard.prototype.addAssociateSchool = function(){
   var resp = renderForm(this.addSchoolForm);
   const input_schoolCode = resp['school-code'];
-  console.log('addAssociateSchool called.')
-  // const my_schoolCode = this.myData.schoolCode;
-  // const mySchoolRef = this.database.ref('schools/'+my_schoolCode);
+
   $('#add-school-modal .progress').css('display', 'block');
   $('#add-school-modal .btn').attr('disabled', 'disabled');
 
@@ -74,8 +77,8 @@ EducatorDashboard.prototype.addAssociateSchool = function(){
 };
 
 EducatorDashboard.prototype.initializeUserListForGivenSchool = function(schoolCode) {
-  firebase.database().ref('schools/'+schoolCode)
-  .once('value',function(data){
+  const schoolRef = firebase.database().ref('schools/'+schoolCode);
+  schoolRef.once('value',function(data){
     if(data.val()) {
       var temp = document.createElement('div');
       temp.innerHTML = EducatorDashboard.SCHOOL_LIST_TEMPLATE;
@@ -84,19 +87,19 @@ EducatorDashboard.prototype.initializeUserListForGivenSchool = function(schoolCo
       schoolListElement.querySelector('.school-name').textContent = data.val().name;
       this.usersContainer.appendChild(schoolListElement);
 
-      const userObjs = data.val().students?Object.values(data.val().students):[];
-      for(var i=0; i<userObjs.length; i++) {
-        const each = userObjs[i];
-        if(each.uid == firebase.auth().currentUser.uid) continue;
+      schoolRef.child('students').on('child_added', function(snapshot){
+        const each = snapshot.val();
+        if(each.uid == firebase.auth().currentUser.uid) return;
         var temp = document.createElement('div');
         temp.innerHTML = EducatorDashboard.USER_LIST_ITEM;
         var listItem = temp.firstChild;
         listItem.querySelector('.display-name').textContent = each.displayName;
         listItem.querySelector('.photo').src = each.photoURL;
         listItem.querySelector('.email').textContent = each.email;
-
         schoolListElement.appendChild(listItem);
-      }
+      }.bind(this));
+
+
     } else {
       window.alert("There were no schools found with that code.");
     }

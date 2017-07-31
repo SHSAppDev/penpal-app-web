@@ -182,7 +182,9 @@ Command.prototype.addAssociateSchool = function(){
     return callerSchoolRef.once('value', function(snapshot){
       // In school ref, see if the code is already there first. Call error if so.
       const associatedSchools = snapshot.val().associatedSchools;
-      const asCodes = associatedSchools?Object.values(associatedSchools):[];
+      const asCodes = associatedSchools?Object.keys(associatedSchools).map(function(key){
+        return associatedSchools[key];
+      }):[];
       if(asCodes.indexOf(code)===-1) {
         // The school isn't already added. Now let's check if the school exists.
         const otherSchoolRef = admin.database().ref('schools/'+code);
@@ -195,18 +197,18 @@ Command.prototype.addAssociateSchool = function(){
              .then(function(){
                otherSchoolRef.child('associatedSchools').push(callerSchoolCode)
                 .then(function(){
-                  this.success('Successfully added school.');
+                  return this.success('Successfully added school!');
                }.bind(this));
             }.bind(this));
           } else {
             // No exist :(
-            this.error('No school was found with that code.');
+            return this.error('No school was found with that code.');
           }
         }.bind(this));
 
       } else {
         // The school is already added.
-        this.error('This school is already added.');
+        return this.error('This school is already added.');
       }
     }.bind(this));
   }.bind(this));
