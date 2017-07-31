@@ -11,6 +11,8 @@ function EducatorDashboard() {
   document.getElementById('sign-out-mobile')
     .addEventListener('click', this.signOut.bind(this));
   this.usersContainer = document.getElementById('users-container');
+  this.addSchoolForm = document.getElementById('add-school-form');
+  this.command = new Command();
 }
 
 EducatorDashboard.prototype.onAuthStateChanged = function(user) {
@@ -25,6 +27,10 @@ EducatorDashboard.prototype.onAuthStateChanged = function(user) {
       // Show user list
       this.initializeUserListForGivenSchool(schoolCode);
 
+      monitorFormIsFull(this.addSchoolForm);
+      // Allow adding of schools
+      $('#add-btn').click(this.addAssociateSchool.bind(this));
+
       // Unhide body.
       $('body').css('display', 'block');
 
@@ -37,6 +43,34 @@ EducatorDashboard.prototype.onAuthStateChanged = function(user) {
 
 EducatorDashboard.prototype.signOut = function() {
   this.auth.signOut();
+};
+
+EducatorDashboard.prototype.addAssociateSchool = function(){
+  var resp = renderForm(this.addSchoolForm);
+  const input_schoolCode = resp['school-code'];
+  console.log('addAssociateSchool called.')
+  // const my_schoolCode = this.myData.schoolCode;
+  // const mySchoolRef = this.database.ref('schools/'+my_schoolCode);
+  $('#add-school-modal .progress').css('display', 'block');
+  $('#add-school-modal .btn').attr('disabled', 'disabled');
+
+  this.command.requestFunction('addAssociateSchool', {
+    'schoolCode': input_schoolCode
+  }, {
+    'success': function(resp) {
+      Materialize.toast(resp, 4000);
+      $('#add-school-modal .progress').css('display', 'none');
+      $('#add-school-modal .btn').removeAttr('disabled');
+
+    }.bind(this),
+
+    'error': function(err) {
+      Materialize.toast(err, 5000);
+      $('#add-school-modal .progress').css('display', 'none');
+      $('#add-school-modal .btn').removeAttr('disabled');
+
+    }.bind(this)
+  });
 };
 
 EducatorDashboard.prototype.initializeUserListForGivenSchool = function(schoolCode) {
@@ -91,5 +125,39 @@ EducatorDashboard.USER_LIST_ITEM =
         $('.modal').modal();
     }); // end of document ready
 })(jQuery); // end of jQuery name space
+
+function renderForm(form) {
+  // Returns an object where the keys are the input names and the values
+  // are the values that the user inputted. Useful to me 😏
+  var resp = {};
+  const elements = form.elements;
+  for(var i=0; i<elements.length; i++) {
+    const input = elements[i];
+    resp[input.name] = input.value;
+  }
+  return resp;
+}
+
+function monitorFormIsFull(form) {
+  // Makes sure ALL fields in form contain SOMETHING. Disables all elements
+  // with .btn class if just one field is empty.
+  var $inputs = $(form).find('input');
+  $inputs.keyup(function(){
+    var full = true;
+    $inputs.each(function(){
+      if($(this).val() === '') {
+        full = false;
+      }
+    });
+    var $btn = $(form).find('.btn');
+    if(full) {
+      $btn.removeAttr('disabled');
+      // console.log('remove disabled');
+    } else {
+      $btn.attr('disabled', 'disabled');
+      // console.log('set disable true');
+    }
+  });
+}
 
 new EducatorDashboard();
