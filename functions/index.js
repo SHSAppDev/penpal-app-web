@@ -169,6 +169,51 @@ Command.prototype.registerInSchool = function() {
     }.bind(this));
 };
 
+//For educator accounrs
+Command.prototype.addAssociateSchool = function(){
+  const code = this.params.schoolCode;
+  if(!code)
+    return this.error('addAssociateSchool command must have schoolCode parameter');
+  const uid = this.uid;
+  // Find caller's schoolCode to locate school ref
+  admin.database().ref('educator-data/'+uid).once('value', function(snapshot){
+    const callerSchoolCode = snapshot.val().schoolCode;
+    const callerSchoolRef = admin.database().ref('schools/'+callerSchoolCode);
+    return callerSchoolRef.once('value', function(snapshot){
+      // In school ref, see if the code is already there first. Call error if so.
+      const associatedSchools = snapshot.val().associatedSchools;
+      const asCodes = associatedSchools?Object.keys(associatedSchools).map(function(key){
+        return associatedSchools[key];
+      }):[];
+      if(asCodes.indexOf(code)===-1) {
+        // The school isn't already added. Now let's check if the school exists.
+        const otherSchoolRef = admin.database().ref('schools/'+code);
+        otherSchoolRef.once('value', function(snapshot){
+          if(snapshot.val()) {
+            // YAY it exists
+            // Add code to callerSchoolRef.associatedSchools
+            // Then add callerSchoolCode to otherSchoolRef.associatedSchools
+            callerSchoolRef.child('associatedSchools').push(code)
+             .then(function(){
+               otherSchoolRef.child('associatedSchools').push(callerSchoolCode)
+                .then(function(){
+                  return this.success('Successfully added school!');
+               }.bind(this));
+            }.bind(this));
+          } else {
+            // No exist :(
+            return this.error('No school was found with that code.');
+          }
+        }.bind(this));
+
+      } else {
+        // The school is already added.
+        return this.error('This school is already added.');
+      }
+    }.bind(this));
+  }.bind(this));
+};
+
 
 
 exports.requestFunction = functions.database.ref('/function-requests/{pushId}')
