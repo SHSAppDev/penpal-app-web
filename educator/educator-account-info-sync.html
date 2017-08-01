@@ -1,0 +1,66 @@
+<!doctype html>
+
+<!--We be going ham!-->
+<!--Educator page goes to this page as soon as he/she is logged in
+if educator has the registered=true attribute inside his/her account, then
+proceed to dashboard as normal. Otherwise, some data syncing is needed.-->
+<html>
+  <head></head>
+  <body>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyCx-2_5IcfXswoDZhjle1rPS3m-ryi3rpM",
+        authDomain: "penpalapp-6020c.firebaseapp.com",
+        databaseURL: "https://penpalapp-6020c.firebaseio.com",
+        storageBucket: "penpalapp-6020c.appspot.com",
+        messagingSenderId: "322094641122"
+      };
+      firebase.initializeApp(config);
+      const database = firebase.database();
+      const auth = firebase.auth();
+      auth.onAuthStateChanged(function(user){
+        if(user) {
+          const userRef = database.ref('educator-data/'+auth.currentUser.uid)
+          userRef.once('value', function(snapshot){
+            var myData = snapshot.val();
+            if(myData.registered) {
+              // All good. Proceed.
+              window.location.href = './educator-dashboard.html';
+            } else {
+              // First time logging in, must do stuff.
+              var updates = {};
+              updates['/registered'] = true;
+              const schoolCode = makeid();
+              updates['/schoolCode'] = schoolCode;
+              userRef.update(updates).then(function(){
+                // Make the new school
+                database.ref('schools/'+schoolCode).update({
+                  'name': myData.schoolName
+                }).then(function(){
+                  // Finally done.
+                  window.location.href = './educator-dashboard.html';
+                });
+              });
+
+            }
+          });
+        } else {
+          window.location.href = './educator-login.html';
+        }
+      });
+
+      function makeid() {
+        var text = "";
+        var possible = "0123456789";
+        for (var i = 0; i < 5; i++)
+          text += possible.charAt(Math.floor(Math.random() * possible.length));
+        return text;
+      }
+
+
+    </script>
+  </body>
+</html>

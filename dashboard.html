@@ -39,6 +39,8 @@
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
 
+    <script src="scripts/google-analytics-tracking.js"></script>
+
 </head>
 
 <body>
@@ -52,6 +54,7 @@
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE
             }, 'google_translate_element');
         }
+
     </script>
 
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
@@ -61,6 +64,8 @@
 <ul id="user-dropdown" class="dropdown-content">
     <li>
         <a id="sign-out">Sign-out</a>
+        <a href="account-info-sync.html?editProfile=true">Edit Profile</a>
+        <a href="stat-summary.html">View Stat Summary</a>
     </li>
 </ul>
 <nav>
@@ -70,7 +75,14 @@
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li>
                 <!-- <a href="aboutpage.html">About</a> -->
-                <a id="user-name" href='stat-summary.html' hidden>Username</a>
+
+
+
+
+                <!-- <a id="user-name" href='profile-page.html' hidden>Username</a> -->
+                <a id="user-name" href="profile-page.html" hidden>Username</a> <!--Made dead link while profile-page is under development-->
+
+
             </li>
             <li>
                 <a class="dropdown-button" href="#!" data-activates="user-dropdown" id="user-pic" hidden></a>
@@ -79,6 +91,9 @@
         <ul class="side-nav" id="mobile-demo">
             <li>
                 <a id="sign-out-mobile">Sign-out</a>
+                <a href="account-info-sync.html?editProfile=true">Edit Profile</a>
+                <a href="stat-summary.html">View Stat Summary</a>
+
             </li>
         </ul>
     </div>
@@ -123,6 +138,11 @@
             <center id="chat-title" hidden>
               <span class="display-name"></span>
               <span class="local-time"></span>
+              <span>
+                <a href="#bell-modal" id="bell" style='color:white;'>
+                  <i class="material-icons" style="font-size:25px;">notifications_active</i>
+                </a>
+              </span>
             </center>
             <span class="notranslate">
         <div id="chat" class="card z-depth-3">
@@ -230,17 +250,26 @@
             <li>
                 <div class="collapsible-header"><span style="color:red;">Special Characters</span><span class="notranslate"><i class="material-icons" style="color:red;">translate</i></span></div>
                 <div class="collapsible-body">
-                    <span class="notranslate">
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">á</a>
+                  <div class="input-field col s12">
+                    <select id="special-characterset-select">
+                      <option value="es">Spanish</option>
+                      <option value="fr" selected>French</option>
+                      <option value="de">German</option>
+                      <option value="emoji">Emoji-Speak</option>
+                    </select>
+                    <label>Character Set</label>
+                  </div>
+                  <div class="button-container"></div>
+
+                    <!-- <a class="waves-effect waves-teal btn-flat special-character-tool-button">á</a>
+
                     <a class="waves-effect waves-teal btn-flat special-character-tool-button">é</a>
                     <a class="waves-effect waves-teal btn-flat special-character-tool-button">í</a>
                     <a class="waves-effect waves-teal btn-flat special-character-tool-button">ó</a>
                     <a class="waves-effect waves-teal btn-flat special-character-tool-button">ú</a>
                     <a class="waves-effect waves-teal btn-flat special-character-tool-button">ñ</a>
                     <a class="waves-effect waves-teal btn-flat special-character-tool-button">¿</a>
-                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">¡</a>
-                    </span>
-
+                    <a class="waves-effect waves-teal btn-flat special-character-tool-button">¡</a> -->
                 </div>
             </li>
         </ul>
@@ -262,6 +291,37 @@
             <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Done</a>
         </div>
     </div>
+
+    <!-- bell-modal -->
+    <div id="bell-modal" class="modal">
+        <div class="modal-content">
+            <h4>Are you sure you want to notify <span>name</span>?</h4>
+            <button id="send-notification" class="red lighten-1 btn waves-effect waves-light">
+              </span>Yes</span>
+            </button>
+            <button class="modal-action modal-close red lighten-1 btn waves-effect waves-light">
+              </span>No Thanks</span>
+            </button>
+            <div id="send-notification-progress" class="progress" style="display:none;">
+               <div class="indeterminate"></div>
+            </div>
+            <!-- <div class="preloader-wrapper small active">
+              <div class="spinner-layer spinner-white-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                  <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div> -->
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+        </div>
+    </div>
+
 
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
@@ -300,14 +360,16 @@
     </script>
 
     <!-- The main page script -->
-    <script src="scripts/pages/dashboard.js"></script>
+        <script src="scripts/command.js"></script>
 
-    <!--get user info-->
+    <script src="scripts/pages/dashboard.js"></script>
+    <script>
+    console.log('hi');
+     </script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js'></script>
     <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/moment.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.11/moment-timezone-with-data-2010-2020.min.js'></script>
     <script src="scripts/user-info-new.js"></script>
-    <script src="scripts/command.js"></script>
 
 
 

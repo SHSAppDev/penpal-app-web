@@ -94,7 +94,6 @@ LoadMessages.prototype.loadMessages = function () {
   this.messagesRef = this.database.ref('conversations/' + uids);
   this.messagesRef.off();
 
-
   // Loads the last messages and listen for new ones.
   var setMessage = function (data) {
     var val = data.val();
@@ -102,7 +101,7 @@ LoadMessages.prototype.loadMessages = function () {
       this.makeNotification(val);
     }
     this.displayMessage(data.key, val.name, val.text, val.photoUrl, val.imageUrl, val.uid);
-    // Display a notification right here....
+
   }.bind(this);
   this.messagesRef.limitToLast(30).on('child_added', setMessage);
   this.messagesRef.limitToLast(30).on('child_changed', setMessage);
@@ -114,7 +113,9 @@ LoadMessages.prototype.setChatTitle = function() {
   if(this.targetUID) {
     firebase.database().ref('user-data/'+this.targetUID).once('value', function(data){
       if(!data.val()) {
-        window.alert("Uh Oh, it looks like this user doesn't exist anymore. That's strange...");
+        // window.alert("Uh Oh, it looks like this user doesn't exist anymore. That's strange...");
+        Materialize.toast("Uh Oh, it looks like this user doesn't exist anymore. That's strange...", 3000);
+
         return;
       }
       const displayName = data.val().displayName;

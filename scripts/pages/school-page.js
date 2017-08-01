@@ -3,11 +3,11 @@
 
 // Initializes SchoolPage.
 function SchoolPage() {
-  this.schoolCodeInput = document.getElementById('school-code-input');
-  this.searchButton = document.getElementById('search-button');
-  this.searchButton.addEventListener('click', function(){
-    this.initializeAllOptions(this.schoolCodeInput.value);
-  }.bind(this));
+  // this.schoolCodeInput = document.getElementById('school-code-input');
+  // this.searchButton = document.getElementById('search-button');
+  // this.searchButton.addEventListener('click', function(){
+  //   this.initializeAllOptions(this.schoolCodeInput.value);
+  // }.bind(this));
   this.optionsContainer = document.getElementById('options-container');
   this.initFirebase();
 }
@@ -31,6 +31,19 @@ SchoolPage.prototype.onAuthStateChanged = function(user) {
     // firebase.database().ref('schools').once('value', function(data){
     //   console.log('all schools '+data.val())
     // }.bind(this));
+    firebase.database().ref('user-data/'+firebase.auth().currentUser.uid)
+      .once('value', function(snapshot){
+        const schoolCode = snapshot.val().schoolCode;
+        if(schoolCode) {
+          // The user has an associated school. Site can proceed normally.
+          document.getElementById('body').style.display = 'block';
+          this.initializeAllOptions(schoolCode);
+        } else {
+          // Uh Oh, there is no school code. Must redirect user to place where they can enter a school code.
+          window.location.href = 'account-info-sync.html?editProfile=true'+
+            '&message=Please enter your school code to be able to view potential contacts.';
+        }
+    }.bind(this));
   }
 };
 
@@ -87,7 +100,8 @@ SchoolPage.USER_LIST_ITEM =
   '<li class="collection-item avatar">' +
     '<div>' +
       '<img src=# class="circle photo"></img>' +
-      '<span class="title display-name">Alvin</span><button class="secondary-content">ADD</button>' +
+      '<span class="title display-name">Alvin</span>' +
+      //'<button class="secondary-content">ADD</button>' +
       '<p class="email"></p>' +
     '</div>' +
   '</li>';

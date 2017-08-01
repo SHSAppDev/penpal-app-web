@@ -40,7 +40,7 @@
 
 <body>
     <h1 id="title">World Without Borders</h1>
-    <img class="www-logo responsive-img" src="images/base_recolored_360.png"></img>
+    <img class="www-logo responsive-img" src="images/base_transparent.png"></img>
     <a class="btn red lighten-1 waves-light waves-effect" href=# id="get-started">Get Started</a>
 
   <!--Firebase-->
@@ -64,8 +64,6 @@
         window.location.href = auth.currentUser === null ? 'login.html' : 'account-info-sync.html';
       }
     });
-
-
     var btn = document.getElementById('get-started');
     btn.addEventListener('click', function () {
       btnClicked = true;

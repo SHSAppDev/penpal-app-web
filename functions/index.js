@@ -11,9 +11,9 @@ const mailTransport = nodemailer.createTransport(
 const APP_NAME = 'World Without Borders';
 
 
-// exports.hello = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// })
+exports.hello = functions.https.onRequest((request, response) => {
+ response.send("Hello from Firebase!");
+})
 
 function Command(event, uid, params) {
     this.event = event;
@@ -78,14 +78,12 @@ Command.prototype.sendMessage = function() {
         recipientConvContainerRef.once('value', function(snapshot){
           // Snapshot.val() should contain 1 child that has an arbitray pushId
           // The value is the recipient's conversation obj
-          console.log('got conv container val');
           const pushId = Object.keys(snapshot.val())[0];
           const unreadMessages = snapshot.val()[pushId].unreadMessages;
-          console.log('conversation object: '+recipientConvContainerRef.path);
-          console.log('is it a func? '+recipientConvContainerRef.child);
           admin.database().ref(recipientConvContainerRef.path+'/'+pushId+'/unreadMessages')
-            .set(unreadMessages + 1).then(function(){
-              // Send a fun email if the unreadMessages is a multiple of 3
+            .transaction(function(unreadMessages){
+              return (unreadMessages || 0) + 1;
+            }.bind(this)).then(function(){
               if((unreadMessages + 1) % 3 === 0) {
                 admin.database().ref('user-data/'+recipientUID).once('value', function(snapshot){
                   const recipientEmail = snapshot.val().email;
@@ -170,6 +168,52 @@ Command.prototype.registerInSchool = function() {
       }.bind(this));
     }.bind(this));
 };
+
+//For educator accounrs
+Command.prototype.addAssociateSchool = function(){
+  const code = this.params.schoolCode;
+  if(!code)
+    return this.error('addAssociateSchool command must have schoolCode parameter');
+  const uid = this.uid;
+  // Find caller's schoolCode to locate school ref
+  admin.database().ref('educator-data/'+uid).once('value', function(snapshot){
+    const callerSchoolCode = snapshot.val().schoolCode;
+    const callerSchoolRef = admin.database().ref('schools/'+callerSchoolCode);
+    return callerSchoolRef.once('value', function(snapshot){
+      // In school ref, see if the code is already there first. Call error if so.
+      const associatedSchools = snapshot.val().associatedSchools;
+      const asCodes = associatedSchools?Object.keys(associatedSchools).map(function(key){
+        return associatedSchools[key];
+      }):[];
+      if(asCodes.indexOf(code)===-1) {
+        // The school isn't already added. Now let's check if the school exists.
+        const otherSchoolRef = admin.database().ref('schools/'+code);
+        otherSchoolRef.once('value', function(snapshot){
+          if(snapshot.val()) {
+            // YAY it exists
+            // Add code to callerSchoolRef.associatedSchools
+            // Then add callerSchoolCode to otherSchoolRef.associatedSchools
+            callerSchoolRef.child('associatedSchools').push(code)
+             .then(function(){
+               otherSchoolRef.child('associatedSchools').push(callerSchoolCode)
+                .then(function(){
+                  return this.success('Successfully added school!');
+               }.bind(this));
+            }.bind(this));
+          } else {
+            // No exist :(
+            return this.error('No school was found with that code.');
+          }
+        }.bind(this));
+
+      } else {
+        // The school is already added.
+        return this.error('This school is already added.');
+      }
+    }.bind(this));
+  }.bind(this));
+};
+
 
 
 exports.requestFunction = functions.database.ref('/function-requests/{pushId}')
@@ -257,10 +301,11 @@ function sendAnEmail(emailAddress, subject, text) {
     text: text
   };
   return mailTransport.sendMail(mailOptions).then(() => {
-    console.log('New email sent to:', email);
+    console.log('New email sent to:', emailAddress);
   });
 }
 
+// Creates a string version of any object that shows all key and value pairs.
 function stringObj(obj) {
   const keys = Object.keys(obj);
   const vals = keys.map(function(key) {
@@ -273,6 +318,9 @@ function stringObj(obj) {
   return str;
 }
 
+// Creates a string version of any object that shows all key and value pairs.
+// This recursive version will show the string versions of objects as values.
+// e.g. {a: b, c: { a: b }}
 function stringObjRecursive(obj, indentLevel) {
   const keys = Object.keys(obj);
   const vals = keys.map(function(key) {

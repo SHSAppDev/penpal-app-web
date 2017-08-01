@@ -1,0 +1,60 @@
+<!doctype.html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>My Profile</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="profilepage.css">
+		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+		<!-- Compiled and minified CSS -->
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+
+	  <!-- Compiled and minified JavaScript -->
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+
+	</head>
+
+	<body style="display:none;">
+		<a href="./dashboard.html">Back to conversations</a>
+		<img id="profile-pic" src=#></img>
+		<h2 id="display-name"></h2>
+		<h2 id="email"></h2>
+		<h2 id="timezone"></h2>
+		Click <a href="account-info-sync.html?editProfile=true">here</a> to edit your profile.
+		Click <a href="stat-summary.html">here</a> for your stat summary.
+
+		<!--Firebase-->
+	  <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+	  <script>
+	    // Initialize Firebase
+	    var config = {
+	      apiKey: "AIzaSyCx-2_5IcfXswoDZhjle1rPS3m-ryi3rpM",
+	      authDomain: "penpalapp-6020c.firebaseapp.com",
+	      databaseURL: "https://penpalapp-6020c.firebaseio.com",
+	      storageBucket: "penpalapp-6020c.appspot.com",
+	      messagingSenderId: "322094641122"
+	    };
+	    firebase.initializeApp(config);
+			const database = firebase.database();
+			const auth = firebase.auth();
+			auth.onAuthStateChanged(function(user){
+				if(user) {
+					const uid = auth.currentUser.uid;
+					const myRef = database.ref('user-data/'+uid);
+					myRef.once('value', function(snapshot){
+						const data = snapshot.val();
+						$('body').css('display', 'block');
+						$('#profile-pic').attr('src', data.photoURL);
+						$('#display-name').html(data.displayName);
+						$('#email').html(data.email);
+						$('#timezone').html(data.timezone);
+					});
+
+				} else {
+					window.location.href = "dashboard.html";
+				}
+			});
+		</script>
+	</body>
+</html>
