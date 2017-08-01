@@ -1,98 +1,60 @@
 <!doctype.html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<title>My Profile</title>
-	<meta name="viewport" content="witdth=device-width,initial-scale=1")/>
-	<link rel="stylesheet" type="text/css" href="profilepage.css")/>
-	<!-- Compiled and minified CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+	<head>
+		<meta charset="utf-8">
+		<title>My Profile</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="profilepage.css">
+		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
-  <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-</head>
+		<!-- Compiled and minified CSS -->
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
 
-<body>
-This is the profile page.
-Your information should show up here.
-Click <a href="account-info-sync.html?editProfile=true">here</a> to edit your profile.
-Click <a href="stat-summary.html">here</a> for your stat summary.
+	  <!-- Compiled and minified JavaScript -->
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 
-<!-- <nav>
-            <div class="nav-wrapper">
-                <a href="#" class="brand-logo center">Your Profile Page</a>
-                <ul id="nav-mobile" class="left hide-on-med-and-down">
-                </ul>
-            </div>
-        </nav>
+	</head>
 
-<<<<<<< HEAD
-   <div class="col s12 m7">
-    <div class="card horizontal">
-      <div class="card-image">
-        <img src="http://lorempixel.com/100/190/nature/6">
-      </div>
-      <div class="card-stacked">
-        <div class="card-content">
-        <h3>About You</h3>
-          <p>Here you can add a picture and info about you here.</p>
-        </div>
-        <div class="card-action">
-          <a href="file:///C:/Users/Kyle/Desktop/penpal-app-web/addtoyourprofilepage.html">This is a link</a>
-        </div>
-      </div>
-    </div>
-  </div>
-<div class="col s12 m7">
-    <div class="card horizontal">
-      <div class="card-image">
-        <img src="http://lorempixel.com/100/190/nature/6">
-      </div>
-      <div class="card-stacked">
-        <div class="card-content">
-        <h3>Blank</h3>
-          <p>Blank</p>
-        </div>
-        <div class="card-action">
-          <a href="file:///C:/Users/Kyle/Desktop/penpal-app-web/addtoyourprofilepage.html">This is a link</a>
-        </div>
-      </div>
-    </div>
-  </div>
+	<body style="display:none;">
+		<a href="./dashboard.html">Back to conversations</a>
+		<img id="profile-pic" src=#></img>
+		<h2 id="display-name"></h2>
+		<h2 id="email"></h2>
+		<h2 id="timezone"></h2>
+		Click <a href="account-info-sync.html?editProfile=true">here</a> to edit your profile.
+		Click <a href="stat-summary.html">here</a> for your stat summary.
 
-<div class="col s12 m7">
-    <div class="card horizontal">
-      <div class="card-image">
-        <img src="http://lorempixel.com/100/190/nature/6">
-      </div>
-      <div class="card-stacked">
-        <div class="card-content">
-        <h3>Blank</h3>
-          <p>Blank.</p>
-        </div>
-        <div class="card-action">
-          <a href="file:///C:/Users/Kyle/Desktop/penpal-app-web/addtoyourprofilepage.html">This is a link</a>
-        </div>
-      </div>
-    </div>
-  </div>
+		<!--Firebase-->
+	  <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+	  <script>
+	    // Initialize Firebase
+	    var config = {
+	      apiKey: "AIzaSyCx-2_5IcfXswoDZhjle1rPS3m-ryi3rpM",
+	      authDomain: "penpalapp-6020c.firebaseapp.com",
+	      databaseURL: "https://penpalapp-6020c.firebaseio.com",
+	      storageBucket: "penpalapp-6020c.appspot.com",
+	      messagingSenderId: "322094641122"
+	    };
+	    firebase.initializeApp(config);
+			const database = firebase.database();
+			const auth = firebase.auth();
+			auth.onAuthStateChanged(function(user){
+				if(user) {
+					const uid = auth.currentUser.uid;
+					const myRef = database.ref('user-data/'+uid);
+					myRef.once('value', function(snapshot){
+						const data = snapshot.val();
+						$('body').css('display', 'block');
+						$('#profile-pic').attr('src', data.photoURL);
+						$('#display-name').html(data.displayName);
+						$('#email').html(data.email);
+						$('#timezone').html(data.timezone);
+					});
 
-
-=======
- <a class="waves-effect waves-light btn" href="addtoyourprofilepage.html"><i class="material-icons">Add to your Profile Page</i></a><br><br><br><br><br>
-
- <a class="waves-effect waves-light btn" href="#!"><i class="material-icons">About You</i></a><br>
-
- <a class="waves-effect waves-light btn" href="#!"><i class="material-icons">Status</i></a><br>
-
- <a class="waves-effect waves-light btn" href="#!"><i class="material-icons">Messages</i></a><br>
-
- <a class="waves-effect waves-light btn" href="#!"><i class="material-icons">Contacts</i></a><br>
-
-<<<<<<< HEAD:profilepage.html
-<a class="waves-effect waves-light btn" href="#!"><i class="material-icons">Notification Settings</i></a><br>
->>>>>>> master
-=======
-<a class="waves-effect waves-light btn" href="#!"><i class="material-icons">Notification Settings</i></a><br> -->
-</body>
+				} else {
+					window.location.href = "dashboard.html";
+				}
+			});
+		</script>
+	</body>
 </html>

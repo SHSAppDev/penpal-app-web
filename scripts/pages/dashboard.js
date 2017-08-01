@@ -14,12 +14,13 @@ function WWBDashboard() {
     this.translate = new EZTranslate();
     this.command = new Command();
     this.targetUID = getParameterByName('targetUID');
-    firebase.database().ref('user-data/'+targetUID).once('value',
-      function(snapshot){
-        this.recipientProfile = snapshot.val();
-        $('#bell-modal h4 > span').html(this.recipientProfile.displayName);
-        console.log('changed name');
-    }.bind(this));
+    if(this.targetUID) {
+      firebase.database().ref('user-data/'+targetUID).once('value',
+        function(snapshot){
+          this.recipientProfile = snapshot.val();
+          $('#bell-modal h4 > span').html(this.recipientProfile.displayName);
+      }.bind(this));
+    }
 
 
     // this.userInfo = new UserInfo();
