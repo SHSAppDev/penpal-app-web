@@ -1,6 +1,6 @@
 body {
     background-color: #009688;
-     display: flex;
+    display: flex;
     align-items: center;
     align-content: center;
     justify-content: center;
@@ -15,4 +15,3 @@ body {
     align-content: center;
     justify-content: center;
 }
-

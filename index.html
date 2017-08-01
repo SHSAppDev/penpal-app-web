@@ -9,7 +9,7 @@
 </head>
 
 <body>
-
+  <!--Sohini WAS HERE!!!!!-->
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
     <script>
@@ -24,15 +24,16 @@
         firebase.initializeApp(config);
 
         var auth = firebase.auth();
-        // auth.onAuthStateChanged(function(user){
-        //   if(user) {
-        //       window.location.href = "dashboard.html";
-        //   } else {
-        //       window.location.href = "login.html";
-        //   }
-        // });
+        auth.onAuthStateChanged(function(user){
+          if(user) {
+              window.location.href = "account-info-sync.html";
+              //If the user has already used the site before, then
+              //account-info-sync will send the user immediately to the dashboard.
+          } else {
+              window.location.href = "landingpage.html";
+          }
+        });
 
-        window.location.href = "landingpage.html";
 
     </script>
 

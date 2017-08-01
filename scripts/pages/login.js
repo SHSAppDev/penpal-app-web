@@ -22,8 +22,8 @@ W3Login.prototype.initFirebase = function() {
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
 W3Login.prototype.onAuthStateChanged = function(user) {
   if (user) { // User is signed in!
-    console.log("going to dashboard");
-    window.location.href = 'dashboard.html';
+    // console.log("going to dashboard");
+    window.location.href = 'account-info-sync.html';
   }
 };
 

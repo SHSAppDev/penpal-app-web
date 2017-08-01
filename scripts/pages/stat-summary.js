@@ -33,7 +33,7 @@ StatSummary.prototype.onAuthStateChanged = function(user) {
       document.getElementById('display-name').textContent = data.val().displayName;
       document.getElementById('email').textContent = data.val().email;
       document.getElementById('profile-pic').src = data.val().photoURL;
-      document.getElementById('user-card').removeAttribute('hidden');
+      document.getElementById('user-card-container').style.display='block ';
 
     }.bind(this));
 
@@ -42,6 +42,7 @@ StatSummary.prototype.onAuthStateChanged = function(user) {
 
 StatSummary.prototype.loadConversationStats = function() {
   this.database.ref('user-data/'+this.auth.currentUser.uid+'/conversations').once('value', function(data) {
+    if(data.val()===null) return;
     const recipientUIDs = Object.values(data.val()).map(function(convContainer){
       return convContainer.recipientUID;
     });
@@ -55,6 +56,7 @@ StatSummary.prototype.loadConversationStats = function() {
 
 function ConvStatElementMachine(targetUID) {
   this.obj = {};
+  this.targetUID = targetUID
   const uid = targetUID;
   firebase.database().ref('user-data/'+uid).once('value', function(user){
     const displayName = user.val().displayName;
@@ -103,10 +105,11 @@ ConvStatElementMachine.prototype.addComponent = function(key, value){
        stat.querySelector('.title').textContent = this.obj['displayName'];
        stat.querySelector('.profile-pic').src = this.obj['photoURL'];
        stat.querySelector('.email').textContent = this.obj['email'];
-       stat.querySelector('.sent').textContent = 'Sent: '+ this.obj['messagesSent'] +
-       ' Messages , '+this.obj['wordsSent']+' Words';
-       stat.querySelector('.received').textContent = 'Received: '+ this.obj['messagesReceived'] +
-       ' Messages , '+this.obj['wordsReceived']+' Words';
+       stat.querySelector('.sent').textContent = 'You sent '+ this.obj['messagesSent'] +
+       ' message(s) and '+this.obj['wordsSent']+' word(s).';
+       stat.querySelector('.received').textContent = 'You  received '+ this.obj['messagesReceived'] +
+       ' message(s) and '+this.obj['wordsReceived']+' word(s).';
+       stat.href = 'dashboard.html?targetUID='+this.targetUID;
 
 
        document.getElementById('conversation-stat-list').appendChild(stat);
@@ -123,14 +126,15 @@ const convStatTemplate =
 //         "<p class='received'>Received: 17 Messages, 146 Words</p>" +
 //     "</div>" +
 // "</div>";
-
+'<a class="link" href=# style="color:gray">' +
 '<li class="collection-item avatar">' +
       '<img src="images/yuna.jpg" alt="" class="profile-pic circle">' +
-      '<span class="title">Username</span>' +
+      '<span class="title" style="color:black">Username</span>' +
       '<p class="email">anotheruser@example.com</p>' +
       '<p class="sent">Sent: 20 Messages, 131 Words</p>' +
       '<p class="received">Received: 17 Messages, 146 Words</p>' +
-'</li>';
+'</li>' +
+'</a>';
 
 // '<div href=# class="collection-item avatar">' +
 //   '<span><img class="pic circle" src=#></span>' +
