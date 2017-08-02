@@ -1,0 +1,72 @@
+body {
+    background:  #44A08D;
+   
+}
+
+#login-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    z-index: 22;
+}
+
+
+#login-btn {
+    width: 100%;
+}
+
+#create-account-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    z-index: 21;
+    opacity: 0;
+}
+p {
+
+}
+
+#tosignup:target ~ #wrapper #create-account-card,
+#tologin:target ~ #wrapper #login-card{
+	z-index: 22;
+	animation-name: fadeInLeft;
+	animation-delay: .1s;
+}
+
+.animate{
+	animation-duration: 0.5s;
+	animation-timing-function: ease;
+	animation-fill-mode: both;
+}
+@keyframes fadeInLeft {
+	0% {
+		opacity: 0;
+		/*transform: translateX(-20px);*/
+	}
+	
+	100% {
+		opacity: 1;
+		/*transform: translateX(0);*/
+	}
+}
+
+#tosignup:target ~ #wrapper #login-card,
+#tologin:target ~ #wrapper #create-account-card{
+	animation-name: fadeOutLeft;
+}
+
+@keyframes fadeOutLeft {
+	0% {
+		opacity: 1;
+		/*transform: translateX(0);*/
+	}
+	
+	100% {
+		opacity: 0;
+		/*transform: translateX(-20px);*/
+	}
+}
