@@ -33,7 +33,7 @@ StatSummary.prototype.onAuthStateChanged = function(user) {
       document.getElementById('display-name').textContent = data.val().displayName;
       document.getElementById('email').textContent = data.val().email;
       document.getElementById('profile-pic').src = data.val().photoURL;
-      document.getElementById('user-card-container').style.display='block ';
+      document.getElementById('user-card').style.display="flex";
 
     }.bind(this));
 
@@ -70,7 +70,7 @@ function ConvStatElementMachine(targetUID) {
   const convKey = uid > currentUID ? uid+currentUID : currentUID+uid;
   firebase.database().ref('conversations/'+convKey).once('value', function(conversation){
     // console.log('conversation '+Object.values(conversation.val()));
-    const messageObjects = Object.values(conversation.val());
+    const messageObjects = conversation.val()?Object.values(conversation.val()):{};
     var messagesSent = 0, wordsSent = 0;
     var messagesReceived = 0, wordsReceived = 0;
     // console.log(messageObjects[0].text);
