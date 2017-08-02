@@ -48,7 +48,7 @@ LoadConversationList.CONVERSATION_TEMPLATE =
     '<a href=# class="collection-item avatar">' +
       '<span><img class="pic circle" src=#></span>' +
       '<span class="name title">Name</span>' +
-      '<div class="active-indicator">' +
+      '<div class="active-indicator" hidden>' +
         '<div class="active-green-circle"></div><span>Online</span>' +
       '</div>' +
       '<span class="new badge">0</span>'+
