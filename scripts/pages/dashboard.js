@@ -111,7 +111,7 @@ WWBDashboard.prototype.sendNotificationEmail = function(){
     this.sendNotificationButton.setAttribute('DISABLED', true);
     this.command.requestFunction('sendEmail', {
         'emailAddress': this.recipientProfile.email,
-        'subject': this.myProfile.displayName+" has rung the bell!",
+        'subject': this.myProfile.displayName+" has rung the sbell!",
         'text': "Don't keep your penpal waiting! Log onto http://worldwithoutborders.ml/ and keep your conversation going!"
     }, {
         'success': function(resp){

@@ -1,50 +1,22 @@
-h1 {
-    color: blue;
-    font-size: 40px;
-    font-weight: 900px;
-    font-family: Lobster;
-}
-
-h2 {
-    color: indigo;
-    font-size: 40px;
-    font-weight: 900px;
-    font-family: Lobster;
-}
-
-html {
-    font-family: sans-serif;
-}
-
 body {
+  background-color: #009688;
     display: flex;
     min-height: 100vh;
     flex-direction: column;
     font-family: sans-serif;
+   }
+
+h4 {
+    color: teal;
+    font-size: 40px;
+    font-weight: 900px;
+    font-family: sans-serif;
 }
 
+p{
+    color: white;
+}
 main {
     flex: 1 0 auto;
 }
-
-body {
-    background-color: white;
-}
-
-ol {
-    background: teal;
-    padding: 20px;
-}
-
-ul {
-    background: #3399ff;
-    padding: 20px;
-}
-
-ol li {
-    background: #e6e6e6;
-    padding: 5px;
-    margin-left: 35px;
-}
-
 
