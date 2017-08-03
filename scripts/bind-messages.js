@@ -52,6 +52,7 @@ function LoadMessages(targetUID) {
   }
 
 
+
   this.initFirebase();
 }
 
