@@ -17,12 +17,12 @@ BindTranslate.prototype.translate = function() {
   var source = this.sourceText.value;
   var srcLang = this.sourceLang.options[this.sourceLang.selectedIndex].value;
   if(srcLang==="") {
-    window.alert("Choose a source language before translating.");
+    Materialize.toast("Choose a source language before translating.", 4000);
     return;
   }
   var targetLang = this.targetLang.options[this.targetLang.selectedIndex].value;
   if(targetLang==="") {
-    window.alert("Choose a target language before translating");
+    Materialize.toast("Choose a target language before translating", 4000);
     return;
   }
   this.translator.translate(srcLang, targetLang, source, this.onTextTranslated.bind(this));

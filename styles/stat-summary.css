@@ -8,8 +8,8 @@ body {
 }
 
 #user-card {
-    width: 330px;
-    height: 330px;
+    width: 400px;
+    height: 400px;
     display: flex;
     align-items: center;
     align-content: center;

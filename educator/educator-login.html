@@ -1,0 +1,194 @@
+<!doctype html>
+
+<html lang="en">
+<!-- Materialize CSS Head -->
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Improve your foreign language skills by chatting with native speakers your age.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instructor login</title>
+  <link rel="stylesheet" type="text/css" href="../educator/educator-login.css">
+
+
+  <!-- Disable tap highlight on IE -->
+  <meta name="msapplication-tap-highlight" content="no">
+
+  <!-- Web Application Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="World Without Borders">
+  <meta name="theme-color" content="#303F9F">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="World Without Borders">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
+
+  <!-- Tile icon for Win8 -->
+  <meta name="msapplication-TileColor" content="#3372DF">
+  <meta name="msapplication-navbutton-color" content="#303F9F">
+
+  <!-- Compiled and minified CSS -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+
+</head>
+
+<body>
+  <!--<h1> For Teachers and Instructors </h1>-->
+  <!--<div class="card" id="login-card">
+          <div class="card-content">
+            <span class="card-title center-align">Sign In To Your Account</span>
+              <div class="row">
+                <form class="col s12" id="login-form">
+                  <div class="row">
+
+                    <div class="input-field col s6">
+                      <input name="email-address" type="text" class="validate">
+                      <label for="email">Email Address</label>
+                    </div>
+                    <div class="input-field col s6">
+                      <input name="password" type="text" class="validate">
+                      <label for="password">Password</label>
+                    </div>
+                  </div>
+                  <a id="login-btn" class="waves-effect waves-light btn" disabled><i class="material-icons left">account_circle</i>Sign In</a>
+
+                </form>
+              </div>
+              <div class="progress" style="display:none;">
+                  <div class="indeterminate"></div>
+              </div>
+          </div>
+      </div>
+
+      <div class="card" id="create-account-card">
+          <div class="card-content">
+            <span class="card-title center-align">Don't have one? Make One Here!</span>
+              <div class="row">
+                <form class="col s12" id="create-account-form">
+                  <div class="row">
+
+                    <div class="input-field col s6">
+                      <input name="email-address" type="text" class="validate">
+                      <label for="email">Email Address</label>
+                    </div>
+                    <div class="input-field col s6">
+                      <input name="password" type="text" class="validate">
+                      <label for="password">Password</label>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <input name="school-name" type="text">
+                      <label>School Name</label>
+                    </div>
+                  </div>
+                  <a id="create-account-btn" class="waves-effect waves-light btn" disabled><i class="material-icons left">account_circle</i>Create My Account!</a>
+
+                </form>
+              </div>
+              <div class="progress" style="display:none;">
+                  <div class="indeterminate"></div>
+              </div>
+          </div>
+      </div>-->
+  <a class="hiddenanchor" id="tosignup"></a>
+  <a class="hiddenanchor" id="tologin"></a>
+  <div id="wrapper">
+    <div class="animate card" id="login-card">
+      <div class="card-content">
+        <span class="card-title center-align">Sign In To Your Account</span>
+        <div class="row">
+          <form class="col s12" id="login-form">
+            <div class="row">
+
+              <div class="input-field col s6 l6 m6">
+                <i class="tiny material-icons prefix">account_circle</i>
+
+                <input name="email-address" type="text" class="validate">
+                <label for="email">Email Address</label>
+              </div>
+              <div class="input-field col s6 l6 m6">
+                <i class="tiny material-icons prefix">lock</i>
+                <input name="password" type="password" class="validate">
+                <label for="password">Password</label>
+              </div>
+            </div>
+            <a id="login-btn" class="waves-effect waves-light btn" disabled>Sign In</a>
+            <p style="margin-top: 10px; text-align: center;">Don't have an account? <a href="#tosignup" id="sign-up">Sign-up</a> </p>
+          </form>
+        </div>
+        <div class="progress" style="display:none;">
+          <div class="indeterminate"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="animate card" id="create-account-card">
+      <div class="card-content">
+        <span class="card-title center-align">Create an account</span>
+        <div class="row">
+          <form class="col s12" id="create-account-form">
+            <div class="row">
+
+              <div class="input-field col s6">
+                <i class="small material-icons prefix">account_circle</i>
+                <input name="email-address" type="text" class="validate">
+                <label for="email">Email Address</label>
+              </div>
+              <div class="input-field col s6">
+                <i class="tiny material-icons prefix">lock</i>
+                <input name="password" type="password" class="validate">
+                <label for="password">Password</label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="input-field col s12">
+                <i class="tiny material-icons prefix">school</i>
+                <input name="school-name" type="text">
+                <label>School Name</label>
+              </div>
+            </div>
+            <a id="create-account-btn" class="waves-effect waves-light btn" style="width: 100%" disabled>Create My Account</a>
+            <p style="margin-top: 10px; text-align: center;">Already have an account? <a href="#tologin" id="login">Log-in</a> </p>
+
+          </form>
+        </div>
+        <div class="progress" style="display:none;">
+          <div class="indeterminate"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCx-2_5IcfXswoDZhjle1rPS3m-ryi3rpM",
+      authDomain: "penpalapp-6020c.firebaseapp.com",
+      databaseURL: "https://penpalapp-6020c.firebaseio.com",
+      storageBucket: "penpalapp-6020c.appspot.com",
+      messagingSenderId: "322094641122"
+    };
+    firebase.initializeApp(config);
+  </script>
+  <script src="educator-login.js"></script>
+  <!-- <script src="scripts/pages/login.js"></script>
+  <script src="scripts/bind-signin-button.js" buttonID='sign-in'></script> -->
+
+</body>
+
+</html>

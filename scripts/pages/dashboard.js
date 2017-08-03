@@ -7,18 +7,20 @@ function WWBDashboard() {
     // Shortcuts to DOM Elements.
     this.userPic = document.getElementById('user-pic');
     this.userName = document.getElementById('user-name');
+
     this.sendNotificationButton = document.getElementById('send-notification');
     this.sendNotificationButton.addEventListener('click', this.sendNotificationEmail.bind(this));
     this.initFirebase();
     this.translate = new EZTranslate();
     this.command = new Command();
     this.targetUID = getParameterByName('targetUID');
-    firebase.database().ref('user-data/'+targetUID).once('value',
-      function(snapshot){
-        this.recipientProfile = snapshot.val();
-        $('#bell-modal h4 > span').html(this.recipientProfile.displayName);
-        console.log('changed name');
-    }.bind(this));
+    if(this.targetUID) {
+      firebase.database().ref('user-data/'+targetUID).once('value',
+        function(snapshot){
+          this.recipientProfile = snapshot.val();
+          $('#bell-modal h4 > span').html(this.recipientProfile.displayName);
+      }.bind(this));
+    }
 
 
     // this.userInfo = new UserInfo();
@@ -28,6 +30,17 @@ function WWBDashboard() {
     // Here I do English to Spanish
     // this.translate.translate("en", "es", "What's up?", function(translatedText){
     //     console.log("translatedText: "+translatedText);
+    // });
+
+    // this.command.requestFunction('sendEmail', {
+    //   'emailAddress': 'kyleseidphan@gmail.com',
+    //   'subject': 'The Bell has been rung!',
+    //   'text': 'Log on and start messaging.'
+    // }, {
+    //   'success': function(resp){
+    //     window.alert('The email was successfully sent');
+    //   }.bind(this),
+    //   'error': function(resp){}.bind(this)
     // });
 
 }
