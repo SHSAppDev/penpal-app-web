@@ -1,5 +1,5 @@
 body {
-  background-color: #009688;
+  background-color: teal;
     display: flex;
     min-height: 100vh;
     flex-direction: column;
@@ -20,3 +20,6 @@ main {
     flex: 1 0 auto;
 }
 
+.parallax-container {
+    height: "100%";
+}

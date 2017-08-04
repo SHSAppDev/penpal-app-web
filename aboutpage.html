@@ -12,20 +12,12 @@
     <meta name="viewport" content="width=device=width,initial-scale=1">
     <link rel="stylesheet" type="text/css" href="aboutpagemain.css")/>
 
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
-
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-
-    <!--Import jQuery before materialize.js-->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="js/materialize.min.js"></script>
-
 
     </head>
 
@@ -40,10 +32,46 @@
         <button class="waves-effect waves-light btn" type="button" onclick="document.getElementById('demo').innerHTML=Date()">
 Click on me to display Date and Time</button><br><br>
 -->
-        
-<h4><center>About</center></h4>
-<div class="container">
 
+  
+<div class="slider">
+<ul class="slides">
+
+<li>
+<img src="images/WWBlogo.jpg">         <!--Change the picture-->
+<div class="caption center-align">
+<h3>This is our big timeline!</h3>
+<h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+</div>
+</li>
+
+<li>
+<img src="images/WWBlogo.jpg">       <!--Change the picture-->
+<div class="caption center-align">   
+<div class="caption center-align">
+<h3>This is our big timeline!</h3>     <!--Change this-->
+<h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>    <!--Change this-->
+</div>
+</li>
+
+<li>
+<img src="images/WWBlogo.jpg">        <!--Change the picture-->
+<div class="caption center-align">   
+<div class="caption center-align">
+<h3>This is our big timeline!</h3>     <!--Change this-->
+<h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>   <!--Change this-->
+</div>
+</li>
+
+</div>
+
+<h4><center>About</center></h4>
+
+<div class="parallax-container">
+<div class="parallax"><img src="images/WWBlogo.jpg"></div>  <!--Change the picture-->
+</div>
+
+<div class="container">
 <p class="flow-text">"If you talk to a man in a language he understands, that goes to his head. If you talk to him in his own language, that goes to his heart."<br><br>
 
         Nelson Mandela</p><br>
@@ -51,6 +79,9 @@ Click on me to display Date and Time</button><br><br>
 <p class="flow-text">World Without Borders will be a service that upgrades the old pen pal concept with instant messaging that young people are used to today in the form of an online chat app. Especially in the case of foreign language education, this is fantastic because it allows students to improve their language skills while having fun by conversing with native speakers their age. Certain tools will also be implemented that make this type of communication easier such as the ability to translate just an individual word or phrase, grammar checks, and speech to text.</p>
         </div><br><br>
 
+<div class="parallax-container">
+<div class="parallax"><img src="images/WWBlogo.jpg"></div>
+</div>
         <h4><center>Frequently Asked Questions</center></h4><br>
 
         <h5>Question 1</h5>
@@ -58,5 +89,34 @@ Click on me to display Date and Time</button><br><br>
 
         <h5>Question 2</h5>
         <h5>Question 2 Answer</h5><br>
-        
+
+        <h5>Question 3</h5>
+        <h5>Question 3 Answer</h5><br>
+
+        <h5>Question 4</h5>
+        <h5>Question 4 Answer</h5><br>
+
+        <h5>Question 5</h5>
+        <h5>Question 5 Answer</h5><br>
+
+
+
+<!--Import jQuery before materialize.js-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+
+
+<script>
+   $(document).ready(function)(){
+    $('slider').slider();
+   });
+
+    $(document).ready(function(){
+        $('.parallax').parallax();
+    });
+</script>
+
+<!-- Compiled and minified CSS -->
+
+</body>
 </html>
