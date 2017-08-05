@@ -1,6 +1,6 @@
 
 'use strict';
- console.log("The dashboard");
+ // console.log("The dashboard");
 // Initializes WWBDashboard.
 function WWBDashboard() {
 

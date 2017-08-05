@@ -85,6 +85,7 @@ EducatorDashboard.prototype.initializeUserListForGivenSchool = function(schoolCo
       const schoolListElement = temp.firstChild;
       schoolListElement.id = schoolCode;
       schoolListElement.querySelector('.school-name').textContent = data.val().name;
+
       this.usersContainer.appendChild(schoolListElement);
 
       schoolRef.child('students').on('child_added', function(snapshot){

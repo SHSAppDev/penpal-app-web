@@ -14,10 +14,10 @@ function LoadConversationList(conversationListID) {
   }
 
   // More gross hacks! Stop the pre-loader from displaying if it's been a while.
-  console.log('gross hack!');
+  // console.log('gross hack!');
   setTimeout(function(){
     document.getElementById('conversations-preloader').style.display = "none";
-    console.log("Preloader hidden");
+    // console.log("Preloader hidden");
   }.bind(this), 2000);
 
   this.initFirebase();
