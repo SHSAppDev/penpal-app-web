@@ -22,6 +22,8 @@ EducatorDashboard.prototype.onAuthStateChanged = function (user) {
       const schoolCode = this.myData.schoolCode;
       const mySchoolRef = this.database.ref('schools/' + schoolCode);
       document.getElementById('school-name').innerHTML = schoolName;
+      document.getElementById('school-code').innerHTML = schoolCode;
+
 
       // Show user list
       this.initializeUserListForGivenSchool(schoolCode);
@@ -77,6 +79,7 @@ EducatorDashboard.prototype.addAssociateSchool = function () {
 EducatorDashboard.prototype.initializeUserListForGivenSchool = function (schoolCode) {
     const schoolRef = firebase.database().ref('schools/' + schoolCode);
     const headerColors = ["#ec407a", "#ab47bc", "#7e57c2", "#5c6bc0", "#42a5f5", "#29b6f6", "#26c6da", "#26a69a", "#66bb6a", "#9ccc65", "#d4e157", "#ffee58", "#ffca28", "#ffa726", "#ff7043"];
+
     schoolRef.once('value', function (data) {
       if (data.val()) {
         var temp = document.createElement('div');
@@ -84,7 +87,7 @@ EducatorDashboard.prototype.initializeUserListForGivenSchool = function (schoolC
         const schoolListElement = temp.firstChild;
         schoolListElement.id = schoolCode;
         schoolListElement.querySelector('.school-name').textContent = data.val().name;
-        schoolListElement.querySelector('.collection-header').style.backgroundColor = headerColors[Math.floor(Math.random() * this.length)];
+        schoolListElement.querySelector('.collection-header').style.backgroundColor = headerColors[Math.floor(Math.random() * headerColors.length)];
 
         this.usersContainer.appendChild(schoolListElement);
 
