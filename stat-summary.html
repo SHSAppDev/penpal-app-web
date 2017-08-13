@@ -42,17 +42,27 @@
 
 </head>
 
-<bod id='body'>
+<bod id='body' class="notranslate">
 
+    <!-- <div id="google_translate_element"></div> -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-    <a style="margin-top: 10px; width: 400px" class="center-align btn waves-light waves-effect red lighten-1" id="back-button" href="dashboard.html">Back to Conversations</a>
+    <a style="margin-top: 10px; width: 400px" class="center-align btn waves-light waves-effect red lighten-1 translate" id="back-button" href="dashboard.html">Back to Conversations</a>
 
     <!--This card contains stats of the current user-->
     <div class="card" id="user-card" style="display:none;">
         <div class="card-content">
-            <span id="display-name" class="card-title center-align">Myum Nameum</span>
-            <img id="profile-pic" class="circle" src=# width="200px" height="200px"></img>
-            <p id="email" class="center-align">user@example.com</p>
+          <img id="profile-pic" class="circle" src=# width="200px" height="200px"></img>
+          <span id="display-name" class="card-title center-align">Myum Nameum</span>
+          <p id="email" class="center-align">user@example.com</p>
         </div>
     </div>
 
