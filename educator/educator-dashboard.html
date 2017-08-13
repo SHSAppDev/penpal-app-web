@@ -2,67 +2,69 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="Improve your foreign language skills by chatting with native speakers your age.">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <span class="notranslate"><title>World Without Borders</title></span>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Improve your foreign language skills by chatting with native speakers your age.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <span class="notranslate"><title>World Without Borders</title></span>
 
-  <!-- Disable tap highlight on IE -->
-  <meta name="msapplication-tap-highlight" content="no">
+    <!-- Disable tap highlight on IE -->
+    <meta name="msapplication-tap-highlight" content="no">
 
-  <!-- Web Application Manifest -->
-  <link rel="manifest" href="manifest.json">
-  <!-- Add to homescreen for Chrome on Android -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="World Without Borders">
-  <meta name="theme-color" content="#303F9F">
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="World Without Borders">
+    <meta name="theme-color" content="#303F9F">
 
-  <!-- Add to homescreen for Safari on iOS -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="World Without Borders">
-  <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="World Without Borders">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
 
-  <!-- Tile icon for Win8 -->
-  <meta name="msapplication-TileColor" content="#3372DF">
-  <meta name="msapplication-navbutton-color" content="#303F9F">
+    <!-- Tile icon for Win8 -->
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <meta name="msapplication-navbutton-color" content="#303F9F">
 
-  <!-- Compiled and minified CSS -->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="educator-dashboard.css">
+    <!-- Compiled and minified CSS -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="educator-dashboard.css">
 
 </head>
 
-<body>
+<body hidden class="teal">
     <!-- <h1 id="title">World Without Borders</h1>
     <img class="www-logo responsive-img" src="images/base_recolored_360.png"></img>
     <a class="btn red lighten-1 waves-light waves-effect" href=# id="get-started">Get Started</a> -->
-      <span class="notranslate">
-  <ul id="user-dropdown" class="dropdown-content">
+    <span class="notranslate">
+  <!-- <ul id="user-dropdown" class="dropdown-content">
       <li>
           <a id="sign-out">Sign-out</a>
           <a href="account-info-sync.html?editProfile=true">Edit Profile</a>
           <a href="stat-summary.html">View Stat Summary</a>
       </li>
-  </ul>
-  <nav>
+  </ul> -->
+    <nav>
       <div class="nav-wrapper teal" id="nav-bar">
           <a href="#" class="brand-logo"><i class="large material-icons">textsms</i>World Without Borders</a>
-          <a href="#" data-activates="mobile-demo" class="button-collapse" id="button-collapse"><i class="material-icons">menu</i></a>
-          <ul id="nav-mobile" class="right hide-on-med-and-down">
+
+          <a id="sign-out" class="right waves-effect waves-light btn red hide-on-med-and-down">Sign-out</a>
+
+          <!-- <ul id="nav-mobile" class="right hide-on-med-and-down">
               <li>
-                  <!-- <a href="aboutpage.html">About</a> -->
-                  <a id="user-name" href='profile-page.html' hidden>Username</a>
+
               </li>
               <li>
                   <a class="dropdown-button" href="#!" data-activates="user-dropdown" id="user-pic" hidden></a>
               </li>
-          </ul>
+          </ul> -->
+          <a href="#" data-activates="mobile-demo" class="button-collapse" id="button-collapse"><i class="material-icons">menu</i></a>
           <ul class="side-nav" id="mobile-demo">
               <li>
                   <a id="sign-out-mobile">Sign-out</a>
@@ -70,22 +72,60 @@
           </ul>
       </div>
     </nav>
-  </span>
+    <h1 id="school-name"></h1>
+    <h3>Your School Code: <span id="school-code"></span></h3>
 
-  <!--Firebase-->
-  <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
-  <script>
-      // Initialize Firebase
-      var config = {
-          apiKey: "AIzaSyCx-2_5IcfXswoDZhjle1rPS3m-ryi3rpM",
-          authDomain: "penpalapp-6020c.firebaseapp.com",
-          databaseURL: "https://penpalapp-6020c.firebaseio.com",
-          storageBucket: "penpalapp-6020c.appspot.com",
-          messagingSenderId: "322094641122"
-      };
-      firebase.initializeApp(config);
-  </script>
-  <script src="educator-dashboard.js"></script>
+    <!-- <a id="add-school-btn" class="waves-effect waves-light btn">Add Associate School</a> -->
+    <!-- Add School Button -->
+    <a class="waves-effect waves-light btn red lighten-1 modal-trigger" id="add-school-btn" href="#add-school-modal">Add an Associate School</a>
+
+    <div id="users-container">
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="add-school-modal" class="modal">
+        <div class="modal-content">
+            <h4>Add Associate Schools</h4>
+            <p>Adding other schools allows your students to more easily get in touch.</p>
+            <div class="row">
+                <form class="col s12" id="add-school-form">
+                    <div class="row">
+
+                        <div class="input-field col s6">
+                            <input name="school-code" type="text">
+                            <label for="school-code">School Code</label>
+                        </div>
+                    </div>
+                    <a id="add-btn" class="red lighten-1waves-effect waves-light btn col s6" disabled>Add</a>
+
+                </form>
+            </div>
+            <div class="progress" style="display:none;">
+                <div class="indeterminate"></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Done</a>
+        </div>
+    </div>
+    </span>
+
+    <!--Firebase-->
+    <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+          apiKey: "AIzaSyDLnL7hjfEVuQIuHVD8NA7shxlzItZviaw",
+          authDomain: "worldwithoutwalls-f2d4b.firebaseapp.com",
+          databaseURL: "https://worldwithoutwalls-f2d4b.firebaseio.com",
+          projectId: "worldwithoutwalls-f2d4b",
+          storageBucket: "worldwithoutwalls-f2d4b.appspot.com",
+          messagingSenderId: "517582843677"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script src='../scripts/command.js'></script>
+    <script src="educator-dashboard.js"></script>
 </body>
 
 </html>

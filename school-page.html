@@ -3,48 +3,59 @@
 <html lang="en">
 <!-- Materialize CSS Head -->
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Improve your foreign language skills by chatting with native speakers your age.">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My School Page</title>
-    <link rel="stylesheet" type="text/css" href="styles/school-page.css">
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="description" content="Improve your foreign language skills by chatting with native speakers your age.">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>My School Page</title>
+      <link rel="stylesheet" type="text/css" href="styles/school-page.css">
 
 
-    <!-- Disable tap highlight on IE -->
-    <meta name="msapplication-tap-highlight" content="no">
+      <!-- Disable tap highlight on IE -->
+      <meta name="msapplication-tap-highlight" content="no">
 
-    <!-- Web Application Manifest -->
-    <link rel="manifest" href="manifest.json">
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="World Without Borders">
-    <meta name="theme-color" content="#303F9F">
+      <!-- Web Application Manifest -->
+      <link rel="manifest" href="manifest.json">
+      <!-- Add to homescreen for Chrome on Android -->
+      <meta name="mobile-web-app-capable" content="yes">
+      <meta name="application-name" content="World Without Borders">
+      <meta name="theme-color" content="#303F9F">
 
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="World Without Borders">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
+      <!-- Add to homescreen for Safari on iOS -->
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+      <meta name="apple-mobile-web-app-title" content="World Without Borders">
+      <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
 
-    <!-- Tile icon for Win8 -->
-    <meta name="msapplication-TileColor" content="#3372DF">
-    <meta name="msapplication-navbutton-color" content="#303F9F">
+      <!-- Tile icon for Win8 -->
+      <meta name="msapplication-TileColor" content="#3372DF">
+      <meta name="msapplication-navbutton-color" content="#303F9F">
 
-    <!-- Compiled and minified CSS -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+      <!-- Compiled and minified CSS -->
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
 
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!-- Compiled and minified JavaScript -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
 
-</head>
+  </head>
 
-<body id='body' style='display:none'>
+  <body id='body' style='display:none' class="notranslate">
+    <!-- <div id="google_translate_element"></div> -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-    <a style="color: white;" class="center-align" id="back-button" href="dashboard.html">Back to Conversations</a>
+
+    <a style="color: white;" class="center-align translate" id="back-button" href="dashboard.html">Back to Conversations</a>
 
     <!-- <p>Type your school code in here to see a list of options.</p>
     <input type="text" id="school-code-input"></input>

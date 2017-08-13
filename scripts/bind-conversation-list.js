@@ -13,6 +13,13 @@ function LoadConversationList(conversationListID) {
     "the conversations onto :(");
   }
 
+  // More gross hacks! Stop the pre-loader from displaying if it's been a while.
+  // console.log('gross hack!');
+  setTimeout(function(){
+    document.getElementById('conversations-preloader').style.display = "none";
+    // console.log("Preloader hidden");
+  }.bind(this), 2000);
+
   this.initFirebase();
 }
 
@@ -48,7 +55,7 @@ LoadConversationList.CONVERSATION_TEMPLATE =
     '<a href=# class="collection-item avatar">' +
       '<span><img class="pic circle" src=#></span>' +
       '<span class="name title">Name</span>' +
-      '<div class="active-indicator">' +
+      '<div class="active-indicator" hidden>' +
         '<div class="active-green-circle"></div><span>Online</span>' +
       '</div>' +
       '<span class="new badge">0</span>'+
