@@ -23,6 +23,9 @@ function LoadMessages(targetUID) {
     document.getElementById("chat-container").style.display = 'none';
     document.getElementById("tools-container").style.display = 'none';
     return;
+  } else {
+    document.getElementById("chat-container").removeAttribute('hidden');
+    document.getElementById("tools-container").removeAttribute('hidden');
   }
 
   // Toggle for the button.
@@ -50,6 +53,7 @@ function LoadMessages(targetUID) {
   } else {
     console.log("Notifications are not supported.");
   }
+
 
 
   this.initFirebase();
