@@ -7,6 +7,7 @@ function StatSummary() {
   // httpGetAsync("https://us-central1-penpalapp-6020c.cloudfunctions.net/helloWorld", function(resp){
   //   console.log(response);
   // });
+
 }
 
 // Sets up shortcuts to Firebase features and initiate firebase auth.
@@ -25,10 +26,13 @@ StatSummary.prototype.initFirebase = function() {
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
 StatSummary.prototype.onAuthStateChanged = function(user) {
   if (user) {
+    const paramUID = getParameterByName('uid');
+    this.forSelf = paramUID === null || paramUID === '' || paramUID === this.auth.currentUser.uid;
+    this.myUid = this.forSelf ? this.auth.currentUser.uid : paramUID;
     this.loadConversationStats() //WooHoo!
 
-    // Also load own profile
-    this.database.ref('user-data/'+this.auth.currentUser.uid).once('value', function(data){
+    // Also load own profile or profile of target user
+    this.database.ref('user-data/'+this.myUid).once('value', function(data){
       // const myProfile = document.getElementById('my-profile');
       document.getElementById('display-name').textContent = data.val().displayName;
       document.getElementById('email').textContent = data.val().email;
@@ -41,7 +45,7 @@ StatSummary.prototype.onAuthStateChanged = function(user) {
 };
 
 StatSummary.prototype.loadConversationStats = function() {
-  this.database.ref('user-data/'+this.auth.currentUser.uid+'/conversations').once('value', function(data) {
+  this.database.ref('user-data/'+this.myUid+'/conversations').once('value', function(data) {
     if(data.val()===null) return;
     const recipientUIDs = Object.values(data.val()).map(function(convContainer){
       return convContainer.recipientUID;
@@ -49,14 +53,15 @@ StatSummary.prototype.loadConversationStats = function() {
     // recipientUIDs is an array containing all the uids that the user has conversations with
     // now, I loop through them all and somehow get all the necessary data bits.
     for(var i=0; i<recipientUIDs.length; i++) {
-      new ConvStatElementMachine(recipientUIDs[i]);
+      new ConvStatElementMachine(recipientUIDs[i], this.myUid);
     }
   }.bind(this));
 }
 
-function ConvStatElementMachine(targetUID) {
+function ConvStatElementMachine(targetUID, myUid) {
   this.obj = {};
-  this.targetUID = targetUID
+  this.targetUID = targetUID;
+  this.myUid = myUid;
   const uid = targetUID;
   firebase.database().ref('user-data/'+uid).once('value', function(user){
     const displayName = user.val().displayName;
@@ -66,8 +71,7 @@ function ConvStatElementMachine(targetUID) {
     this.addComponent('email', email);
     this.addComponent('photoURL', photoURL);
   }.bind(this));
-  const currentUID = firebase.auth().currentUser.uid; //<-The user held in auth; the person using the app NOW
-  const convKey = uid > currentUID ? uid+currentUID : currentUID+uid;
+  const convKey = uid > this.myUid ? uid+this.myUid : this.myUid+uid;
   firebase.database().ref('conversations/'+convKey).once('value', function(conversation){
     // console.log('conversation '+Object.values(conversation.val()));
     const messageObjects = conversation.val()?Object.values(conversation.val()):{};
@@ -75,7 +79,7 @@ function ConvStatElementMachine(targetUID) {
     var messagesReceived = 0, wordsReceived = 0;
     // console.log(messageObjects[0].text);
     for(var i=0; i<messageObjects.length; i++){
-      if(messageObjects[i].uid == firebase.auth().currentUser.uid){
+      if(messageObjects[i].uid == this.myUid){
         messagesSent += 1;
         if(messageObjects[i].text)wordsSent += messageObjects[i].text.split(' ').length;
       } else {
@@ -105,11 +109,12 @@ ConvStatElementMachine.prototype.addComponent = function(key, value){
        stat.querySelector('.title').textContent = this.obj['displayName'];
        stat.querySelector('.profile-pic').src = this.obj['photoURL'];
        stat.querySelector('.email').textContent = this.obj['email'];
-       stat.querySelector('.sent').textContent = 'You sent '+ this.obj['messagesSent'] +
+       const subject = this.forSelf ? "You" : document.getElementById('display-name').textContent;
+       stat.querySelector('.sent').textContent = subject+' sent '+ this.obj['messagesSent'] +
        ' message(s) and '+this.obj['wordsSent']+' word(s).';
-       stat.querySelector('.received').textContent = 'You  received '+ this.obj['messagesReceived'] +
+       stat.querySelector('.received').textContent = subject+' received '+ this.obj['messagesReceived'] +
        ' message(s) and '+this.obj['wordsReceived']+' word(s).';
-       stat.href = 'dashboard.html?targetUID='+this.targetUID;
+       if(this.forSelf) stat.href = 'dashboard.html?targetUID='+this.targetUID;
 
 
        document.getElementById('conversation-stat-list').appendChild(stat);
