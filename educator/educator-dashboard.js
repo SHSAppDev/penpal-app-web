@@ -93,6 +93,7 @@ EducatorDashboard.prototype.initializeUserListForGivenSchool = function (schoolC
 
         schoolRef.child('students').on('child_added', function (snapshot) {
           const each = snapshot.val();
+          if(!each) return;
           if (each.uid == firebase.auth().currentUser.uid) return;
           var temp = document.createElement('div');
           temp.innerHTML = EducatorDashboard.USER_LIST_ITEM;
@@ -100,6 +101,8 @@ EducatorDashboard.prototype.initializeUserListForGivenSchool = function (schoolC
           listItem.querySelector('.display-name').textContent = each.displayName;
           listItem.querySelector('.photo').src = each.photoURL;
           listItem.querySelector('.email').textContent = each.email;
+          listItem.querySelector('.anchor').href = '../stat-summary.html?uid='+each.uid;
+
           schoolListElement.appendChild(listItem);
         }.bind(this));
       } else {
@@ -115,9 +118,11 @@ EducatorDashboard.SCHOOL_LIST_TEMPLATE =
 EducatorDashboard.USER_LIST_ITEM =
   '<li class="collection-item avatar">' +
   '<div>' +
+  '<a class="anchor" href=#>' +
   '<img src=# class="circle photo"></img>' +
   '<span class="title display-name">Alvin</span>' +
   '<p class="email"></p>' +
+  '</a>' +
   '</div>' +
   '</li>';
 
