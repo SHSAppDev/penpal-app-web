@@ -101,7 +101,7 @@ EducatorDashboard.prototype.initializeUserListForGivenSchool = function (schoolC
           listItem.querySelector('.display-name').textContent = each.displayName;
           listItem.querySelector('.photo').src = each.photoURL;
           listItem.querySelector('.email').textContent = each.email;
-          listItem.querySelector('.anchor').href = '../stat-summary.html?uid='+each.uid;
+          // listItem.querySelector('.anchor').href = '../stat-summary.html?uid='+each.uid;
 
           schoolListElement.appendChild(listItem);
         }.bind(this));
@@ -118,11 +118,11 @@ EducatorDashboard.SCHOOL_LIST_TEMPLATE =
 EducatorDashboard.USER_LIST_ITEM =
   '<li class="collection-item avatar">' +
   '<div>' +
-  '<a class="anchor" href=#>' +
+  // '<a class="anchor" href=#>' +
   '<img src=# class="circle photo"></img>' +
   '<span class="title display-name">Alvin</span>' +
   '<p class="email"></p>' +
-  '</a>' +
+  // '</a>' +
   '</div>' +
   '</li>';
 
