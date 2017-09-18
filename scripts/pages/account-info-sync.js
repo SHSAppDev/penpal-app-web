@@ -124,7 +124,7 @@ AccountInfoSync.prototype.submit = function() {
         updateManager.processDone('schoolRegistration');
       }.bind(this),
       'error': function(err) {
-        this.fail('Some error occurred while trying to register for the school.');
+        this.fail(err);
       }.bind(this)
     });
   }

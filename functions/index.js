@@ -67,10 +67,10 @@ Command.prototype.sendMessage = function() {
     // Since it's not absolutely crucial for this step to work, I won't call sucess when done.
     // Success already is called when the main message object is saved (code above).
     // unread messages won't get incremented if the recipeient user is online.
-    console.log('about to set unreadMessages');
+    // console.log('about to set unreadMessages');
     admin.database().ref('presence/'+recipientUID).once('value', function(snapshot){
       if(snapshot.val()) {
-        console.log('was going to increment unread messages but user is online');
+        // console.log('was going to increment unread messages but user is online');
       } else {
         const recipientConvContainerRef = admin.database()
           .ref('user-data/'+recipientUID+'/conversations')
@@ -148,10 +148,18 @@ Command.prototype.registerInSchool = function() {
       const displayName = data.val().displayName;
       const email = data.val().email;
       const photoURL = data.val().photoURL;
+      const myUid = data.val().uid;
+      const myOldSchoolCode = data.val().schoolCode; // <- Null if not yet registered in school
       // console.log(this.params);
       const schoolRef = admin.database().ref('/schools/'+this.params.schoolCode);
       return schoolRef.once('value', function(data) {
         if(data.val()) {
+          // If user already exists in school, don't push a new object.
+          const allStudents = objValues(data.val().students?data.val().students:[]);
+          for(var i=0; i< allStudents.length; i++) {
+            const each = allStudents[i];
+            if(each.uid === myUid) return this.success("You are already registered for this school!");
+          }
           schoolRef.child('students').push({
             'displayName': displayName,
             'email': email,
@@ -159,11 +167,34 @@ Command.prototype.registerInSchool = function() {
             'uid': this.uid
           }).then(function(){
             userRef.update({'/schoolCode': this.params.schoolCode}).then(function(){
-              this.success('Successfully registered for school! '+this.params.schoolCode);
+              if(myOldSchoolCode) {
+                // Clear the old school of the user's account if he/she was in an old school.
+                // console.log('old school code: '+myOldSchoolCode);
+                const oldSchoolRef = admin.database().ref('/schools/'+myOldSchoolCode);
+                oldSchoolRef.child('students').orderByChild('uid')
+                 .equalTo(myUid).once('value', function(data){
+                  //  console.log('query data: '+data.val());
+                   if(data.val()){
+                     //Student must be taken out of old school.
+                     const pushKey = Object.keys(data.val())[0];
+                    //  console.log("push key:"+ data.key);
+                     oldSchoolRef.child('students/'+pushKey).set(null).then(function(){
+                      //  console.log('student removed from old school');
+                       this.success('Successfully registered for school! '+this.params.schoolCode);
+                     }.bind(this));
+                   } else {
+                     //the student wasn't in the old school. weird. done.
+                    //  console.log("the student wasn't in the old school. weird. done.");
+                     this.success('Successfully registered for school! '+this.params.schoolCode);
+                   }
+                }.bind(this));
+              } else {
+                this.success('Successfully registered for school! '+this.params.schoolCode);
+              }
             }.bind(this));
           }.bind(this));
         } else {
-          this.error('The school does not exist.');
+          return this.error('There is no school with that code.');
         }
       }.bind(this));
     }.bind(this));
@@ -305,12 +336,24 @@ function sendAnEmail(emailAddress, subject, text) {
   });
 }
 
+function objValues(obj) {
+  return Object.keys(obj).map(function(key){
+    return obj[key];
+  });
+}
+
+function objContainsVal(obj, val) {
+  const vals = objValues(obj);
+  for(var i=0; i<vals.length; i++) {
+    if(vals[i] === val) return true;
+  }
+  return false;
+}
+
 // Creates a string version of any object that shows all key and value pairs.
 function stringObj(obj) {
   const keys = Object.keys(obj);
-  const vals = keys.map(function(key) {
-    return obj[key];
-  });
+  const vals = objValues(obj);
   var str = '';
   for(var i=0; i<keys.length; i++) {
     str += keys[i]+': '+vals[i]+'\n';
