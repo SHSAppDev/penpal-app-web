@@ -53,15 +53,16 @@ StatSummary.prototype.loadConversationStats = function() {
     // recipientUIDs is an array containing all the uids that the user has conversations with
     // now, I loop through them all and somehow get all the necessary data bits.
     for(var i=0; i<recipientUIDs.length; i++) {
-      new ConvStatElementMachine(recipientUIDs[i], this.myUid);
+      new ConvStatElementMachine(recipientUIDs[i], this.myUid, this.forSelf);
     }
   }.bind(this));
 }
 
-function ConvStatElementMachine(targetUID, myUid) {
+function ConvStatElementMachine(targetUID, myUid, forSelf) {
   this.obj = {};
   this.targetUID = targetUID;
   this.myUid = myUid;
+  this.forSelf = forSelf;
   const uid = targetUID;
   firebase.database().ref('user-data/'+uid).once('value', function(user){
     const displayName = user.val().displayName;
