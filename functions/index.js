@@ -85,16 +85,19 @@ Command.prototype.sendMessage = function() {
 
         admin.database().ref('presence/'+recipientUID).once('value', function(snapshot){
           if(!snapshot.val()) { // Only increment unread messages if user is offline
+            var newUnreadMessages = 0;
             admin.database().ref(recipientConvContainerRef.path+'/'+pushId+'/unreadMessages')
-              .transaction(function(unreadMessages){
-                return (unreadMessages || 0) + 1;
+              .transaction(function(oldUnreadMessages){
+                newUnreadMessages = (oldUnreadMessages || 0) + 1;
+                return newUnreadMessages;
               }.bind(this)).then(function(){
-                if((unreadMessages + 1) % 3 === 0) {
+                console.log("New Unread Messages: "+newUnreadMessages);
+                if(newUnreadMessages % 3 === 0) {
                   admin.database().ref('user-data/'+recipientUID).once('value', function(snapshot){
                     const recipientEmail = snapshot.val().email;
                     const recipientName = snapshot.val().displayName;
                     sendAnEmail(recipientEmail,
-                      'You have '+(unreadMessages+1)+' new messages from '+displayName+'.',
+                      'You have '+newUnreadMessages+' new messages from '+displayName+'.',
                       'Hello '+(recipientName?recipientName:'')+'! You have '+(unreadMessages+1)+
                       ' new messages from '+displayName+'. Don\'t keep your ePenPal waiting. ' +
                       'Log into http://worldwithoutborders.ml/ to send a reply!');
