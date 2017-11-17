@@ -68,38 +68,57 @@ Command.prototype.sendMessage = function() {
     // Success already is called when the main message object is saved (code above).
     // unread messages won't get incremented if the recipeient user is online.
     // console.log('about to set unreadMessages');
-    admin.database().ref('presence/'+recipientUID).once('value', function(snapshot){
+    // admin.database().ref('presence/'+recipientUID).once('value', function(snapshot){
+      // if(snapshot.val()) {
+      //   // console.log('was going to increment unread messages but user is online');
+      // } else {
+    const recipientConvContainerRef = admin.database()
+      .ref('user-data/'+recipientUID+'/conversations')
+      .orderByChild('recipientUID').equalTo(this.uid).limitToFirst(1);
+    recipientConvContainerRef.once('value', function(snapshot){
+      // Snapshot.val() should contain 1 child that has an arbitray pushId
+      // The value is the recipient's conversation obj
+      // There is however a chance the recipient doesn't have the conversation added yet...
       if(snapshot.val()) {
-        // console.log('was going to increment unread messages but user is online');
-      } else {
-        const recipientConvContainerRef = admin.database()
-          .ref('user-data/'+recipientUID+'/conversations')
-          .orderByChild('recipientUID').equalTo(this.uid).limitToFirst(1);
-        recipientConvContainerRef.once('value', function(snapshot){
-          // Snapshot.val() should contain 1 child that has an arbitray pushId
-          // The value is the recipient's conversation obj
-          const pushId = Object.keys(snapshot.val())[0];
-          const unreadMessages = snapshot.val()[pushId].unreadMessages;
-          admin.database().ref(recipientConvContainerRef.path+'/'+pushId+'/unreadMessages')
-            .transaction(function(unreadMessages){
-              return (unreadMessages || 0) + 1;
-            }.bind(this)).then(function(){
-              if((unreadMessages + 1) % 3 === 0) {
-                admin.database().ref('user-data/'+recipientUID).once('value', function(snapshot){
-                  const recipientEmail = snapshot.val().email;
-                  const recipientName = snapshot.val().displayName;
-                  sendAnEmail(recipientEmail,
-                    'You have '+(unreadMessages+1)+' new messages from '+displayName+'.',
-                    'Hello '+(recipientName?recipientName:'')+'! You have '+(unreadMessages+1)+
-                    ' new messages from '+displayName+'. Don\'t keep your ePenPal waiting. ' +
-                    'Log into http://worldwithoutborders.ml/ to send a reply!');
-                }.bind(this));
-              }
-            }.bind(this));
+        const pushId = Object.keys(snapshot.val())[0];
+        const unreadMessages = snapshot.val()[pushId].unreadMessages;
 
-        }.bind(this));
-      }
+        admin.database().ref('presence/'+recipientUID).once('value', function(snapshot){
+          if(!snapshot.val()) { // Only increment unread messages if user is offline
+            admin.database().ref(recipientConvContainerRef.path+'/'+pushId+'/unreadMessages')
+              .transaction(function(unreadMessages){
+                return (unreadMessages || 0) + 1;
+              }.bind(this)).then(function(){
+                if((unreadMessages + 1) % 3 === 0) {
+                  admin.database().ref('user-data/'+recipientUID).once('value', function(snapshot){
+                    const recipientEmail = snapshot.val().email;
+                    const recipientName = snapshot.val().displayName;
+                    sendAnEmail(recipientEmail,
+                      'You have '+(unreadMessages+1)+' new messages from '+displayName+'.',
+                      'Hello '+(recipientName?recipientName:'')+'! You have '+(unreadMessages+1)+
+                      ' new messages from '+displayName+'. Don\'t keep your ePenPal waiting. ' +
+                      'Log into http://worldwithoutborders.ml/ to send a reply!');
+                  }.bind(this));
+                }
+              }.bind(this));
+            }
+          }.bind(this));
+
+
+        } else {
+          // Uh Oh! The recipient doesn't have the conversation!
+          admin.database().ref('user-data/'+recipientUID+'/conversations').push({
+            recipientUID: this.uid,
+            unreadMessages: 1
+          }).then(function(){
+            // this.success("Successfully added conversation with uid "+recipientUID);
+            console.log("Send message! The recipient didn't yet have a conversation, so it was added!");
+          }.bind(this));
+        }
+
     }.bind(this));
+      // }
+    // }.bind(this));
 
 
   } else {
