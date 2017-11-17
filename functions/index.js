@@ -109,7 +109,7 @@ Command.prototype.sendMessage = function() {
 
 Command.prototype.addConversation = function() {
   const recipientUID = this.params.recipientUID;
-  const recipientEmail = this.params.recipeientEmail;
+  const recipientEmail = this.params.recipientEmail;
   if(recipientUID) {
     // It's easiest to do this if we just know the recipientUID
     //   1) Add to my own conversation
