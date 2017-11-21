@@ -52,7 +52,7 @@ AddConversation.prototype.addConversationToDatabase = function() {
           'recipientUID': uid
         }, {
           success: function(resp) {
-            Materialize.toast(value[uid].displayName+" was added to your conversations!");
+            Materialize.toast(value[uid].displayName+" was added to your conversations!", 3000);
             this.emailField.value = "";
             this.$progress.css({display: 'none'});
           }.bind(this),

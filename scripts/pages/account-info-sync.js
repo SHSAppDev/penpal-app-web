@@ -13,31 +13,17 @@ AccountInfoSync.prototype.onAuthStateChanged = function(user) {
 
     this.userRef = firebase.database().ref('user-data/'+firebase.auth().currentUser.uid);
 
-    if(!this.editProfile) {
-      //ASAP update the user's profile as much as you can.
-      var updates = {};
-      updates['/displayName'] = firebase.auth().currentUser.displayName;
-      updates['/email'] = firebase.auth().currentUser.email;
-      updates['/photoURL'] = firebase.auth().currentUser.photoURL;
-      updates['/uid'] = firebase.auth().currentUser.uid;
-      this.userRef.update(updates);
-    }
-
-
     //This might be their first time using the app, so good to check
     this.userRef.child('registered').once('value', function(data){
-      if(!this.editProfile && data.val() && data.val()===true) {
-        //Already registered!!! Go on to the app!
-        window.location.href = 'dashboard.html'
-      } else {
-        // Not yet registered. Or the profile is being editted. Unhide the content ui.
-        document.getElementById('content').style.display = 'block';
+      const registered = data.val();
+      if(registered && this.editProfile) {
+        //Time to edit the profile!
+        // Show UI
+        // document.getElementById('content').style.display = 'block';
         this.initForm();
-
-        //UI tweaks if profile is simply being editted.
+        //UI tweaks for when profile is simply being edited.
         document.getElementById('welcome-text').style.display = 'none';
         document.getElementById('submit-button').innerHTML = 'Save';
-
         //Might we also need to display a special message?
         const message = getParameterByName('message');
         if(message) {
@@ -45,6 +31,21 @@ AccountInfoSync.prototype.onAuthStateChanged = function(user) {
           window.alert(message);
         }
 
+      } else if(registered) {
+        //GO TO THE APP
+        window.location.href = 'dashboard.html'
+      } else {
+        //First time using the app!
+        // Show UI
+        // document.getElementById('content').style.display = 'block';
+        this.initForm();
+        //ASAP update the user's profile as much as you can.
+        var updates = {};
+        updates['/displayName'] = firebase.auth().currentUser.displayName;
+        updates['/email'] = firebase.auth().currentUser.email;
+        updates['/photoURL'] = firebase.auth().currentUser.photoURL;
+        updates['/uid'] = firebase.auth().currentUser.uid;
+        this.userRef.update(updates);
       }
     }.bind(this));
 
@@ -52,6 +53,7 @@ AccountInfoSync.prototype.onAuthStateChanged = function(user) {
 };
 
 AccountInfoSync.prototype.initForm = function() {
+  document.getElementById('content').style.display = 'block';
   this.fullNameField = document.getElementById('full-name');
   this.emailField = document.getElementById('email');
   this.schoolCodeField = document.getElementById('school-code');
