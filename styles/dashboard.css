@@ -230,7 +230,13 @@ body {
   margin-right: 5px; }
 
 #sidebar {
-  margin-top: 5px; }
+  margin-top: 5px;
+}
+
+#conversation-list {
+  max-height: 74vh;
+  overflow-y: auto;
+}
 
 #nav-bar {
   padding-left: 10px;
@@ -244,7 +250,7 @@ body {
 #chat {
   margin-top: 6.5px;
   padding: 0px 0px 0px 10px;
-  overflow-y: auto;
+  overflow-y: scroll;
   height: 72vh;
   margin-bottom: 0.1px;
   /*margin-left: 7.5px;*/ }

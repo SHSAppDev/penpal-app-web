@@ -96,30 +96,32 @@
 
     <!-- Content -->
     <div class="row">
-        <div id="sidebar" class="col s12 m12 l2 teal white-text">
-        <span class="translate">Conversations</span>
-        <div class="preloader-wrapper active" id="conversations-preloader">
-            <div class="spinner-layer spinner-red-only">
-                <div class="circle-clipper left">
-                    <div class="circle"></div>
-                </div>
-                <div class="gap-patch">
-                    <div class="circle"></div>
-                </div>
-                <div class="circle-clipper right">
-                    <div class="circle"></div>
+        <div id="sidebar" class="col s12 m12 l2 teal white-text" style="margin-top: 15px;">
+          <center class="translate">Conversations</center>
+          <!-- <div id="conversations-card" class="card z-depth-3"> -->
+            <div class="preloader-wrapper active" id="conversations-preloader">
+                <div class="spinner-layer spinner-red-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div id="conversation-list" class="collection z-depth-3">
-        </div>
-            <a id="add-people-button" class="btn-large waves-effect waves-light red lighten-1" href="#add-conversation"><span class="translate">Add</span><i class="material-icons"> people</i></a>
-            </a>
+            <div id="conversation-list" class="collection z-depth-3">
+            </div>
+          <!-- </div> -->
+          <a id="add-people-button" class="btn-large waves-effect waves-light red lighten-1" href="#add-conversation"><span class="translate">Add</span><i class="material-icons"> people</i></a>
+
         </div>
 
         <div class="col s12 m12 l10">
-            <div class="translate card-panel" style="margin-top: 33px;" hidden id="nothing-to-display">
+            <div class="translate card-panel" style="margin-top: 43px;" hidden id="nothing-to-display">
                 <p class="center-align">Nothing to show yet :)</p>
                 <p class="center-align">Click a conversation from your conversation list</p>
                 <p class="center-align">Or click <a style="color: red;" href="#add-conversation">here</a> to start one.</p>
@@ -174,7 +176,7 @@
 
     </div>
 
-    <div id="tools-container" class="col s5 m5 l4 teal" style="margin-top: 5px;" hidden>
+    <div id="tools-container" class="col s5 m5 l4 teal" style="margin-top: 15px;" hidden>
         <center class="white-text translate">Tools</center>
         <!--<div id="chat" class="card z-depth-3">-->
         <ul id="translate-panel" class="collapsible card" data-collapsible="accordion">
