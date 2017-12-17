@@ -137,28 +137,35 @@ Command.prototype.sendMessage = function() {
 
 Command.prototype.addConversation = function() {
   const recipientUID = this.params.recipientUID;
-  const recipientEmail = this.params.recipientEmail;
+  const recipientEmail = this.params.recipientEmail; // <--Assume undefined
   if(recipientUID) {
     // It's easiest to do this if we just know the recipientUID
     //   1) Add to my own conversation
-    admin.database().ref('user-data/'+this.uid+'/conversations').push({
+    return admin.database().ref('user-data/'+this.uid+'/conversations').push({
       recipientUID: recipientUID,
       unreadMessages: 0
     }).then(function(){
       //  2) Add to the recipient's conversations
-      admin.database().ref('user-data/'+recipientUID+'/conversations').push({
+      return admin.database().ref('user-data/'+recipientUID+'/conversations').push({
         recipientUID: this.uid,
         unreadMessages: 0
       }).then(function(){
-        this.success("Successfully added conversation with uid "+recipientUID);
+        return admin.database().ref('user-data/'+recipientUID).once('value', function(snapshot){
+          const notifyAddress = snapshot.val().email;
+          // console.log("notifyAddress: "+notifyAddress);
+          // console.log("snapshot val: "+stringObjRecursive(snapshot.val()));
+          return sendAnEmail(notifyAddress, "You have a new conversation!", "Someone new wants to talk to you! Log into http://worldwithoutborders.ml/ to keep the conversation going!")
+            .then(this.success.bind(this, "Successfully added conversation with uid "+this.params.recipientUID));
+        }.bind(this));
+
       }.bind(this));
     }.bind(this));
   } else if(recipientEmail) {
     // A little harder but still doable. TODO Make it work.
-    this.error("Adding by email not supported yet. Sry.");
+    return this.error("Adding by email not supported yet. Sry.");
   } else {
     // Best error.
-    this.console.error("For addConversation please supply parameter for " +
+    return this.error("For addConversation please supply parameter for " +
       "either recipeientEmail or recipientUID");
   }
 }
@@ -353,6 +360,7 @@ function sendWelcomeEmail(email, displayName) {
 }
 
 function sendAnEmail(emailAddress, subject, text) {
+  console.log('send email request for '+emailAddress);
   const mailOptions = {
     from: `${APP_NAME} <noreply@firebase.com>`,
     to: emailAddress,
