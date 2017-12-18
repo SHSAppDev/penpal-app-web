@@ -59,6 +59,7 @@ SchoolPage.prototype.initializeUserListForGivenSchool = function(schoolCode) {
       this.optionsContainer.appendChild(schoolListElement);
 
       const userObjs = data.val().students?Object.values(data.val().students):[];
+      const listItems = [];
       for(var i=0; i<userObjs.length; i++) {
         const each = userObjs[i];
         if(each.uid == firebase.auth().currentUser.uid) continue;
@@ -69,8 +70,19 @@ SchoolPage.prototype.initializeUserListForGivenSchool = function(schoolCode) {
         listItem.querySelector('.photo').src = each.photoURL;
         listItem.querySelector('.email').textContent = each.email;
 
-        schoolListElement.appendChild(listItem);
+        listItems[i] = listItem;
       }
+      listItems.sort(function(a, b) {
+          var splitA = a.querySelector('.display-name').textContent.toUpperCase().split(" ");
+          var splitB = b.querySelector('.display-name').textContent.toUpperCase().split(" ");
+          var textA = splitA[splitA.length-1];
+          var textB = splitB[splitB.length-1];
+          return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+      });
+      for(var i=0; i<listItems.length; i++) {
+        schoolListElement.appendChild(listItems[i]);
+      }
+
     } else {
       window.alert("There were no schools found with that code.");
     }
