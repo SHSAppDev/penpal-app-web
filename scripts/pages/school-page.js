@@ -33,7 +33,8 @@ SchoolPage.prototype.onAuthStateChanged = function(user) {
     // }.bind(this));
     firebase.database().ref('user-data/'+firebase.auth().currentUser.uid)
       .once('value', function(snapshot){
-        const schoolCode = snapshot.val().schoolCode;
+        this.myProfile = snapshot.val();
+        const schoolCode = this.myProfile.schoolCode;
         if(schoolCode) {
           // The user has an associated school. Site can proceed normally.
           document.getElementById('body').style.display = 'block';
@@ -72,6 +73,8 @@ SchoolPage.prototype.initializeUserListForGivenSchool = function(schoolCode) {
 
         listItems[i] = listItem;
       }
+
+      // Sort alphabetically
       listItems.sort(function(a, b) {
           var splitA = a.querySelector('.display-name').textContent.toUpperCase().split(" ");
           var splitB = b.querySelector('.display-name').textContent.toUpperCase().split(" ");
@@ -79,6 +82,8 @@ SchoolPage.prototype.initializeUserListForGivenSchool = function(schoolCode) {
           var textB = splitB[splitB.length-1];
           return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
       });
+
+      // Now add to the school list element.
       for(var i=0; i<listItems.length; i++) {
         schoolListElement.appendChild(listItems[i]);
       }

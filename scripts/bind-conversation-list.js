@@ -52,7 +52,7 @@ LoadConversationList.prototype.loadConversations = function() {
 
 // Template for conversation in conversation list.
 LoadConversationList.CONVERSATION_TEMPLATE =
-    '<a href=# class="collection-item avatar">' +
+    '<a href=# class="collection-item avatar" style="overflow: hidden;">' +
       '<span><img class="pic circle" src=#></span>' +
       '<span class="name title" style="color:black">Name</span>' +
       '<div class="active-indicator" hidden>' +
@@ -141,10 +141,20 @@ LoadConversationList.prototype.sortConversations = function(){
     conv.ranking = ranking;
   }
 
-  // console.log('CONV RANKINGS: '+rankings);
   // now, time to actually sort the conversations
-  // allConversations.sort(function(a, b) {a.querySelector('.name').textContent - b.querySelector('.name').textContent} );
+
+  // Sort alphabetically
+  allConversations.sort(function(a, b) {
+      var splitA = a.querySelector('.name').textContent.toUpperCase().split(" ");
+      var splitB = b.querySelector('.name').textContent.toUpperCase().split(" ");
+      var textA = splitA[splitA.length-1];
+      var textB = splitB[splitB.length-1];
+      return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+  });
+
+  // by ranking
   allConversations.sort(function(a, b){ return b.ranking - a.ranking });
+
   $(this.conversationList).empty();
   for(var i=0; i<allConversations.length; i++) {
     this.conversationList.appendChild(allConversations[i]);
