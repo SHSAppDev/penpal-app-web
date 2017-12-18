@@ -33,7 +33,8 @@ SchoolPage.prototype.onAuthStateChanged = function(user) {
     // }.bind(this));
     firebase.database().ref('user-data/'+firebase.auth().currentUser.uid)
       .once('value', function(snapshot){
-        const schoolCode = snapshot.val().schoolCode;
+        this.myProfile = snapshot.val();
+        const schoolCode = this.myProfile.schoolCode;
         if(schoolCode) {
           // The user has an associated school. Site can proceed normally.
           document.getElementById('body').style.display = 'block';
@@ -59,6 +60,7 @@ SchoolPage.prototype.initializeUserListForGivenSchool = function(schoolCode) {
       this.optionsContainer.appendChild(schoolListElement);
 
       const userObjs = data.val().students?Object.values(data.val().students):[];
+      const listItems = [];
       for(var i=0; i<userObjs.length; i++) {
         const each = userObjs[i];
         if(each.uid == firebase.auth().currentUser.uid) continue;
@@ -69,8 +71,23 @@ SchoolPage.prototype.initializeUserListForGivenSchool = function(schoolCode) {
         listItem.querySelector('.photo').src = each.photoURL;
         listItem.querySelector('.email').textContent = each.email;
 
-        schoolListElement.appendChild(listItem);
+        listItems[i] = listItem;
       }
+
+      // Sort alphabetically
+      listItems.sort(function(a, b) {
+          var splitA = a.querySelector('.display-name').textContent.toUpperCase().split(" ");
+          var splitB = b.querySelector('.display-name').textContent.toUpperCase().split(" ");
+          var textA = splitA[splitA.length-1];
+          var textB = splitB[splitB.length-1];
+          return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+      });
+
+      // Now add to the school list element.
+      for(var i=0; i<listItems.length; i++) {
+        schoolListElement.appendChild(listItems[i]);
+      }
+
     } else {
       window.alert("There were no schools found with that code.");
     }
