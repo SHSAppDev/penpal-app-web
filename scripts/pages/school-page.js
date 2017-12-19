@@ -8,7 +8,7 @@ function SchoolPage() {
   // this.searchButton.addEventListener('click', function(){
   //   this.initializeAllOptions(this.schoolCodeInput.value);
   // }.bind(this));
-  this.optionsContainer = document.getElementById('options-container');
+  this.optionsContainer = document.getElementById('users-container');
   this.initFirebase();
 }
 
@@ -111,17 +111,18 @@ SchoolPage.prototype.initializeAllOptions = function(schoolCode) {
 
 SchoolPage.SCHOOL_LIST_TEMPLATE =
   '<ul class="collection with-header">' +
-    '<li class="collection-header"><h4 class="school-name">School Name</h4></li>' +
+  '<li class="collection-header"><h4 style="text-align:center; height: auto; font-size: 30px; color: black" class="school-name">School Name</h4></li>' +
   '</ul>';
 SchoolPage.USER_LIST_ITEM =
-  '<li class="collection-item avatar">' +
+    '<li class="collection-item avatar">' +
     '<div>' +
-      '<img src=# class="circle photo"></img>' +
-      '<span class="title display-name">Alvin</span>' +
-      //'<button class="secondary-content">ADD</button>' +
-      '<p class="email"></p>' +
+    // '<a class="anchor" href=#>' +
+    '<img src=# class="circle photo"></img>' +
+    '<span class="title display-name">Alvin</span>' +
+    '<p class="email"></p>' +
+    // '</a>' +
     '</div>' +
-  '</li>';
+    '</li>';
 
 // Stolen from stack overflow. Useful!
 // http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript

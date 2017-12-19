@@ -56,7 +56,7 @@ LoadConversationList.CONVERSATION_TEMPLATE =
       '<span><img class="pic circle" src=#></span>' +
       '<span class="name title" style="color:black">Name</span>' +
       '<div class="active-indicator" hidden>' +
-        '<div class="active-green-circle"></div><span>Online</span>' +
+        '<div class="active-green-circle"></div><span class="translate">Online</span>' +
       '</div>' +
       '<span class="new badge">0</span>'+
     '</a>';

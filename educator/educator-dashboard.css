@@ -206,13 +206,14 @@ md-elevation-transition {
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12); }
 
 body {
-  background-color: #009688; 
+  background-color: #009688;
   display: flex;
   justify-content: center;
 }
 
 #sidebar {
-  margin-top: 5px; }
+  margin-top: 5px;
+}
 
 #nav-bar {
   padding-left: 10px;
@@ -240,8 +241,8 @@ body {
   }
 
   #users-container {
-     margin: 30px auto 30px auto; 
-     width: 400px; 
+     margin: 30px auto 30px auto;
+     width: 400px;
     text-align: left;
   }
 
