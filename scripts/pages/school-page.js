@@ -70,6 +70,11 @@ SchoolPage.prototype.initializeUserListForGivenSchool = function(schoolCode) {
         listItem.querySelector('.display-name').textContent = each.displayName;
         listItem.querySelector('.photo').src = each.photoURL;
         listItem.querySelector('.email').textContent = each.email;
+        if(this.IAlreadyHaveConversationWith(each.uid)) {
+          listItem.querySelector('a.add-conv-button').setAttribute('disabled', true);
+          listItem.querySelector('a.add-conv-button i').innerHTML = 'check';
+
+        }
 
         listItems[i] = listItem;
       }
@@ -115,14 +120,26 @@ SchoolPage.SCHOOL_LIST_TEMPLATE =
   '</ul>';
 SchoolPage.USER_LIST_ITEM =
     '<li class="collection-item avatar">' +
-    '<div>' +
+    '<div style="float: left">' +
     // '<a class="anchor" href=#>' +
     '<img src=# class="circle photo"></img>' +
     '<span class="title display-name">Alvin</span>' +
     '<p class="email"></p>' +
     // '</a>' +
     '</div>' +
+    '<a class="add-conv-button btn-floating btn-medium waves-effect waves-light red" style="float: right"><i class="material-icons">person_add</i></a>' +
     '</li>';
+
+// tells us if our current user already has a conversation with the specified uid
+// this.myProfile must be defined before the function is called.
+SchoolPage.prototype.IAlreadyHaveConversationWith = function(uid) {
+  const conversations = Object.values(this.myProfile.conversations);
+  for(var i=0; i<conversations.length; i++) {
+    const conv = conversations[i];
+    if(conv.recipientUID == uid) return true;
+  }
+  return false;
+}
 
 // Stolen from stack overflow. Useful!
 // http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
