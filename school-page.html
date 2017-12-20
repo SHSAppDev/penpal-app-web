@@ -55,16 +55,30 @@
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 
-    <a style="color: white;" class="center-align translate" id="back-button" href="dashboard.html">Back to Conversations</a>
+    <a style="color: white; float: left; margin-left: 50px;" class="center-align translate" id="back-button" href="dashboard.html">
+      <i class="material-icons" style="vertical-align: bottom">arrow_back</i>
+      <span style="font-size: 15px">Back to Conversations</span>
+    </a>
 
     <!-- <p>Type your school code in here to see a list of options.</p>
     <input type="text" id="school-code-input"></input>
     <button id="search-button">Search</button> -->
 
 
-    <div id="options-container">
+    <div id="users-container" style="clear: left">
 
     </div>
+    <!-- <div class="preloader-wrapper small active">
+      <div class="spinner-layer spinner-red-only">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div> -->
 
     <!--This card and all the rest that follow are statistics about each individual conversation.
     Eventually, cards like these will be programatically generated.-->
@@ -88,6 +102,7 @@
       };
       firebase.initializeApp(config);
     </script>
+    <script src="scripts/command.js"></script>  
     <script src="scripts/pages/school-page.js"></script>
 
   </body>

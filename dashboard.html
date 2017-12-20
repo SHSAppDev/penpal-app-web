@@ -71,7 +71,7 @@
             <a href="#" data-activates="mobile-demo" class="button-collapse" id="button-collapse"><i class="material-icons">menu</i></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li>
-                  <a href="school-page.html">My School</a>
+                  <a href="school-page.html" class="translate">My School</a>
                 </li>
                 <li>
                     <!-- <a id="user-name" href='profile-page.html' hidden>Username</a> -->
@@ -86,6 +86,7 @@
             <ul class="side-nav" id="mobile-demo">
                 <li>
                     <a id="sign-out-mobile">Sign-out</a>
+                    <a href="school-page.html" class="translate">My School</a>
                     <a href="account-info-sync.html?editProfile=true" class="translate">Edit Profile</a>
                     <a href="stat-summary.html" class="translate">View Stat Summary</a>
 
@@ -133,7 +134,7 @@
               <span class="display-name"></span>
               <span class="local-time translate"></span>
               <span>
-                <a href="#bell-modal" id="bell" style='color:white;'>
+                <a href="#bell-modal" id="bell" class="btn-floating btn-small waves-effect waves-light red" style='color:white;vertical-align:bottom;'>
                   <i class="material-icons" style="font-size:25px;">notifications_active</i>
                 </a>
               </span>
@@ -287,27 +288,18 @@
     <!-- bell-modal -->
     <div id="bell-modal" class="modal">
         <div class="modal-content translate">
+          <center>
             <h4>Are you sure you want to notify <span>name</span>?</h4>
-            <button id="send-notification" class="red lighten-1 btn waves-effect waves-light">
+            <button id="send-notification" class="red lighten-1 btn waves-effect waves-light" style="margin:20px">
               </span>Yes</span>
             </button>
-            <button class="modal-action modal-close red lighten-1 btn waves-effect waves-light">
+            <button class="modal-action modal-close red lighten-1 btn waves-effect waves-light" style="margin:20px">
               </span>No Thanks</span>
             </button>
-            <div id="send-notification-progress" class="progress" style="display:none;">
-               <div class="indeterminate"></div>
-            </div>
-            <!-- <div class="preloader-wrapper small active">
-              <div class="spinner-layer spinner-white-only">
-                <div class="circle-clipper left">
-                  <div class="circle"></div>
-                </div><div class="gap-patch">
-                  <div class="circle"></div>
-                </div><div class="circle-clipper right">
-                  <div class="circle"></div>
-                </div>
-              </div>
-            </div> -->
+          <center>
+          <div id="send-notification-progress" class="progress" style="display:none;">
+             <div class="indeterminate"></div>
+          </div>
         </div>
         <div class="modal-footer">
             <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat translate">Cancel</a>
