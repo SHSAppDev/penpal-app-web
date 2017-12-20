@@ -80,9 +80,9 @@ SchoolPage.prototype.initializeUserListForGivenSchool = function(schoolCode) {
           addConvButton.setAttribute('disabled', true);
           addConvButtonIcon.innerHTML = 'check';
         } else {
-          console.log('adding click event for addConvButton');
+          // console.log('adding click event for addConvButton');
           $(addConvButton).click(function(){
-            console.log('clicked! '+addConvButton.id);
+            // console.log('clicked! '+addConvButton.id);
             addConvButton.style.display = 'none';
             loader.style.display = 'block';
             this.command.requestFunction('addConversation',{recipientUID: each.uid},
