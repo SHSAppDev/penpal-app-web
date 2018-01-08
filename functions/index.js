@@ -178,8 +178,9 @@ Command.prototype.addConversation = function() {
 
 Command.prototype.registerInSchool = function() {
     const userRef = admin.database().ref('/user-data/'+this.uid);
-
-    userRef.once('value', function(data) {
+    console.log('RUNNING registerInSchool');
+    return userRef.once('value', function(data) {
+      console.log('Fetched user Ref');
       const displayName = data.val().displayName;
       const email = data.val().email;
       const photoURL = data.val().photoURL;
@@ -188,6 +189,8 @@ Command.prototype.registerInSchool = function() {
       // console.log(this.params);
       const schoolRef = admin.database().ref('/schools/'+this.params.schoolCode);
       return schoolRef.once('value', function(data) {
+        // console.log('Fetched School ref');
+
         if(data.val()) {
           // If user already exists in school, don't push a new object.
           const allStudents = objValues(data.val().students?data.val().students:[]);
@@ -195,31 +198,33 @@ Command.prototype.registerInSchool = function() {
             const each = allStudents[i];
             if(each.uid === myUid) return this.success("You are already registered for this school!");
           }
-          schoolRef.child('students').push({
+          // console.log('User not already in the school. About to add.');
+
+          return schoolRef.child('students').push({
             'displayName': displayName,
             'email': email,
             'photoURL': photoURL,
             'uid': this.uid
           }).then(function(){
-            userRef.update({'/schoolCode': this.params.schoolCode}).then(function(){
+            // console.log('about to update user school code');
+            return userRef.update({'/schoolCode': this.params.schoolCode}).then(function(){
+              // console.log('UPDATED user '+this.uid+' school code to '+this.params.schoolCode);
               if(myOldSchoolCode) {
+
                 // Clear the old school of the user's account if he/she was in an old school.
-                // console.log('old school code: '+myOldSchoolCode);
                 const oldSchoolRef = admin.database().ref('/schools/'+myOldSchoolCode);
-                oldSchoolRef.child('students').orderByChild('uid')
+                return oldSchoolRef.child('students').orderByChild('uid')
                  .equalTo(myUid).once('value', function(data){
-                  //  console.log('query data: '+data.val());
                    if(data.val()){
                      //Student must be taken out of old school.
                      const pushKey = Object.keys(data.val())[0];
                     //  console.log("push key:"+ data.key);
-                     oldSchoolRef.child('students/'+pushKey).set(null).then(function(){
-                      //  console.log('student removed from old school');
-                       this.success('Successfully registered for school! '+this.params.schoolCode);
+                     return oldSchoolRef.child('students/'+pushKey).set(null).then(function(){
+                       // Done taking out of the old school
+                       return this.success('Successfully registered for school! '+this.params.schoolCode);
                      }.bind(this));
                    } else {
-                     //the student wasn't in the old school. weird. done.
-                    //  console.log("the student wasn't in the old school. weird. done.");
+                     // the student wasn't in the old school. weird. done removing i guess.
                      this.success('Successfully registered for school! '+this.params.schoolCode);
                    }
                 }.bind(this));
@@ -314,6 +319,14 @@ exports.requestFunction = functions.database.ref('/function-requests/{pushId}')
         console.error("Data for function request must have action and params children.");
         cmd.error("Data for function request must have action and params children.");
       }
+});
+
+exports.updateRecentActivityTimestamp = functions.database.ref('/presence/{uid}')
+.onWrite(event => {
+  const uid = event.params.uid;
+  const online = event.data.val(); //lol we actually don't need this...
+  const currentTimestamp = admin.database.ServerValue.TIMESTAMP;
+  return admin.database().ref('/recent-activity-timestamps/'+uid).set(currentTimestamp);
 });
 
 // exports.deleteFuncReq = functions.database.ref('/function-requests/{pushId}/delete')
