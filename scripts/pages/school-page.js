@@ -67,10 +67,22 @@ SchoolPage.prototype.initializeUserListForGivenSchool = function(schoolCode) {
         if(each.uid == firebase.auth().currentUser.uid) continue;
         var temp = document.createElement('div');
         temp.innerHTML = SchoolPage.USER_LIST_ITEM;
-        var listItem = temp.firstChild;
+        const listItem = temp.firstChild;
         listItem.querySelector('.display-name').textContent = each.displayName;
         listItem.querySelector('.photo').src = each.photoURL;
         listItem.querySelector('.email').textContent = each.email;
+
+        firebase.database().ref('recent-activity-timestamps/'+each.uid).once('value', function(data){
+          const activityTimestamp = data.val();
+          // console.log('here '+activityTimestamp);
+          if(!activityTimestamp) return;
+          const currentTimestamp = new Date().getTime();
+          const difference = currentTimestamp - activityTimestamp;
+          const estimate = millisecondsToTimeDurationEstimate(difference);
+          // console.log('estimate: '+millisecondsToTimeDurationEstimate(difference));
+          listItem.querySelector('.last-active').innerHTML = 'Active '+estimate+' ago';
+          listItem.querySelector('.last-active').removeAttribute('hidden');
+        }.bind(this));
 
         const addConvButton = listItem.querySelector('a.add-conv-button');
         addConvButton.id = 'add-conv-button-'+each.uid;
@@ -119,6 +131,7 @@ SchoolPage.prototype.initializeUserListForGivenSchool = function(schoolCode) {
       // Now add to the school list element.
       for(var i=0; i<listItems.length; i++) {
         schoolListElement.appendChild(listItems[i]);
+        console.log('school list item appended');
       }
 
     } else {
@@ -152,7 +165,8 @@ SchoolPage.USER_LIST_ITEM =
       // '<a class="anchor" href=#>' +
         '<img src=# class="circle photo"></img>' +
         '<span class="title display-name">Alvin</span>' +
-        '<p class="email"></p>' +
+        '<p class="email" style="color: grey"></p>' +
+        '<p class="translate last-active" style="color: grey" hidden> </p>' +
       // '</a>' +
       '</div>' +
       '<a class="add-conv-button btn-floating btn-medium waves-effect waves-light red" style="float: right"><i class="material-icons">person_add</i></a>' +
@@ -170,6 +184,32 @@ SchoolPage.prototype.IAlreadyHaveConversationWith = function(uid) {
     if(conv.recipientUID == uid) return true;
   }
   return false;
+}
+
+// Will return a string that gives a time duration estimate that's a whole
+// number on the order of minutes, hours, days, months, or years.
+// E.g. may output "10 minutes" or "2 months"
+// If the duration is less than 1 minute, the function will still output '1 minute'
+function millisecondsToTimeDurationEstimate(millis) {
+  const seconds = millis / 1000;
+  const minutes = seconds / 60;
+  const hours = minutes / 60;
+  const days = hours / 24;
+  const months = days / 31; //I'M LAZY
+  const years = months / 12;
+  if(years > 1) {
+    return ''+Math.round(years)+' years';
+  } else if(months > 1) {
+    return ''+Math.round(months)+' months';
+  } else if(days > 1) {
+    return ''+Math.round(days)+' days';
+  } else if(hours > 1) {
+    return ''+Math.round(hours)+' hours';
+  } else if(minutes > 1) {
+    return ''+Math.round(minutes)+' minutes';
+  } else {
+    return '1 minute';
+  }
 }
 
 // Stolen from stack overflow. Useful!

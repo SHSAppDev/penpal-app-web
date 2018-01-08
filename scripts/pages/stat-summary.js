@@ -38,8 +38,18 @@ StatSummary.prototype.onAuthStateChanged = function(user) {
       document.getElementById('email').textContent = data.val().email;
       document.getElementById('profile-pic').src = data.val().photoURL;
       document.getElementById('user-card').style.display="flex";
-
+      // console.log('profile finished');
     }.bind(this));
+
+    // this.database.ref('recent-activity-timestamps/'+this.myUid).once('value', function(data){
+    //   const activityTimestamp = data.val();
+    //   console.log('here '+activityTimestamp);
+    //   if(!activityTimestamp) return;
+    //   const currentTimestamp = new Date().getTime();
+    //   const difference = currentTimestamp - activityTimestamp;
+    //   console.log('Timestamp difference '+difference);
+    //   console.log('estimate: '+millisecondsToTimeDurationEstimate(difference));
+    // }.bind(this));
 
   }
 };
@@ -161,6 +171,32 @@ function getParameterByName(name, url) {
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+// Will return a string that gives a time duration estimate that's a whole
+// number on the order of minutes, hours, days, months, or years.
+// E.g. may output "10 minutes" or "2 months"
+// If the duration is less than 1 minute, the function will still output '1 minute'
+function millisecondsToTimeDurationEstimate(millis) {
+  const seconds = millis / 1000;
+  const minutes = seconds / 60;
+  const hours = minutes / 60;
+  const days = hours / 24;
+  const months = days / 31; //I'M LAZY
+  const years = months / 12;
+  if(years > 1) {
+    return ''+Math.round(years)+' years';
+  } else if(months > 1) {
+    return ''+Math.round(months)+' months';
+  } else if(days > 1) {
+    return ''+Math.round(days)+' days';
+  } else if(hours > 1) {
+    return ''+Math.round(hours)+' hours';
+  } else if(minutes > 1) {
+    return ''+Math.round(minutes)+' minutes';
+  } else {
+    return '1 minute';
+  }
 }
 
 // function httpGetAsync(theUrl, callback)

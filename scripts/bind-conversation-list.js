@@ -58,6 +58,7 @@ LoadConversationList.CONVERSATION_TEMPLATE =
       '<div class="active-indicator" hidden>' +
         '<div class="active-green-circle"></div><span class="translate">Online</span>' +
       '</div>' +
+      '<div class="last-active translate" style="color: grey" hidden></div>' +
       '<span class="new badge">0</span>'+
     '</a>';
 
@@ -110,8 +111,25 @@ LoadConversationList.prototype.displayConversation = function(recipientUID, myCo
       const live = snapshot.val();
       if(live){
         div.querySelector('.active-indicator').removeAttribute('hidden');
+        div.querySelector('.last-active').setAttribute('hidden', true);
       } else {
         div.querySelector('.active-indicator').setAttribute('hidden', true);
+        // Show activity estimate
+        this.database.ref('recent-activity-timestamps/'+recipientUID).once('value', function(data){
+          const activityTimestamp = data.val();
+          // console.log('here '+activityTimestamp);
+          if(!activityTimestamp) return;
+          const currentTimestamp = new Date().getTime();
+          const difference = currentTimestamp - activityTimestamp;
+          const estimate = millisecondsToTimeDurationEstimate(difference);
+          // console.log('estimate: '+millisecondsToTimeDurationEstimate(difference));
+          div.querySelector('.last-active').innerHTML = 'Active '+estimate+' ago';
+          div.querySelector('.last-active').difference = difference;
+          div.querySelector('.last-active').removeAttribute('hidden');
+
+          this.sortConversations();
+
+        }.bind(this));
       }
       this.sortConversations();
     }.bind(this));
@@ -125,18 +143,25 @@ LoadConversationList.prototype.sortConversations = function(){
   // var rankings = [];
   // console.log('sort conversations '+stringObjRecursive(allConversations));
   // RANKING SYSTEM
-  // +100 points for each unread message
-  // TODO +10 points for every (10 - number of days since last message or bell ring)
-  // +1 point for being online (active indicator is visible)
+  // +10000 points for each unread message
+  // +10 points for every ********
+  // +1000 point for being online (active indicator is visible)
   for(var i=0; i<allConversations.length; i++) {
     const conv = allConversations[i];
     var ranking = 0;
     const unreadMessages = parseInt(conv.querySelector('.new').innerHTML);
-    ranking += 100*unreadMessages;
+    ranking += 10000*unreadMessages;
+
+
+    const timeSinceActive = parseInt(conv.querySelector('.last-active').difference);
+    console.log('TIME SINCE ACTIVE: '+timeSinceActive);
+    if(timeSinceActive) {
+      ranking += 100 / ((timeSinceActive+60000) / 60000);
+    }
 
     const activeIndicator = conv.querySelector('.active-indicator');
     if(activeIndicator && !activeIndicator.getAttribute('hidden')) {
-      ranking += 1;
+      ranking += 1000;
     }
     conv.ranking = ranking;
   }
@@ -156,11 +181,39 @@ LoadConversationList.prototype.sortConversations = function(){
   allConversations.sort(function(a, b){ return b.ranking - a.ranking });
 
   $(this.conversationList).empty();
+  // console.log('resorting conversations');
   for(var i=0; i<allConversations.length; i++) {
     this.conversationList.appendChild(allConversations[i]);
+    // console.log('ranking: '+allConversations[i].ranking);
   }
   // this.conversationList.appendChild(allConversations);
 };
+
+// Will return a string that gives a time duration estimate that's a whole
+// number on the order of minutes, hours, days, months, or years.
+// E.g. may output "10 minutes" or "2 months"
+// If the duration is less than 1 minute, the function will still output '1 minute'
+function millisecondsToTimeDurationEstimate(millis) {
+  const seconds = millis / 1000;
+  const minutes = seconds / 60;
+  const hours = minutes / 60;
+  const days = hours / 24;
+  const months = days / 31; //I'M LAZY
+  const years = months / 12;
+  if(years > 1) {
+    return ''+Math.round(years)+' years';
+  } else if(months > 1) {
+    return ''+Math.round(months)+' months';
+  } else if(days > 1) {
+    return ''+Math.round(days)+' days';
+  } else if(hours > 1) {
+    return ''+Math.round(hours)+' hours';
+  } else if(minutes > 1) {
+    return ''+Math.round(minutes)+' minutes';
+  } else {
+    return '1 minute';
+  }
+}
 
 function objValues(obj) {
   return Object.keys(obj).map(function(key){
