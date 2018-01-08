@@ -181,10 +181,10 @@ LoadConversationList.prototype.sortConversations = function(){
   allConversations.sort(function(a, b){ return b.ranking - a.ranking });
 
   $(this.conversationList).empty();
-  console.log('resorting conversations');
+  // console.log('resorting conversations');
   for(var i=0; i<allConversations.length; i++) {
     this.conversationList.appendChild(allConversations[i]);
-    console.log('ranking: '+allConversations[i].ranking);
+    // console.log('ranking: '+allConversations[i].ranking);
   }
   // this.conversationList.appendChild(allConversations);
 };
