@@ -41,6 +41,12 @@ StatSummary.prototype.onAuthStateChanged = function(user) {
       // console.log('profile finished');
     }.bind(this));
 
+    this.backButton = document.getElementById('back-button');
+    if(!this.forSelf) {
+      this.backButton.innerHTML = 'Back to Dashboard';
+      this.backButton.href = 'educator/educator-dashboard.html';
+    }
+
     // this.database.ref('recent-activity-timestamps/'+this.myUid).once('value', function(data){
     //   const activityTimestamp = data.val();
     //   console.log('here '+activityTimestamp);
@@ -125,7 +131,11 @@ ConvStatElementMachine.prototype.addComponent = function(key, value){
        ' message(s) and '+this.obj['wordsSent']+' word(s).';
        stat.querySelector('.received').textContent = subject+' received '+ this.obj['messagesReceived'] +
        ' message(s) and '+this.obj['wordsReceived']+' word(s).';
-       if(this.forSelf) stat.href = 'dashboard.html?targetUID='+this.targetUID;
+       if(this.forSelf) {
+         stat.href = 'dashboard.html?targetUID='+this.targetUID;
+       } else {
+         stat.href = 'educator/view-conversation.html?uid1='+this.myUid+'&uid2='+this.targetUID;
+       }
 
 
        document.getElementById('conversation-stat-list').appendChild(stat);

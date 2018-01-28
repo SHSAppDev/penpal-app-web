@@ -12,6 +12,9 @@ function EducatorDashboard() {
   this.usersContainer = document.getElementById('users-container');
   this.addSchoolForm = document.getElementById('add-school-form');
   this.command = new Command();
+
+  this.headerColors = ["#ec407a", "#29b6f6",  "#5c6bc0", "#42a5f5", "#ab47bc", "#26a69a", "#7e57c2",  "#29b6f6", "#26c6da", "#66bb6a", "#9ccc65", "#d4e157", "#ffee58", "#ffca28", "#ffa726", "#ff7043"];
+  this.colorIndex = 0;
 }
 
 EducatorDashboard.prototype.onAuthStateChanged = function (user) {
@@ -78,8 +81,6 @@ EducatorDashboard.prototype.addAssociateSchool = function () {
 
 EducatorDashboard.prototype.initializeUserListForGivenSchool = function (schoolCode) {
     const schoolRef = firebase.database().ref('schools/' + schoolCode);
-    const headerColors = ["#ec407a", "#ab47bc", "#7e57c2", "#5c6bc0", "#42a5f5", "#29b6f6", "#26c6da", "#26a69a", "#66bb6a", "#9ccc65", "#d4e157", "#ffee58", "#ffca28", "#ffa726", "#ff7043"];
-
     schoolRef.once('value', function (data) {
       if (data.val()) {
         var temp = document.createElement('div');
@@ -87,7 +88,9 @@ EducatorDashboard.prototype.initializeUserListForGivenSchool = function (schoolC
         const schoolListElement = temp.firstChild;
         schoolListElement.id = schoolCode;
         schoolListElement.querySelector('.school-name').textContent = data.val().name;
-        schoolListElement.querySelector('.collection-header').style.backgroundColor = headerColors[Math.floor(Math.random() * headerColors.length)];
+        schoolListElement.querySelector('.collection-header').style.backgroundColor = this.headerColors[this.colorIndex];
+        this.colorIndex+=1;
+        if(this.colorIndex===this.headerColors.length) this.colorIndex = 0;
 
         this.usersContainer.appendChild(schoolListElement);
 
