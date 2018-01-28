@@ -130,6 +130,7 @@ SchoolPage.prototype.initializeUserListForGivenSchool = function(schoolCode) {
 
       // Now add to the school list element.
       for(var i=0; i<listItems.length; i++) {
+        if(!(listItems[i] instanceof Node)) continue; 
         schoolListElement.appendChild(listItems[i]);
         console.log('school list item appended');
       }
