@@ -15,21 +15,22 @@
  #chat-preloader {
      align-self: center;
  }
- 
+
  #message-filler {
      flex-grow: 1;
  }
- 
+
 
  #add-conversation-button {
      display: flex;
      align-items: center;
      justify-content: center;
  }
+
  .message-container:first-of-type {
      border-top-width: 0;
  }
- 
+
  .message-container {
      display: flex;
      flex-direction: row;
@@ -41,11 +42,11 @@
      opacity: 0;
      transition: opacity 1s ease-in-out;
  }
- 
+
  .message-container.visible {
      opacity: 1;
  }
- 
+
  .message-container .pic {
      background-image: url('/images/profile_placeholder.png');
      background-repeat: no-repeat;
@@ -56,12 +57,12 @@
      margin-right: 7.5px;
      /*switch*/
  }
- 
+
  .name {
      color: #009688;
  }
  /*message text container*/
- 
+
  .message-container .message {
      font-weight: 300;
      box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
@@ -88,7 +89,7 @@
   left: -15px;
   top: 45px;
 }*/
- 
+
  .message-container .name {
      margin-left: 7.5px;
      /*switch*/
@@ -96,7 +97,7 @@
      font-style: italic;
      font-size: 12px;
  }
- 
+
  #image-form {
      display: flex;
      flex-direction: row;
@@ -111,9 +112,7 @@
  /*#image-form #submitImage .material-icons {
   top: -1px;
 }*/
- 
+
  #mediaCapture {
      /*display: none;*/
  }
-
-
