@@ -152,14 +152,12 @@ const convStatTemplate =
 //         "<p class='received'>Received: 17 Messages, 146 Words</p>" +
 //     "</div>" +
 // "</div>";
-'<a class="link" href=# style="color:gray">' +
-'<li class="collection-item avatar">' +
+'<a class="collection-item link avatar" style="color:gray" href=#>' +
       '<img src=# alt="" class="profile-pic circle">' +
       '<span class="title" style="color:black">Username</span>' +
       '<p class="email translate">anotheruser@example.com</p>' +
       '<p class="sent translate">Sent: 20 Messages, 131 Words</p>' +
       '<p class="received translate">Received: 17 Messages, 146 Words</p>' +
-'</li>' +
 '</a>';
 
 // '<div href=# class="collection-item avatar">' +
