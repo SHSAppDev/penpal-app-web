@@ -1,0 +1,284 @@
+<!doctype.html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Improve your foreign language skills by chatting with native speakers your age.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <span class="notranslate"><title>World Without Borders</title></span>
+    <link rel="stylesheet" type="text/css" href="../styles/dashboard.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../styles/main.css"> -->
+
+    <!-- Disable tap highlight on IE -->
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="World Without Borders">
+    <meta name="theme-color" content="#303F9F">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="World Without Borders">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
+
+    <!-- Tile icon for Win8 -->
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <meta name="msapplication-navbutton-color" content="#303F9F">
+
+    <!-- Compiled and minified CSS -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="educator-dashboard.css">
+
+    <style>
+
+      #chat-container {
+        margin-top: 5px;
+        color: white;
+      }
+      #chat {
+          display: flex;
+          flex-direction: column;
+          margin-top: 6.5px;
+          padding: 0px 0px 0px 10px;
+          overflow-y: scroll;
+          height: 90vh;
+          margin-bottom: 0.1px;
+      }
+      .message-container {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          margin-top: 10px;
+          padding-top: 10px;
+      }
+      .message-container .pic {
+          background-image: url('/images/profile_placeholder.png');
+          background-repeat: no-repeat;
+          width: 35px;
+          height: 35px;
+          background-size: 35px;
+          border-radius: 30px;
+          margin-right: 7.5px;
+          /*switch*/
+      }
+      .name {
+          color: #009688;
+      }
+      /*message text container*/
+
+      .message-container .message {
+          font-weight: 300;
+          box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+          color: #040404;
+          /*switch*/
+          max-width: 35vw;
+          padding: 5px 10px 5px 10px;
+          /*background: #E5E5EA;*/
+          background: #DFDFDF;
+          /*switch*/
+          -webkit-border-radius: 4px;
+          -moz-border-radius: 4px;
+          border-radius: 4px;
+      }
+      .message-container .name {
+          margin-left: 7.5px;
+          /*switch*/
+          color: #bbb;
+          font-style: italic;
+          font-size: 12px;
+      }
+    </style>
+
+</head>
+
+<body class="teal">
+  <span class="notranslate">
+    <a style="color: white; float: left; margin-left: 50px;" class="center-align translate" id="back-button">
+      <i class="material-icons" style="vertical-align: bottom">arrow_back</i>
+      <span style="font-size: 15px">Back to Stats</span>
+    </a>
+
+    <div id="chat-container" class="col s12 m12 l12 teal white-text" >
+
+        <div id="chat" class="card z-depth-3" style="clear: left;">
+            <div id="messages" style="color: black; padding-bottom: 10px;">
+              <!-- <span id="message-filler">Message</span> -->
+            </div>
+        </div>
+    </div>
+
+  </span>
+
+  <!--Firebase-->
+  <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+  <script>
+      // Initialize Firebase
+      var config = {
+          apiKey: "AIzaSyCx-2_5IcfXswoDZhjle1rPS3m-ryi3rpM",
+          authDomain: "penpalapp-6020c.firebaseapp.com",
+          databaseURL: "https://penpalapp-6020c.firebaseio.com",
+          storageBucket: "penpalapp-6020c.appspot.com",
+          messagingSenderId: "322094641122"
+      };
+      firebase.initializeApp(config);
+  </script>
+  <script src='../scripts/command.js'></script>
+  <script>
+    //script
+    function ViewConversation() {
+      this.uid1 = getParameterByName('uid1');
+      this.uid2 = getParameterByName('uid2');
+      this.convKey = this.uid1 > this.uid2 ? this.uid1+this.uid2 : this.uid2+this.uid1;
+      console.log(this.uid1+',   '+this.uid2);
+      document.getElementById('back-button').href = '../stat-summary.html?uid='+this.uid1;
+      this.messagesContainer = document.getElementById('messages');
+      this.chat = document.getElementById('chat');
+
+      firebase.database().ref('conversations/'+this.convKey).once('value', function(snapshot){
+        const data = snapshot.val();
+        if(!data) {
+          alert('Uh Oh! It looks like this conversation does not exist.');
+          return;
+        }
+        const messageObjects = Object.values(data);
+        for(var i=0; i<messageObjects.length; i++) {
+          const msgObj = messageObjects[i];
+          const uid = msgObj.uid;
+          const name = msgObj.name;
+          const photoUrl = msgObj.photoUrl;
+          const text = msgObj.text; //<--Could be null
+          const imageUrl = msgObj.imageUrl; //<--Could be null
+          this.displayMessage(uid, name, photoUrl, text, imageUrl);
+
+        }
+      }.bind(this));
+
+    }
+
+    ViewConversation.MESSAGE_TEMPLATE =
+    '<div class="message-container">' +
+    '<div class="pic"></div>' +
+    '<div class="message"></div>' +
+    '<div class="name"></div>' +
+    '</div>';
+
+    // ViewConversation.IMAGE_MESSAGE_TEMPLATE =
+    // '<div class="message-container">' +
+    //   '<img src=# class="materialboxed" width="300"></img>' +
+    // '</div>';
+
+    // ViewConversation.prototype.displayMessage = function(uid, name, photoUrl, text, imageUrl){
+    //   var temp = document.createElement('div');
+    //   temp.innerHTML = imageUrl ? ViewConversation.IMAGE_MESSAGE_TEMPLATE : ViewConversation.MESSAGE_TEMPLATE;
+    //   const messageElement = temp.firstChild;
+    //   if(imageUrl) {
+    //     messageElement.querySelector('img').src = imageUrl;
+    //   } else {
+    //     messageElement.querySelector('.pic').backgroundImage = 'url('+photoUrl+')';
+    //     messageElement.querySelector('.name').textContent = name;
+    //     messageElement.querySelector('.message').textContent = text;
+    //   }
+    //
+    //   this.messagesContainer.appendChild(messageElement);
+    //
+    // };
+
+    ViewConversation.prototype.displayMessage = function (uid, name, picUrl, text, imageUri) {
+
+      var temp = document.createElement('div');
+      temp.innerHTML = ViewConversation.MESSAGE_TEMPLATE;
+      div = temp.firstChild;
+      // div.setAttribute('id', key);
+      this.messagesContainer.appendChild(div);
+      if (uid === this.uid1) { // Switch positioning of message depending on user who sent
+        // console.log("switching position "+uid);
+        div.style.flexDirection = "row-reverse";
+        div.style.justifyContent = "flex-start"
+      }
+
+
+      if (picUrl) {
+        div.querySelector('.pic').style.backgroundImage = 'url(' + picUrl + ')';
+      }
+
+      div.querySelector('.name').textContent = name;
+      div.querySelector('.name').style.marginRight = "7.5px";
+
+      var messageElement = div.querySelector('.message');
+      if (text) { // If the message is text.
+        messageElement.textContent = text;
+        // Replace all line breaks by <br>.
+        messageElement.innerHTML = messageElement.innerHTML.replace(/\n/g, '<br>');
+      } else if (imageUri) { // If the message is an image.
+        var temp = document.createElement('div');
+        temp.innerHTML = '<img src=# class="materialboxed" width="300"></img>';
+        var image = temp.firstChild;
+        image.addEventListener('load', function () {
+          this.chat.scrollTop = this.chat.scrollHeight;
+        }.bind(this));
+        this.setImageUrl(imageUri, image);
+        messageElement.innerHTML = '';
+        messageElement.appendChild(image);
+        $('.materialboxed').materialbox();
+      }
+
+      var profilePic = div.querySelector('.pic');
+      if (uid === this.uid1) {
+        // console.log("message sent by current user");
+        messageElement.style.background = "#009688";
+        messageElement.style.color = "white";
+        profilePic.style.marginLeft = "7.5px";
+
+      } else {
+        messageElement.style.color = "#212121";
+      }
+
+
+      this.chat.scrollTop = this.chat.scrollHeight;
+
+    };
+
+    // Sets the URL of the given img element with the URL of the image stored in Firebase Storage.
+    ViewConversation.prototype.setImageUrl = function (imageUri, imgElement) {
+      // If the image is a Firebase Storage URI we fetch the URL.
+      if (imageUri.startsWith('gs://')) {
+        imgElement.src = ViewConversation.LOADING_IMAGE_URL; // Display a loading image first.
+        firebase.storage().refFromURL(imageUri).getMetadata().then(function (metadata) {
+          imgElement.src = metadata.downloadURLs[0];
+        });
+      } else {
+        imgElement.src = imageUri;
+      }
+    };
+
+
+    function getParameterByName(name, url) {
+        if (!url) {
+          url = window.location.href;
+        }
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    $(document).ready(function(){
+      new ViewConversation();
+    });
+
+
+  </script>
+</body>
+
+</html>

@@ -93,6 +93,11 @@ WWBDashboard.prototype.onAuthStateChanged = function(user) {
         firebase.database().ref('user-data/'+firebase.auth().currentUser.uid).once('value',
           function(snapshot){
             this.myProfile = snapshot.val();
+
+            //User agreement
+            console.log('REACHED HRE!'+this.myProfile['user-agreement']);
+            if(!this.myProfile['user-agreement']) window.location.href = 'user-agreement.html';
+
             // Unhide and set userName
             this.userName.removeAttribute('hidden');
             this.userName.innerHTML = this.myProfile.displayName;
