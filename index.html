@@ -9,30 +9,32 @@
 </head>
 
 <body>
+    <h1>WWB will be back by Tuesday 2/6/2018</h1>
+
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
     <script>
       // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyDLnL7hjfEVuQIuHVD8NA7shxlzItZviaw",
-        authDomain: "worldwithoutwalls-f2d4b.firebaseapp.com",
-        databaseURL: "https://worldwithoutwalls-f2d4b.firebaseio.com",
-        projectId: "worldwithoutwalls-f2d4b",
-        storageBucket: "worldwithoutwalls-f2d4b.appspot.com",
-        messagingSenderId: "517582843677"
-      };
-      firebase.initializeApp(config);
+      // var config = {
+      //   apiKey: "AIzaSyDLnL7hjfEVuQIuHVD8NA7shxlzItZviaw",
+      //   authDomain: "worldwithoutwalls-f2d4b.firebaseapp.com",
+      //   databaseURL: "https://worldwithoutwalls-f2d4b.firebaseio.com",
+      //   projectId: "worldwithoutwalls-f2d4b",
+      //   storageBucket: "worldwithoutwalls-f2d4b.appspot.com",
+      //   messagingSenderId: "517582843677"
+      // };
+      // firebase.initializeApp(config);
 
-        var auth = firebase.auth();
-        auth.onAuthStateChanged(function(user){
-          if(user) {
-              window.location.href = "account-info-sync.html";
-              //If the user has already used the site before, then
-              //account-info-sync will send the user immediately to the dashboard.
-          } else {
-              window.location.href = "landingpage.html";
-          }
-        });
+      // var auth = firebase.auth();
+      // auth.onAuthStateChanged(function(user){
+      //   if(user) {
+      //       window.location.href = "account-info-sync.html";
+      //       //If the user has already used the site before, then
+      //       //account-info-sync will send the user immediately to the dashboard.
+      //   } else {
+      //       window.location.href = "landingpage.html";
+      //   }
+      // });
 
 
     </script>

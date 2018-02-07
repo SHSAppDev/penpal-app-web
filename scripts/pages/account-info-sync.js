@@ -10,7 +10,7 @@ function AccountInfoSync() {
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
 AccountInfoSync.prototype.onAuthStateChanged = function(user) {
   if (user) { // User is signed in!
-
+    console.log('current user '+firebase.auth().currentUser.uid);
     this.userRef = firebase.database().ref('user-data/'+firebase.auth().currentUser.uid);
 
     //This might be their first time using the app, so good to check
@@ -246,3 +246,4 @@ $(document).ready(function() {
     new AccountInfoSync();
 
 });
+
